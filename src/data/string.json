@@ -1,0 +1,13 @@
+{
+  "LOGO": "ViVi",
+  "HOME": "홈",
+  "LOGIN_TITLE": "Login",
+  "BROADCAST": "방송",
+  "BROADCAST_INFO": "기본 정보",
+  "BROADCAST_START": "방송 시작",
+  "BROADCAST_TITLE": "제목",
+  "BROADCAST_NOTICE": "공지",
+  "BROADCAST_TYPE": "방송 유형",
+  "BROADCAST_TYPE_VIDEO": "비디오",
+  "BROADCAST_TYPE_RADIO": "라디오"
+}
