@@ -52,7 +52,7 @@ export default {
   column-gap: 12px;
 
   .viewer-wrap {
-    width: 600px;
+    width: 300px;
   }
 
   .chat-wrap {

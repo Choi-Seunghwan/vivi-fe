@@ -1,4 +1,4 @@
-import _remove from "lodash/remove";
+import _remove from 'lodash/remove';
 import {
   METHOD_CREATE_ROOM,
   METHOD_JOIN_ROOM,
@@ -9,14 +9,14 @@ import {
   METHOD_SEND_SESSION_DESC_OFFER,
   SESSION_DESC_OFFER,
   SESSION_DESC_ANSWER,
-  ICE_CANDIDATE,
-} from "@/vivi-utils/constants";
-import type { Room, Member, ChatMessage } from "@/vivi-utils/types";
-import { PeerConnection } from "@/modules/PeerConnection";
-import mediaManager from "@/modules/MediaManager";
+  ICE_CANDIDATE
+} from '@/vivi-utils/constants';
+import type { Room, Member, ChatMessage } from '@/vivi-utils/types';
+import { PeerConnection } from '@/modules/PeerConnection';
+import mediaManager from '@/modules/MediaManager';
 
 const webSocketHandler = async ({ app, method, args }) => {
-  const splitedMethod = method.split("/");
+  const splitedMethod = method.split('/');
   const { result, resultCode, statusCode, description } = args;
   const _service = app._service;
   const _store = app.$store;
@@ -24,18 +24,14 @@ const webSocketHandler = async ({ app, method, args }) => {
   switch (splitedMethod[1]) {
     case METHOD_CREATE_ROOM: {
       const { room } = result;
-      await app.$store.dispatch("room/setRoom", { room: room }, { root: true });
+      await app.$store.dispatch('room/setRoom', { room: room }, { root: true });
       break;
     }
 
     case METHOD_JOIN_ROOM: {
       const { room } = result;
-      await _store.dispatch("room/setRoom", { room: room }, { root: true });
-      await _store.dispatch(
-        "room/setRoomConnectionStatus",
-        { status: "COMPLETE" },
-        { root: true }
-      );
+      await _store.dispatch('room/setRoom', { room: room }, { root: true });
+      await _store.dispatch('room/setRoomConnectionStatus', { status: 'COMPLETE' }, { root: true });
       // _service.sendSessionDescOfferToRoomAllMembers();
       break;
     }
@@ -64,20 +60,17 @@ const webSocketHandler = async ({ app, method, args }) => {
          * @todo 나온 것만 leave 하도록 수정
          */
         const memberSocketId = member?.socketId;
-        const memberIndex = currentRoom.members.findIndex(
-          (m) => m.socketId === memberSocketId
-        );
+        const memberIndex = currentRoom.members.findIndex(m => m.socketId === memberSocketId);
         currentRoom.members.splice(memberIndex, 1);
       }
       break;
     }
 
     case ROOM_CHAT_MESSAGE: {
-      const { room, chatMessage }: { room: Room; chatMessage: ChatMessage } =
-        result;
+      const { room, chatMessage }: { room: Room; chatMessage: ChatMessage } = result;
       const currentRoom: Room = _store.state?.room?.room;
       if (room.roomId === currentRoom.roomId) {
-        _store.dispatch("room/pushChatMessage", { chatMessage });
+        _store.dispatch('room/pushChatMessage', { chatMessage });
       }
       break;
     }
@@ -88,9 +81,7 @@ const webSocketHandler = async ({ app, method, args }) => {
     case SESSION_DESC_OFFER: {
       const { offer, member }: { offer; member: Member } = result;
       const room: Room = _store.state?.room?.room;
-      const roomMember: Member | undefined = room.members.find(
-        (m) => m.socketId === member.socketId
-      );
+      const roomMember: Member | undefined = room.members.find(m => m.socketId === member.socketId);
 
       if (!roomMember) return;
       const localStream = mediaManager.getLocalStream();
@@ -106,9 +97,7 @@ const webSocketHandler = async ({ app, method, args }) => {
     case SESSION_DESC_ANSWER: {
       const { answer, member }: { answer; member: Member } = result;
       const room: Room = _store.state?.room?.room;
-      const roomMember: Member | undefined = room.members.find(
-        (m) => m.socketId === member.socketId
-      );
+      const roomMember: Member | undefined = room.members.find(m => m.socketId === member.socketId);
 
       if (!roomMember) return;
 
@@ -119,9 +108,7 @@ const webSocketHandler = async ({ app, method, args }) => {
     case ICE_CANDIDATE: {
       const { candidate, member }: { candidate; member: Member } = result;
       const room: Room = _store.state?.room?.room;
-      const roomMember: Member | undefined = room.members.find(
-        (m) => m.socketId === member.socketId
-      );
+      const roomMember: Member | undefined = room.members.find(m => m.socketId === member.socketId);
 
       if (!roomMember) return;
 

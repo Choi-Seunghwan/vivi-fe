@@ -2,10 +2,10 @@
  * 웹소켓, API wrapping 하여 service.get, service.message 이런 형태로 쓰기 위함.
  */
 
-import ServiceWebSocket from "@/service/ServiceWebSocket";
-import { PeerConnection } from "@/modules/PeerConnection";
-import api from "@/service/api";
-import type { Member, Room, ServiceResultRes } from "@/vivi-utils/types";
+import ServiceWebSocket from '@/service/ServiceWebSocket';
+import { PeerConnection } from '@/modules/PeerConnection';
+import api from '@/service/api';
+import type { Member, Room, ServiceResultRes } from '@/vivi-utils/types';
 import {
   METHOD_CREATE_ROOM,
   METHOD_JOIN_ROOM,
@@ -13,12 +13,12 @@ import {
   METHOD_SEND_ROOM_CHAT_MESSAGE,
   METHOD_SEND_SESSION_DESC_OFFER,
   METHOD_SEND_SESSION_DESC_ANSWER,
-  METHOD_SEND_ICE_CANDIDATE,
-} from "@/vivi-utils/constants";
-import { EVENT_ICE_CANDIDATE } from "@/constant";
-import eventManager from "@/modules/EventManager";
-import logger from "@/vivi-utils/logger";
-import mediaManager from "@/modules/MediaManager";
+  METHOD_SEND_ICE_CANDIDATE
+} from '@/vivi-utils/constants';
+import { EVENT_ICE_CANDIDATE } from '@/constant';
+import eventManager from '@/modules/EventManager';
+import logger from '@/vivi-utils/logger';
+import mediaManager from '@/modules/MediaManager';
 
 export class ServiceManager {
   app;
@@ -26,10 +26,7 @@ export class ServiceManager {
 
   constructor() {
     this.sWs = new ServiceWebSocket();
-    eventManager.setEvent(
-      EVENT_ICE_CANDIDATE,
-      this.sendICECandidate.bind(this)
-    );
+    eventManager.setEvent(EVENT_ICE_CANDIDATE, this.sendICECandidate.bind(this));
   }
 
   setApp(app) {
@@ -46,7 +43,7 @@ export class ServiceManager {
    */
 
   async getRoomList() {
-    const response: ServiceResultRes = await api.get("room/roomList");
+    const response: ServiceResultRes = await api.get('room/roomList');
     return response?.result;
   }
 
@@ -55,8 +52,8 @@ export class ServiceManager {
   }
 
   async joinRoom({ roomId }: { roomId: number }) {
-    this.app.$store.dispatch("room/setRoomConnectionStatus", {
-      status: "CONNECTING",
+    this.app.$store.dispatch('room/setRoomConnectionStatus', {
+      status: 'CONNECTING'
     });
     await this.sWs.sendMessage(`room/${METHOD_JOIN_ROOM}`, { roomId });
   }
@@ -65,25 +62,19 @@ export class ServiceManager {
     const room: Room = this.app.$store?.state?.room?.room;
     if (!room) return;
     await this.sWs.sendMessage(`room/${METHOD_LEAVE_ROOM}`, {
-      roomId: room.roomId,
+      roomId: room.roomId
     });
-    this.app.$store.dispatch("room/leaveRoom");
+    this.app.$store.dispatch('room/leaveRoom');
   }
 
   /**
    * Chat
    */
 
-  async sendChatMessage({
-    roomId,
-    message,
-  }: {
-    roomId: number;
-    message: string;
-  }) {
+  async sendChatMessage({ roomId, message }: { roomId: number; message: string }) {
     await this.sWs.sendMessage(`room/${METHOD_SEND_ROOM_CHAT_MESSAGE}`, {
       roomId,
-      message,
+      message
     });
   }
 
@@ -97,8 +88,7 @@ export class ServiceManager {
 
     for (let i = 0; i < members.length; i++) {
       // 본인이 아니라면
-      if (socketId !== members[i].socketId)
-        await this.sendSessionDescOfferToRoomMember({ member: members[i] });
+      if (socketId !== members[i].socketId) await this.sendSessionDescOfferToRoomMember({ member: members[i] });
     }
   }
 
@@ -110,12 +100,12 @@ export class ServiceManager {
 
     member.peerConnection = new PeerConnection({ member, localStream });
     const offer = await member?.peerConnection?.createOffer();
-    const _member = { ...member, peerConnection: undefined };
+    const _member = { ...member, peerConnection: null };
 
     await this.sWs.sendMessage(`room/${METHOD_SEND_SESSION_DESC_OFFER}`, {
       roomId: room.roomId,
       member: _member,
-      offer,
+      offer
     });
   }
 
@@ -125,18 +115,18 @@ export class ServiceManager {
     await this.sWs.sendMessage(`room/${METHOD_SEND_SESSION_DESC_ANSWER}`, {
       roomId: room.roomId,
       member,
-      answer,
+      answer
     });
   }
 
   async sendICECandidate({ candidate, member }: { candidate; member: Member }) {
     const room: Room = this.app.$store?.state?.room?.room;
-    const _member = { ...member, peerConnection: undefined };
+    const _member = { ...member, peerConnection: null };
     if (!room) return;
     await this.sWs.sendMessage(`room/${METHOD_SEND_ICE_CANDIDATE}`, {
       roomId: room.roomId,
       candidate,
-      member: _member,
+      member: _member
     });
   }
 }
@@ -144,5 +134,5 @@ export class ServiceManager {
 export const servicePlugin = {
   install(Vue) {
     Vue.config.globalProperties._service = new ServiceManager();
-  },
+  }
 };

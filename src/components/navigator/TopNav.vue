@@ -2,15 +2,12 @@
   <nav class="topNav">
     <div class="leftWrapper">
       <div class="leftWrapper__menu">
-        <img
-          @click="menuIconHandler"
-          src="@/assets/images/menu_icon.png"
-          class="menuIcon"
-        />
+        <img @click="menuIconHandler" src="@/assets/images/menu_icon.png" class="menuIcon" />
       </div>
       <h1 @click="titleClickHandler" class="leftWrapper__logo">
-        {{ parseStr("logo") }}
+        {{ parseStr('logo') }}
       </h1>
+      <router-link :to="'broadcast'">broadcase</router-link>
     </div>
     <div class="rightWrapper">
       <UserController v-if="isLogin" v-slot="{ nickname, avatarSrc }">
@@ -23,28 +20,28 @@
   </nav>
 </template>
 <script>
-import { parseStr } from "@/utils";
-import { mapActions, mapGetters } from "vuex";
-import pageRouteMixin from "@/mixin/pageRouteMixin";
-import UserController from "@/components/user/UserController.vue";
-import UserAvatar from "@/components/user/UserAvatar.vue";
+import { parseStr } from '@/utils';
+import { mapActions, mapGetters } from 'vuex';
+import pageRouteMixin from '@/mixin/pageRouteMixin';
+import UserController from '@/components/user/UserController.vue';
+import UserAvatar from '@/components/user/UserAvatar.vue';
 
 export default {
-  name: "TopNav",
+  name: 'TopNav',
   mixins: [pageRouteMixin],
   components: {
     UserController,
-    UserAvatar,
+    UserAvatar
   },
   computed: {
-    ...mapGetters("account", ["isLogin"]),
+    ...mapGetters('account', ['isLogin'])
   },
   methods: {
     parseStr,
-    ...mapActions("context", ["toggleSideNav"]),
+    ...mapActions('context', ['toggleSideNav']),
 
     titleClickHandler() {
-      this.$router.push("/");
+      this.$router.push('/');
     },
 
     menuIconHandler() {
@@ -53,12 +50,12 @@ export default {
 
     loginBtnHandler() {
       this.$_routeLoginPage();
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss">
-@import "@/assets/scss/theme";
+@import '@/assets/scss/theme';
 
 .topNav {
   // @include theme-color('background', 'color-gradient-primary');

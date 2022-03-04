@@ -1,5 +1,5 @@
 <template>
-  <div class="room-room">
+  <div class="room">
     <section class="room-viewer-wrap">
       <RoomViewer ref="roomViewer" :roomInfo="room" />
     </section>
@@ -43,5 +43,8 @@ export default {
 
 <style lang="scss" scoped>
 .room {
+  .room-viewer-wrap {
+    width: 300px;
+  }
 }
 </style>

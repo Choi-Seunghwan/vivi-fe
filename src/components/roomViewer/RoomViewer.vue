@@ -3,7 +3,9 @@
     <VideoPlayer ref="videoPlayer" class="video-player" :media="localStream" />
     <div v-for="(member, i) in members" :key="i">
       <div>{{ member.nickname }}</div>
-      <VideoPlayer :media="remoteStream"></VideoPlayer>
+      <VideoPlayer :media="getRemoteStream(member)"></VideoPlayer>
+      <p v-if="member.peerConnection">have peerConnection</p>
+      <p v-if="member.peerConnection && member.peerConnection.remoteStream">has remoteStream</p>
     </div>
   </div>
 </template>
@@ -23,9 +25,7 @@ export default {
     },
     localStream: null
   },
-  data: () => ({
-    remoteStream: null
-  }),
+  data: () => ({}),
   computed: {
     members() {
       return this.roomInfo?.members;
@@ -36,8 +36,9 @@ export default {
       return member?.peerConnection?.remoteStream;
     },
     remoteStreamHandler(arg) {
-      const { context, remoteStream } = arg;
+      const { peerConnection, remoteStream } = arg;
       this.remoteStream = remoteStream;
+      this.$forceUpdate();
     }
   },
   mounted() {

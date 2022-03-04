@@ -13,31 +13,30 @@
   </div>
 </template>
 <script>
-import RoomCard from "./RoomCard.vue";
+import RoomCard from './RoomCard.vue';
 
 export default {
   components: {
-    RoomCard,
+    RoomCard
   },
   data: () => ({
     loading: true,
-    roomList: [],
+    roomList: []
   }),
   methods: {
     roomCardClickHandler(roomItem) {
       const { roomId } = roomItem;
-      this.$router.push({ name: "room", params: { roomId } });
+      this.$router.push({ name: 'room', params: { roomId } });
     },
     async init() {
-      console.log("@@@", this._service);
       const result = await this._service.getRoomList();
       this.roomList = result?.roomList;
       this.loading = false;
-    },
+    }
   },
   async beforeMount() {
     this.init();
-  },
+  }
 };
 </script>
 <style lang="scss">
