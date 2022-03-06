@@ -1,6 +1,6 @@
 <template>
-  <div class="userAvatar">
-    <div class="avatar">
+  <div class="avatar">
+    <div class="avatar-wrap">
       <img :src="true ? require(`@/assets/images/user_icon.png`) : ''" class="icon" />
     </div>
     <div class="info">
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.userAvatar {
+.avatar {
   display: flex;
   justify-content: center;
   align-items: center;

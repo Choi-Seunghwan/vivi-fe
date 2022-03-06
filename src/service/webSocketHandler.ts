@@ -9,7 +9,8 @@ import {
   METHOD_SEND_SESSION_DESC_OFFER,
   SESSION_DESC_OFFER,
   SESSION_DESC_ANSWER,
-  ICE_CANDIDATE
+  ICE_CANDIDATE,
+  HOST_LEAVE_ROOM
 } from '@/vivi-utils/constants';
 import type { Room, Member, ChatMessage } from '@/vivi-utils/types';
 import { PeerConnection } from '@/modules/PeerConnection';
@@ -52,9 +53,11 @@ const webSocketHandler = async ({ app, method, args }) => {
       break;
     }
 
+    case HOST_LEAVE_ROOM:
     case MEMBER_LEAVE_ROOM: {
-      const { room, member }: { room: Room; member: Member } = result;
+      const { room, member, isHostLeave }: { room: Room; member: Member } = result;
       const currentRoom: Room = _store.state?.room?.room;
+      console.log('@@@', isHostLeave);
       if (room.roomId === currentRoom.roomId) {
         /**
          * @todo 나온 것만 leave 하도록 수정

@@ -1,7 +1,7 @@
 {
-  "LOGO": "ViVi",
+  "LOGO": "vivi",
   "HOME": "홈",
-  "LOGIN_TITLE": "Login",
+  "LOGIN": "로그인",
   "BROADCAST": "방송",
   "BROADCAST_INFO": "기본 정보",
   "BROADCAST_START": "방송 시작",

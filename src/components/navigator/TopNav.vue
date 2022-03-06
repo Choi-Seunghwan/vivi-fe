@@ -1,21 +1,14 @@
 <template>
-  <nav class="topNav">
-    <div class="leftWrapper">
-      <div class="leftWrapper__menu">
-        <img @click="menuIconHandler" src="@/assets/images/menu_icon.png" class="menuIcon" />
-      </div>
-      <h1 @click="titleClickHandler" class="leftWrapper__logo">
-        {{ parseStr('logo') }}
-      </h1>
-      <router-link :to="'broadcast'">broadcase</router-link>
+  <nav class="top-nav">
+    <div class="left-wrap">
+      <h2 @click="titleClickHandler" class="logo">
+        {{ parseStr('LOGO') }}
+      </h2>
     </div>
-    <div class="rightWrapper">
-      <UserController v-if="isLogin" v-slot="{ nickname, avatarSrc }">
-        <UserAvatar v-bind="{ nickname, avatarSrc }" />
-      </UserController>
-      <div v-else>
-        <button @click="loginBtnHandler">Login</button>
-      </div>
+    <div class="right-wrap">
+      <Avatar v-if="isLogin" />
+      <BasicButton class="login-btn" v-else @click="loginBtnHandler">{{ parseStr('LOGIN') }}</BasicButton>
+      <button class="menu-btn"><img @click="menuIconHandler" :src="'images/menu-icon.svg'" class="menu-icon" /></button>
     </div>
   </nav>
 </template>
@@ -23,15 +16,15 @@
 import { parseStr } from '@/utils';
 import { mapActions, mapGetters } from 'vuex';
 import pageRouteMixin from '@/mixin/pageRouteMixin';
-import UserController from '@/components/user/UserController.vue';
-import UserAvatar from '@/components/user/UserAvatar.vue';
+import Avatar from '@/components/Avatar.vue';
+import BasicButton from '@/components/BasicButton.vue';
 
 export default {
   name: 'TopNav',
   mixins: [pageRouteMixin],
   components: {
-    UserController,
-    UserAvatar
+    Avatar,
+    BasicButton
   },
   computed: {
     ...mapGetters('account', ['isLogin'])
@@ -57,42 +50,32 @@ export default {
 <style lang="scss">
 @import '@/assets/scss/theme';
 
-.topNav {
-  // @include theme-color('background', 'color-gradient-primary');
+.top-nav {
   width: 100%;
   height: 56px;
   display: flex;
   justify-content: space-between;
   z-index: 3;
+  padding: 12px;
 
-  .leftWrapper {
+  .left-wrap {
     display: flex;
-    align-items: center;
-    margin: 12px;
 
-    &__menu {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-top: 2px;
-      cursor: pointer;
-
-      .menuIcon {
-        width: 28px;
-        height: 28px;
-      }
-    }
-
-    &__logo {
+    .logo {
       color: #ffffff;
-      margin: 12px;
-      width: fit-content;
       cursor: pointer;
+      font-size: 30px;
     }
   }
 
-  .rightWrapper {
-    margin: 12px;
+  .right-wrap {
+    display: flex;
+
+    .menu-btn {
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+    }
   }
 }
 </style>
