@@ -1,13 +1,13 @@
 <template>
-  <div class="roomItemContainer">
-    <div class="roomList">
+  <div class="room-list-container">
+    <div class="room-list">
       <RoomCard
         v-for="(roomItem, roomListIndex) in roomList"
         :key="roomListIndex"
-        @click.native="roomCardClickHandler(roomItem)"
+        @click="roomCardHandler(roomItem)"
         :title="roomItem.title"
         :memberCount="roomItem.memberCount"
-        class="roomList__room"
+        class="room-list__item"
       />
     </div>
   </div>
@@ -24,7 +24,7 @@ export default {
     roomList: []
   }),
   methods: {
-    roomCardClickHandler(roomItem) {
+    roomCardHandler(roomItem) {
       const { roomId } = roomItem;
       this.$router.push({ name: 'room', params: { roomId } });
     },
@@ -40,20 +40,13 @@ export default {
 };
 </script>
 <style lang="scss">
-.roomItemContainer {
+.room-list-container {
   .roomList {
     display: flex;
     flex-wrap: wrap;
 
-    &__room {
-      flex-basis: 25%;
-
-      @media (min-width: 520px) {
-        flex-basis: 50%;
-      }
-      @media (min-width: 992px) {
-        flex-basis: 25%;
-      }
+    &__item {
+      width: 400px;
     }
   }
 }

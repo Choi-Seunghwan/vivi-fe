@@ -50,13 +50,14 @@ export default {
   display: flex;
   flex-wrap: wrap;
   column-gap: 12px;
+  padding-top: 40px;
 
   .viewer-wrap {
-    width: 300px;
+    // width: 300px;
   }
 
   .chat-wrap {
-    width: 400px;
+    // width: 400px;
   }
 
   .controller-wrap {

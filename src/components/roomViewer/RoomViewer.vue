@@ -1,11 +1,15 @@
 <template>
   <div class="room-viewer">
-    <VideoPlayer ref="videoPlayer" class="video-player" :media="localStream" />
-    <div v-for="(member, i) in members" :key="i">
-      <div>{{ member.nickname }}</div>
-      <VideoPlayer :media="getRemoteStream(member)"></VideoPlayer>
-      <p v-if="member.peerConnection">have peerConnection</p>
-      <p v-if="member.peerConnection && member.peerConnection.remoteStream">has remoteStream</p>
+    <div class="video-wrap">
+      <div>
+        <VideoPlayer ref="videoPlayer" class="video-player" :media="localStream" />
+      </div>
+      <div v-for="(member, i) in members" :key="i">
+        <div>{{ member.nickname }}</div>
+        <VideoPlayer :media="getRemoteStream(member)"></VideoPlayer>
+        <p v-if="member.peerConnection">have peerConnection</p>
+        <p v-if="member.peerConnection && member.peerConnection.remoteStream">has remoteStream</p>
+      </div>
     </div>
   </div>
 </template>
@@ -51,5 +55,7 @@ export default {
 .room-viewer {
   width: 100%;
   height: 100%;
+  min-width: 550px;
+  border-radius: 12px;
 }
 </style>

@@ -27,7 +27,7 @@ export default {
     BasicButton
   },
   computed: {
-    ...mapGetters('account', ['isLogin'])
+    ...mapGetters('auth', ['isLogin'])
   },
   methods: {
     parseStr,

@@ -1,5 +1,5 @@
 <template>
-  <div class="roomCard">
+  <div @click="$emit('click')" class="room-card">
     <div class="thumbnail"></div>
     <span>{{ title }}</span>
   </div>
@@ -16,8 +16,8 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.roomCard {
+<style lang="scss" scoped>
+.room-card {
   width: 100%;
   height: 260px;
   transition: box-shadow 150ms linear;

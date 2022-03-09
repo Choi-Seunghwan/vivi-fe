@@ -1,20 +1,15 @@
 <template>
   <div class="avatar">
-    <div class="avatar-wrap">
-      <img :src="true ? require(`@/assets/images/user_icon.png`) : ''" class="icon" />
-    </div>
-    <div class="info">
-      <span class="nickname">{{ nickname }}</span>
-    </div>
+    <img :src="imgSrc ? imgSrc : 'images/user-icon.png'" class="icon" />
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    nickname: {
-      type: String,
-      defaultProps: ''
+    imgSrc: {
+      default: '',
+      type: String
     }
   }
 };
@@ -25,28 +20,16 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #ddd;
+  justify-content: center;
+  align-items: center;
 
-  .avatar {
-    display: flex;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #ddd;
-    justify-content: center;
-    align-items: center;
-
-    .icon {
-      width: 28px;
-      height: 28px;
-      // background: url('~@/assets/images/user_icon.png');
-    }
-  }
-
-  .info {
-    margin-left: 8px;
-    .nickname {
-      color: #ffffff;
-    }
+  .icon {
+    width: 32x;
+    height: 32px;
   }
 }
 </style>

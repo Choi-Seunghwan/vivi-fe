@@ -9,6 +9,7 @@
   </div>
 </template>
 <script>
+import mediaManager from '@/modules/MediaManager';
 import { mapState, mapActions } from 'vuex';
 import RoomViewer from '@/components/roomViewer/RoomViewer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
@@ -31,8 +32,9 @@ export default {
       return Number(this.$route?.params?.roomId);
     }
   },
-  mounted() {
+  async mounted() {
     const { roomId } = this;
+    await mediaManager.initLocalStream();
     this._service.joinRoom({ roomId });
   },
   beforeDestroy() {
