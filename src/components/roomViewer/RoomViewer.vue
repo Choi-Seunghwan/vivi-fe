@@ -1,38 +1,53 @@
 <template>
   <div class="room-viewer">
-    <div class="video-wrap">
-      <div>
+    <div class="room-info-wrap"></div>
+    <div class="viewer-wrap">
+      <div class="member-item me">
+        <div class="member-info">
+          <Avatar></Avatar>
+          <p class="nickname">
+            {{ nickname }}
+          </p>
+        </div>
         <VideoPlayer ref="videoPlayer" class="video-player" :media="localStream" />
       </div>
-      <div v-for="(member, i) in members" :key="i">
-        <div>{{ member.nickname }}</div>
+      <div v-for="(member, i) in members" :key="i" class="member-item">
+        <div class="member-info">
+          <Avatar></Avatar>
+          <p class="nickname">
+            {{ member.nickname }}
+          </p>
+        </div>
         <VideoPlayer :media="getRemoteStream(member)"></VideoPlayer>
-        <p v-if="member.peerConnection">have peerConnection</p>
-        <p v-if="member.peerConnection && member.peerConnection.remoteStream">has remoteStream</p>
       </div>
     </div>
   </div>
 </template>
 <script>
-import VideoPlayer from '@/components/video/VideoPlayer.vue';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import eventManager from '@/modules/EventManager';
 import { EVENT_ON_TRACK } from '@/constant';
+import VideoPlayer from '@/components/video/VideoPlayer.vue';
+import Avatar from '@/components/Avatar.vue';
 
 export default {
   components: {
-    VideoPlayer
+    VideoPlayer,
+    Avatar
   },
   props: {
-    roomInfo: {
-      default: () => ({}),
-      type: Object
-    },
     localStream: null
   },
-  data: () => ({}),
   computed: {
+    ...mapState('room', ['room']),
+    ...mapGetters('auth', ['accountInfo']),
+    nickname() {
+      return this.accountInfo?.nickname || '';
+    },
     members() {
-      return this.roomInfo?.members;
+      if (this.room?.members?.length) {
+        return this.room?.members.filter(m => m?.nickname !== this.accountInfo?.nickname);
+      } else return [];
     }
   },
   methods: {
@@ -47,7 +62,8 @@ export default {
   },
   mounted() {
     eventManager.setEvent(EVENT_ON_TRACK, this.remoteStreamHandler.bind(this));
-  }
+  },
+  beforeUnmount() {}
 };
 </script>
 
@@ -55,7 +71,30 @@ export default {
 .room-viewer {
   width: 100%;
   height: 100%;
-  min-width: 550px;
   border-radius: 12px;
+  overflow: hidden;
+
+  .viewer-wrap {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-wrap: wrap;
+
+    .member-item {
+      position: relative;
+      flex: 1;
+
+      .member-info {
+        display: flex;
+        position: absolute;
+        align-items: center;
+        padding: 8px;
+
+        .nickname {
+          margin-left: 6px;
+        }
+      }
+    }
+  }
 }
 </style>

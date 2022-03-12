@@ -1,7 +1,7 @@
 import type { Account } from '@/vivi-utils/types';
 
 const state = () => ({
-  info: undefined
+  info: null
 });
 
 const mutations = {

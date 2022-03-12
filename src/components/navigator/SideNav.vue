@@ -2,7 +2,7 @@
   <aside v-show="showSideNav" class="side-nav">
     <div class="my-info">
       <Avatar></Avatar>
-      <p class="nickname">{{ accountNickname }}</p>
+      <p class="nickname">{{ nickname }}</p>
     </div>
     <hr class="divider" />
     <nav class="nav">
@@ -28,13 +28,13 @@ export default {
   computed: {
     ...mapState('context', ['showSideNav']),
     ...mapGetters('auth', ['accountInfo']),
-    accountNickname() {
+    nickname() {
       return this.accountInfo?.nickname || '';
     },
     navItemList() {
       return [
         { name: 'home', strKey: 'HOME' },
-        { name: 'broadcast', strKey: 'BROADCAST' }
+        { name: 'broadcast', strKey: 'BROADCASTING' }
       ];
     }
   },

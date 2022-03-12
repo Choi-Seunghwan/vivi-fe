@@ -1,10 +1,16 @@
 <template>
-  <button @click="$emit('click')" class="basic-button"><slot></slot></button>
+  <button :class="[theme]" class="basic-button"><slot></slot></button>
 </template>
 
 <script>
 export default {
-  name: 'BasicButton'
+  name: 'BasicButton',
+  props: {
+    theme: {
+      default: '',
+      type: String
+    }
+  }
 };
 </script>
 
@@ -15,5 +21,10 @@ export default {
   border: solid 1px #fff;
   border-radius: 4px;
   cursor: pointer;
+
+  &.white {
+    color: #000;
+    background: #fff;
+  }
 }
 </style>
