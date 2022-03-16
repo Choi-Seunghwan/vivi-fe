@@ -1,50 +1,82 @@
 <template>
   <Layout class="broadcast">
     <section class="room-viewer-wrap">
-      <RoomViewer ref="roomViewer" :localStream="localStream"></RoomViewer>
+      <RoomViewer
+        ref="roomViewer"
+        :room="room"
+        :members="members"
+        :accountInfo="accountInfo"
+        :localStream="localStream"
+      ></RoomViewer>
     </section>
     <section class="tab-wrap">
       <div class="tab">
-        <button :class="{ disabled: !isOnAir }" class="tab-item">
+        <button
+          @click="tabItemHandler('member')"
+          :disabled="!isOnAir"
+          :class="{ disabled: !isOnAir, active: tab === 'member' }"
+          class="tab-item"
+        >
           <img src="images/user-icon.png" />
         </button>
-        <button class="tab-item">
+        <button @click="tabItemHandler('controller')" :class="{ active: tab === 'controller' }" class="tab-item">
           <img src="images/cogwheel-icon.png" />
         </button>
       </div>
       <div class="tab-content">
-        <BroadcastController v-show="tab === 'controller'" @createRoom="createRoom" />
+        <MemberList v-show="tab === 'member'" :members="members" />
+        <BroadcastController v-show="tab === 'controller'" @createRoom="createRoomHandler" />
       </div>
     </section>
   </Layout>
 </template>
 
 <script>
+import { mapActions, mapState, mapGetters } from 'vuex';
 import mediaManager from '@/modules/MediaManager';
 import BroadcastController from '@/components/broadcast/BroadcastController.vue';
-import RoomViewer from '@/components/roomViewer/RoomViewer.vue';
+import RoomViewer from '@/components/RoomViewer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import Layout from '@/components/layout/Layout.vue';
+import MemberList from '@/components/room/MemberList.vue';
 
 export default {
+  name: 'Broadcast',
   components: {
     Layout,
     BroadcastController,
     RoomViewer,
-    ChatContainer
+    ChatContainer,
+    MemberList
   },
   data: () => ({
     localStream: null,
     /**
-     * tab: 'controller' 방송 설정, members: 참여 맴버
+     * tab: 'controller' 방송 설정, member: 참여 맴버
      */
     tab: 'controller',
     isOnAir: false
   }),
+  computed: {
+    ...mapState('room', ['room']),
+    ...mapGetters('auth', ['accountInfo']),
+    members() {
+      if (this.room?.members?.length) {
+        return this.room?.members.filter(m => m?.nickname !== this.accountInfo?.nickname);
+      } else return [];
+    }
+  },
   methods: {
     async createRoom(roomInfo) {
       await this._service.createRoom(roomInfo);
+    },
+    async createRoomHandler(roomInfo) {
+      await this.createRoom(roomInfo);
       this.isOnAir = true;
+      this.tab = 'member';
+    },
+    tabItemHandler(itemKey) {
+      this.tab = itemKey;
     }
   },
   async mounted() {
@@ -86,7 +118,7 @@ export default {
         align-items: center;
         cursor: pointer;
         border-left: solid 1px #000;
-        background: #eee;
+        background: #aaa;
 
         &:hover {
           background: #aaa;
@@ -99,6 +131,10 @@ export default {
 
         &:nth-of-type(1) {
           border: none;
+        }
+
+        &.active {
+          background: #eee;
         }
 
         > img {

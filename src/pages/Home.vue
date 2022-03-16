@@ -7,7 +7,7 @@
 <script>
 // import Banner from '@/components/Banner.vue';
 import { mapState, mapActions } from 'vuex';
-import RoomListContainer from '@/components/roomList/RoomListContainer.vue';
+import RoomListContainer from '@/components/room/RoomListContainer.vue';
 
 export default {
   components: {

@@ -16,7 +16,7 @@ export default {
 
 <style lang="scss" scoped>
 .basic-button {
-  padding: 8px;
+  padding: 0 8px;
   color: #fff;
   border: solid 1px #fff;
   border-radius: 4px;

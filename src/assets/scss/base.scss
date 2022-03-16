@@ -33,7 +33,7 @@ body {
   padding: 0;
   height: 100vh;
   color: #ffffff;
-  background: #181818;
+  background: #191919;
 }
 
 h1,
@@ -60,6 +60,7 @@ button {
 textarea:focus,
 input:focus {
   outline: none;
+  color: #191919;
 }
 
 a {

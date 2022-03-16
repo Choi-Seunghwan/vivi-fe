@@ -8,7 +8,9 @@
     <div class="right-wrap">
       <Avatar v-if="isLogin" />
       <BasicButton class="login-btn" v-else @click="loginBtnHandler">{{ parseStr('LOGIN') }}</BasicButton>
-      <button @click="menuIconHandler" class="menu-btn"><img :src="'images/menu-icon.svg'" class="menu-icon" /></button>
+      <button @click="menuIconHandler" class="menu-btn">
+        <img :src="'/images/menu-icon.svg'" class="menu-icon" />
+      </button>
     </div>
   </nav>
 </template>

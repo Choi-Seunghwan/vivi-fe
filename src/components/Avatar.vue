@@ -1,6 +1,6 @@
 <template>
   <div class="avatar">
-    <img :src="imgSrc ? imgSrc : 'images/user-icon.png'" class="icon" />
+    <img :src="imgSrc ? imgSrc : '/images/user-icon.png'" class="icon" />
   </div>
 </template>
 
