@@ -5,7 +5,7 @@
 import ServiceWebSocket from '@/service/ServiceWebSocket';
 import { PeerConnection } from '@/modules/PeerConnection';
 import api from '@/service/api';
-import type { Member, Room, ServiceResultRes } from '@/vivi-utils/types';
+import type { Member, Room, ServiceResultRes, Account } from '@/vivi-utils/types';
 import {
   METHOD_CREATE_ROOM,
   METHOD_JOIN_ROOM,
@@ -20,9 +20,16 @@ import eventManager from '@/modules/EventManager';
 import logger from '@/vivi-utils/logger';
 import mediaManager from '@/modules/MediaManager';
 
+export const servicePlugin = {
+  install(Vue) {
+    Vue.config.globalProperties._service = new ServiceManager();
+  }
+};
+
 export class ServiceManager {
   app;
   sWs: ServiceWebSocket;
+  store;
 
   constructor() {
     this.sWs = new ServiceWebSocket();
@@ -32,6 +39,7 @@ export class ServiceManager {
   setApp(app) {
     this.app = app;
     this.sWs.setApp(app);
+    this.store = app.$store;
   }
 
   getSocketId() {
@@ -43,7 +51,7 @@ export class ServiceManager {
    */
 
   async getRoomList() {
-    const response: ServiceResultRes = await api.get('room/roomList');
+    const response: ServiceResultRes = await api.get('room/list');
     return response?.result;
   }
 
@@ -129,10 +137,22 @@ export class ServiceManager {
       member: _member
     });
   }
-}
 
-export const servicePlugin = {
-  install(Vue) {
-    Vue.config.globalProperties._service = new ServiceManager();
+  /**
+   * Account
+   */
+
+  async changeNickname(nickname) {
+    const isLogin = this.store.getters['auth/isLogin'];
+
+    if (!isLogin) {
+      const accountInfo: Account = this.store.getters['auth/accountInfo'];
+      const connectionId = accountInfo?.connectionId;
+      const result: ServiceResultRes = await api.patch('account/nickname', { nickname, connectionId });
+
+      const account = result?.result?.account;
+      console.log(account);
+      this.store.dispatch('auth/setAccountInfo', { account });
+    }
   }
-};
+}

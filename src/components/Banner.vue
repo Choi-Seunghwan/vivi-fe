@@ -6,7 +6,7 @@ export default {};
 </script>
 <style scoped lang="scss">
 .banner {
-  height: 300px;
-  background: white;
+  height: 200px;
+  background: blue;
 }
 </style>

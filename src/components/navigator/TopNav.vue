@@ -2,82 +2,92 @@
   <nav class="top-nav">
     <div class="left-wrap">
       <h2 @click="titleClickHandler" class="logo">
-        {{ parseStr('LOGO') }}
+        {{ parseStr('VIVI') }}
       </h2>
     </div>
     <div class="right-wrap">
-      <Avatar v-if="isLogin" />
-      <BasicButton class="login-btn" v-else @click="loginBtnHandler">{{ parseStr('LOGIN') }}</BasicButton>
-      <button @click="menuIconHandler" class="menu-btn">
-        <img :src="'/images/menu-icon.svg'" class="menu-icon" />
-      </button>
+      <a class="cursor-pointer mr-[30px]" @click="broadcastHandler">{{ parseStr('BROADCASTING') }}</a>
+      <div class="my">
+        <BasicInput class="nickname w-[140px]" :maxLength="10" v-model="_nickname" useConfirm />
+      </div>
     </div>
   </nav>
 </template>
 <script>
 import { parseStr } from '@/utils';
-import { mapActions, mapGetters } from 'vuex';
-import pageRouteMixin from '@/mixin/pageRouteMixin';
+import { mapGetters } from 'vuex';
 import Avatar from '@/components/Avatar.vue';
 import BasicButton from '@/components/BasicButton.vue';
+import BasicInput from '@/components/BasicInput.vue';
 
 export default {
   name: 'TopNav',
-  mixins: [pageRouteMixin],
-  components: {
-    Avatar,
-    BasicButton
-  },
+  components: { Avatar, BasicButton, BasicInput },
   computed: {
-    ...mapGetters('auth', ['isLogin'])
+    ...mapGetters('auth', ['accountInfo']),
+    _nickname: {
+      set(v) {
+        this.nicknameHandler(v);
+      },
+      get() {
+        return this.nickname;
+      }
+    },
+    _accountInfo() {
+      return this.accountInfo || {};
+    },
+    nickname() {
+      return this._accountInfo?.nickname || '';
+    }
   },
   methods: {
     parseStr,
-    ...mapActions('context', ['toggleSideNav']),
-
     titleClickHandler() {
       this.$router.push('/');
     },
-
-    menuIconHandler() {
-      this.toggleSideNav();
+    broadcastHandler() {
+      this.$router.push({ name: 'broadcast' });
     },
-
-    loginBtnHandler() {
-      this.$_routeLoginPage();
+    async nicknameHandler(v) {
+      const result = await this._service.changeNickname(v);
+      console.log('@@ nickname end');
     }
   }
 };
 </script>
 <style lang="scss">
-@import '@/assets/scss/theme';
+@import '@/assets/scss/base';
 
 .top-nav {
   width: 100%;
   height: 56px;
   display: flex;
   justify-content: space-between;
-  z-index: 3;
+  z-index: 10;
   padding: 12px;
-  border-bottom: solid 1px #fff;
 
   .left-wrap {
     display: flex;
+    align-items: center;
 
     .logo {
+      font-family: 'SBAggroB';
       color: #ffffff;
       cursor: pointer;
       font-size: 30px;
+      background: $color-gradient-primary;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .logo-img {
+      width: 60px;
     }
   }
 
   .right-wrap {
     display: flex;
 
-    .menu-btn {
-      width: 36px;
-      height: 36px;
-      cursor: pointer;
+    .my {
     }
   }
 }

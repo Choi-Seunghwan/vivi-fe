@@ -1,7 +1,8 @@
 {
-  "LOGO": "vivi",
+  "VIVI": "VIVI",
   "HOME": "홈",
   "LOGIN": "로그인",
+  "ADV_MAIN_TEXT": "소모임! 독서 토론! 스터디!\n이제 우린 VIVI 에서 만난다!",
   "BROADCAST": "방송",
   "BROADCASTING": "방송하기",
   "BROADCAST_SETTING": "방송 설정",

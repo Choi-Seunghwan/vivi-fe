@@ -1,56 +1,43 @@
 <template>
-  <div :class="theme" class="base-layout">
+  <section :class="theme" class="base-layout">
     <Dimmed />
     <TopNav />
     <SideNav />
     <div class="content">
       <slot></slot>
     </div>
-  </div>
+  </section>
 </template>
 <script>
-import TopNav from "@/components/navigator/TopNav.vue";
-import SideNav from "@/components/navigator/SideNav.vue";
-import Dimmed from "../components/layout/Dimmed.vue";
+import TopNav from '@/components/navigator/TopNav.vue';
+import SideNav from '@/components/navigator/SideNav.vue';
+import Dimmed from '../components/layout/Dimmed.vue';
 
 export default {
-  name: "BaseLayout",
+  name: 'BaseLayout',
   components: {
     TopNav,
     SideNav,
-    Dimmed,
+    Dimmed
   },
   data() {
     return {
-      theme: "default",
+      theme: 'default'
     };
   },
   mounted() {},
-  methods: {},
+  methods: {}
 };
 </script>
 
-<style lang="scss">
-@import "@/assets/scss/base.scss";
-
+<style lang="scss" scoped>
 .base-layout {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
 
   .content {
     width: 100%;
-    height: 100%;
-
-    @include tablet {
-      max-width: 1024px;
-    }
-
-    @include desktop {
-      max-width: 1440px;
-    }
+    // padding: 20px 20px 0 20px;
   }
 }
 </style>
