@@ -2,7 +2,7 @@
   <div class="room-viewer">
     <div class="room-info-wrap"></div>
     <div class="viewer-wrap">
-      <div class="member-item me">
+      <div v-show="hasLocalStream" class="member-item me">
         <div class="member-info">
           <Avatar></Avatar>
           <p class="nickname">
@@ -43,6 +43,9 @@ export default {
     localStream: null
   },
   computed: {
+    hasLocalStream() {
+      return !!this.localStream;
+    },
     hasRoom() {
       return !!this.room?.roomId;
     },
@@ -79,7 +82,6 @@ export default {
     width: 100%;
     height: 100%;
     flex-wrap: wrap;
-    padding: 10px;
     background: #eee;
     gap: 8px;
 

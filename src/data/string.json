@@ -13,5 +13,8 @@
   "BROADCAST_NOTICE": "공지",
   "BROADCAST_TYPE": "방송 유형",
   "BROADCAST_TYPE_VIDEO": "비디오",
-  "BROADCAST_TYPE_RADIO": "라디오"
+  "BROADCAST_TYPE_RADIO": "라디오",
+  "ROOM_TAG_TALK": "소통",
+  "ROOM_TAG_SONG": "노래",
+  "ROOM_TAG_DATE": "소개팅"
 }

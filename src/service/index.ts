@@ -50,13 +50,16 @@ export class ServiceManager {
    * Room
    */
 
-  async getRoomList() {
-    const response: ServiceResultRes = await api.get('room/list');
-    return response?.result;
+  async getRoomList({ tag = '' } = {}): Promise<Room[]> {
+    let query = '';
+    query += !!tag ? `?tag=${tag}` : '';
+    const response: ServiceResultRes = await api.get('room/list' + query);
+    const { roomList }: { roomList: Room[] } = response?.result;
+    return roomList;
   }
 
-  async createRoom({ title, type }) {
-    await this.sWs.sendMessage(`room/${METHOD_CREATE_ROOM}`, { title, type });
+  async createRoom({ title, type, tag }) {
+    await this.sWs.sendMessage(`room/${METHOD_CREATE_ROOM}`, { title, type, tag });
   }
 
   async joinRoom({ roomId }: { roomId: number }) {
@@ -151,7 +154,6 @@ export class ServiceManager {
       const result: ServiceResultRes = await api.patch('account/nickname', { nickname, connectionId });
 
       const account = result?.result?.account;
-      console.log(account);
       this.store.dispatch('auth/setAccountInfo', { account });
     }
   }

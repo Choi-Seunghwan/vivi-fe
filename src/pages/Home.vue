@@ -5,15 +5,15 @@
       <h1 class="title">최신 라이브</h1>
       <div class="list-wrap">
         <h2 class="title">소통 💬</h2>
-        <RoomListContainer tag="chat" />
+        <RoomListContainer tag="CHAT" />
       </div>
       <div class="list-wrap">
         <h2 class="title">노래 🎤🎶</h2>
-        <RoomListContainer tag="chat" />
+        <RoomListContainer tag="SONG" />
       </div>
       <div class="list-wrap">
         <h2 class="title">소개팅 🥰</h2>
-        <RoomListContainer tag="chat" />
+        <RoomListContainer tag="DATE" />
       </div>
     </div>
   </div>
@@ -28,9 +28,17 @@ export default {
     Banner,
     RoomListContainer
   },
-  computed: {},
-  methods: {},
-  mounted() {}
+  data: () => ({
+    roomList: []
+  }),
+  methods: {
+    async getRoomList() {
+      this.roomList = await this._service.getRoomList();
+    }
+  },
+  mounted() {
+    this.getRoomList();
+  }
 };
 </script>
 <style lang="scss" scoped>

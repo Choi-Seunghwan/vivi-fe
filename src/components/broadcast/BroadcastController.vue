@@ -7,6 +7,14 @@
         <h4 class="title-text">{{ parseStr('BROADCAST_TITLE') }}</h4>
         <input :placeholder="parseStr('BROADCAST_TITLE_PLACEHOLDER')" v-model="title" class="title-input" />
       </div>
+      <div class="tag">
+        <label>{{ parseStr('ROOM_TAG_TALK') }}</label>
+        <input type="radio" name="tag" value="TALK" v-model="tag" />
+        <label>{{ parseStr('ROOM_TAG_SONG') }}</label>
+        <input type="radio" name="tag" value="SONG" v-model="tag" />
+        <label>{{ parseStr('ROOM_TAG_DATE') }}</label>
+        <input type="radio" name="tag" value="DATE" v-model="tag" />
+      </div>
     </div>
     <BasicButton @click="startBtnHandler" theme="white" class="start-btn">
       {{ parseStr('BROADCAST_START') }}
@@ -22,14 +30,15 @@ export default {
   components: { BasicButton },
   data() {
     return {
-      title: ''
+      title: '',
+      tag: ''
     };
   },
   methods: {
     parseStr,
     startBtnHandler() {
-      const { title } = this;
-      const roomInfo = { title };
+      const { title, tag } = this;
+      const roomInfo = { title, tag };
       this.$emit('createRoom', roomInfo);
     }
   },

@@ -2,8 +2,8 @@
   <div class="room-list-container">
     <div v-if="hasRoomList" class="room-list">
       <RoomCard
-        v-for="(roomItem, roomListIndex) in roomList"
-        :key="roomListIndex"
+        v-for="roomItem in roomList"
+        :key="roomItem.roomId"
         @click="roomCardHandler(roomItem)"
         :title="roomItem.title"
         :memberCount="roomItem.memberCount"
@@ -23,13 +23,16 @@ export default {
   components: {
     RoomCard
   },
+  props: {
+    tag: { type: String, default: '' }
+  },
   data: () => ({
     loading: true,
     roomList: []
   }),
   computed: {
     hasRoomList() {
-      return !!this.room?.length;
+      return !!this.roomList?.length;
     }
   },
   methods: {
@@ -38,8 +41,8 @@ export default {
       this.$router.push({ name: 'room', params: { roomId } });
     },
     async init() {
-      const result = await this._service.getRoomList();
-      this.roomList = result?.roomList;
+      const tag = this.tag || '';
+      this.roomList = await this._service.getRoomList({ tag });
       this.loading = false;
     }
   },

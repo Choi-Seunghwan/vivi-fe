@@ -50,7 +50,6 @@ export default {
     },
     async nicknameHandler(v) {
       const result = await this._service.changeNickname(v);
-      console.log('@@ nickname end');
     }
   }
 };
