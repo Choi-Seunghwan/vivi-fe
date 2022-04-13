@@ -34,7 +34,7 @@ class ServiceWebSocket {
   }
 
   connection() {
-    this.ws = io('localhost:5000');
+    this.ws = io('localhost:6060');
     this.ws.on('replyMessage', args => {
       this.replyMessage(args);
     });

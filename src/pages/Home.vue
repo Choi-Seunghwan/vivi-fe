@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-import Banner from '@/components/Banner.vue';
+import Banner from '@/components/common/Banner.vue';
 import RoomListContainer from '@/components/room/RoomListContainer.vue';
 
 export default {

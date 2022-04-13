@@ -19,7 +19,7 @@
 <script>
 import { parseStr } from '@/utils';
 import { mapActions, mapState, mapGetters } from 'vuex';
-import Avatar from '@/components/Avatar.vue';
+import Avatar from '@/components/common/Avatar.vue';
 
 export default {
   components: {

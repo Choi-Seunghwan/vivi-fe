@@ -11,7 +11,7 @@
 <script>
 import mediaManager from '@/modules/MediaManager';
 import { mapState, mapActions } from 'vuex';
-import RoomViewer from '@/components/RoomViewer.vue';
+import RoomViewer from '@/components/room/RoomViewer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 
 export default {

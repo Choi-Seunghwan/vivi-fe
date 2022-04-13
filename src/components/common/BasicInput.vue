@@ -1,7 +1,6 @@
 <template>
-  <div :class="{ focus: focus }" class="basic-input-wrap">
+  <div :class="{ focus, underline, 'confirm-type': useConfirm }" class="basic-input-wrap">
     <input
-      class="bg-transparent focus:text-[#fff]"
       ref="input"
       :value="_value"
       :maxlength="maxLength"
@@ -10,8 +9,8 @@
       @blur="focus = false"
       @keyup.enter="keyEnter"
     />
-    <button v-if="focus" class="ml-[12px]" @click="$emit('confirm', v)">
-      <img class="w-[14px]" src="/images/check-icon-white.svg" />
+    <button v-if="useConfirm && focus" class="" @click="$emit('confirm', v)">
+      <img src="/images/check-icon-white.svg" />
     </button>
   </div>
 </template>
@@ -22,7 +21,8 @@ export default {
   props: {
     modelValue: { type: String, default: '' },
     maxLength: { type: Number, default: null },
-    useConfirm: { type: Boolean, default: false }
+    useConfirm: { type: Boolean, default: false },
+    underline: { type: Boolean, default: false }
   },
 
   data: () => ({
@@ -60,8 +60,34 @@ export default {
   &.focus {
     border-bottom: 1px solid #fff;
   }
+
+  &.underline {
+    border-bottom: 1px solid #fff;
+  }
+
   > input {
-    width: calc(100% - 40px);
+    width: 100%;
+    color: #fff;
+    background-color: transparent;
+    border: unset;
+    padding-left: 4px;
+    padding-bottom: 4px;
+    font-size: 14px;
+    line-height: 20px;
+    &:focus {
+      color: #fff;
+    }
+  }
+  > button {
+    > img {
+      width: 14px;
+    }
+  }
+
+  &.confirm-type {
+    > input {
+      width: calc(100% - 40px);
+    }
   }
 }
 </style>

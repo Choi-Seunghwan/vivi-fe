@@ -3,7 +3,7 @@
     <ul class="list">
       <li v-for="(m, i) in members" :key="i" class="item flex justify-center items-center">
         <Avatar />
-        <p class="nickname ml-2">
+        <p class="nickname">
           {{ m.nickname }}
         </p>
       </li>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Avatar from '@/components/Avatar.vue';
+import Avatar from '@/components/common/Avatar.vue';
 
 export default {
   name: 'MemberList',
@@ -26,4 +26,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss"></style>

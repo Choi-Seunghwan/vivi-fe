@@ -1,6 +1,7 @@
 <template>
   <Layout class="broadcast">
-    <section class="room-viewer-wrap">
+    <section class="room-viewer-wrap show-tab">
+      <div v-show="showTab" class="blur"></div>
       <RoomViewer
         ref="roomViewer"
         :room="room"
@@ -9,8 +10,8 @@
         :localStream="localStream"
       ></RoomViewer>
     </section>
-    <section class="tab-wrap">
-      <div class="tab">
+    <section v-show="showTab" class="tab-wrap">
+      <!-- <div class="tab">
         <button
           @click="tabItemHandler('member')"
           :disabled="!isOnAir"
@@ -22,7 +23,7 @@
         <button @click="tabItemHandler('controller')" :class="{ active: tab === 'controller' }" class="tab-item">
           <img src="images/cogwheel-icon.png" />
         </button>
-      </div>
+      </div> -->
       <div class="tab-content">
         <MemberList v-show="tab === 'member'" :members="members" />
         <BroadcastController v-show="tab === 'controller'" @createRoom="createRoomHandler" />
@@ -35,7 +36,7 @@
 import { mapActions, mapState, mapGetters } from 'vuex';
 import mediaManager from '@/modules/MediaManager';
 import BroadcastController from '@/components/broadcast/BroadcastController.vue';
-import RoomViewer from '@/components/RoomViewer.vue';
+import RoomViewer from '@/components/room/RoomViewer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import Layout from '@/components/layout/Layout.vue';
 import MemberList from '@/components/room/MemberList.vue';
@@ -55,6 +56,8 @@ export default {
      * tab: 'controller' 방송 설정, member: 참여 맴버
      */
     tab: 'controller',
+    tabList: ['controller', 'member'],
+    showTab: true,
     isOnAir: false
   }),
   computed: {
@@ -88,20 +91,29 @@ export default {
 
 <style lang="scss" scoped>
 .broadcast {
+  position: relative;
   column-gap: 12px;
-  padding-top: 40px;
+  padding: 0;
 
   .room-viewer-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
     flex: 1;
-    border-radius: 6px;
+
+    &.show-tab {
+    }
   }
 
   .tab-wrap {
-    width: 400px;
+    position: absolute;
+    width: 100%;
     height: 100%;
-    background: #000;
     border-radius: 6px;
     overflow: hidden;
+    top: 0;
+    left: 0;
+    z-index: 2;
 
     .tab {
       display: flex;

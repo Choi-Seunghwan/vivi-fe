@@ -31,7 +31,7 @@ import { mapActions, mapState, mapGetters } from 'vuex';
 import eventManager from '@/modules/EventManager';
 import { EVENT_ON_TRACK } from '@/constant';
 import VideoPlayer from '@/components/video/VideoPlayer.vue';
-import Avatar from '@/components/Avatar.vue';
+import Avatar from '@/components/common/Avatar.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 
 export default {
@@ -75,7 +75,6 @@ export default {
   width: 100%;
   height: 100%;
   border-radius: 12px;
-  overflow: hidden;
 
   .viewer-wrap {
     display: flex;

@@ -6,9 +6,9 @@
       </h2>
     </div>
     <div class="right-wrap">
-      <a class="cursor-pointer mr-[30px]" @click="broadcastHandler">{{ parseStr('BROADCASTING') }}</a>
+      <a class="broadcast" @click="broadcastHandler">{{ parseStr('BROADCASTING') }}</a>
       <div class="my">
-        <BasicInput class="nickname w-[140px]" :maxLength="10" v-model="_nickname" useConfirm />
+        <BasicInput class="nickname" :maxLength="10" v-model="_nickname" useConfirm />
       </div>
     </div>
   </nav>
@@ -16,9 +16,9 @@
 <script>
 import { parseStr } from '@/utils';
 import { mapGetters } from 'vuex';
-import Avatar from '@/components/Avatar.vue';
-import BasicButton from '@/components/BasicButton.vue';
-import BasicInput from '@/components/BasicInput.vue';
+import Avatar from '@/components/common/Avatar.vue';
+import BasicButton from '@/components/common/BasicButton.vue';
+import BasicInput from '@/components/common/BasicInput.vue';
 
 export default {
   name: 'TopNav',
@@ -85,8 +85,16 @@ export default {
 
   .right-wrap {
     display: flex;
+    align-items: center;
 
+    .broadcast {
+      text-decoration: underline;
+      cursor: pointer;
+    }
     .my {
+      .nickname {
+        width: 140px;
+      }
     }
   }
 }

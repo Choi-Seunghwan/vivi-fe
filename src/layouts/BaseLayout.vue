@@ -37,7 +37,7 @@ export default {
 
   .content {
     width: 100%;
-    // padding: 20px 20px 0 20px;
+    height: calc(100% - 56px);
   }
 }
 </style>

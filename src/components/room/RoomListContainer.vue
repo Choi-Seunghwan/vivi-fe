@@ -41,7 +41,7 @@ export default {
       this.$router.push({ name: 'room', params: { roomId } });
     },
     async init() {
-      const tag = this.tag || '';
+      const tag = this.tag;
       this.roomList = await this._service.getRoomList({ tag });
       this.loading = false;
     }

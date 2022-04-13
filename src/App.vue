@@ -45,5 +45,6 @@ export default {
 .main-section {
   max-width: $breakpoint-tablet;
   background: #111;
+  overflow-y: auto;
 }
 </style>
