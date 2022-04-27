@@ -1,5 +1,11 @@
 <template>
-  <button :class="[theme, checked ? 'checked' : '']" class="basic-button"><slot></slot></button>
+  <button
+    :class="[theme, checked ? 'checked' : '', disabled ? 'disabled' : '']"
+    class="basic-button"
+    :disabled="disabled"
+  >
+    <slot></slot>
+  </button>
 </template>
 
 <script>
@@ -11,6 +17,10 @@ export default {
       type: String
     },
     checked: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
       type: Boolean,
       default: false
     }
@@ -53,6 +63,13 @@ export default {
       &hover {
         background: #fff;
       }
+    }
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    &:hover {
+      background: unset;
     }
   }
 }

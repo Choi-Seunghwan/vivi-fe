@@ -10,7 +10,6 @@ class EventManager {
   }
 
   async callEvent(event, ...args) {
-    console.log('## event', event, args);
     const e = this.eventMap[event];
     if (!e && typeof e !== 'function') return;
     await e(...args);

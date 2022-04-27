@@ -13,6 +13,7 @@ import mediaManager from '@/modules/MediaManager';
 import { mapState, mapActions } from 'vuex';
 import RoomViewer from '@/components/room/RoomViewer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
+import { toast, parseStr } from '@/utils';
 
 export default {
   components: {
@@ -20,6 +21,12 @@ export default {
     ChatContainer
   },
   watch: {
+    room(v) {
+      if (!v) {
+        toast.showToast(parseStr('TOAST_HOST_OUT'));
+        this.$router.push({ name: 'Home' });
+      }
+    },
     roomConnectionStatus(v, oldV) {
       if (v === 'COMPLETE') {
         this._service.sendSessionDescOfferToRoomAllMembers();
@@ -37,7 +44,7 @@ export default {
     await mediaManager.initLocalStream();
     this._service.joinRoom({ roomId });
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this._service.leaveRoom();
   }
 };

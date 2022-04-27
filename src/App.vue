@@ -5,6 +5,7 @@
       <router-view />
     </BaseLayout>
     <section sub-section></section>
+    <Toast ref="toast" />
   </div>
 </template>
 
@@ -12,12 +13,20 @@
 import _remove from 'lodash/remove';
 import BaseLayout from '@/layouts/BaseLayout.vue';
 import AdSection from './components/layout/AdvSection.vue';
+import Toast from '@/components/common/Toast.vue';
+import { toast } from '@/utils/index.ts';
 
 export default {
   name: 'App',
-  components: { BaseLayout, AdSection },
+  components: { BaseLayout, AdSection, Toast },
   beforeMount() {
     this._service.setApp(this);
+  },
+  mounted() {
+    this.$nextTick(() => {
+      const toastNode = this.$refs.toast;
+      toast.setToastNode(toastNode);
+    });
   }
 };
 </script>

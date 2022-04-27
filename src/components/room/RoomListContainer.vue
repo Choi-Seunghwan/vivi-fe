@@ -38,7 +38,7 @@ export default {
   methods: {
     roomCardHandler(roomItem) {
       const { roomId } = roomItem;
-      this.$router.push({ name: 'room', params: { roomId } });
+      this.$router.push({ name: 'Room', params: { roomId } });
     },
     async init() {
       const tag = this.tag;
@@ -55,16 +55,11 @@ export default {
 .room-list-container {
   display: flex;
   min-height: 100px;
-  justify-content: center;
   align-items: center;
 
-  .roomList {
+  .room-list {
     display: flex;
-    flex-wrap: wrap;
-
-    &__item {
-      width: 400px;
-    }
+    gap: 12px;
   }
 
   .no-room {

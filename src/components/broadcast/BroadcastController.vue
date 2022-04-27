@@ -27,7 +27,7 @@
         />
       </div>
     </div>
-    <BasicButton @click="startBtnHandler" class="start-btn">
+    <BasicButton @click="startBtnHandler" :disabled="startBtnDisabled" class="start-btn">
       {{ parseStr('BROADCAST_START') }}
     </BasicButton>
   </div>
@@ -63,6 +63,9 @@ export default {
     },
     selectedTag() {
       return this.tag;
+    },
+    startBtnDisabled() {
+      return !this.tag || !this.title;
     }
   },
   async mounted() {

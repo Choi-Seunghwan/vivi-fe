@@ -17,7 +17,6 @@ import {
 } from '@/vivi-utils/constants';
 import { EVENT_ICE_CANDIDATE } from '@/constant';
 import eventManager from '@/modules/EventManager';
-import logger from '@/vivi-utils/logger';
 import mediaManager from '@/modules/MediaManager';
 
 export const servicePlugin = {

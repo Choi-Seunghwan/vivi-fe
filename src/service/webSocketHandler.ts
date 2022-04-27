@@ -60,20 +60,25 @@ const webSocketHandler = async ({ app, method, args }) => {
         }
 
         case METHOD_LEAVE_ROOM: {
-          // _store.dispatch('room/leaveRoom');
-          // _store.dispatch('room/setRoomConnectionStatus', { status: 'NONE' }, { root: true });
+          _store.dispatch('room/leaveRoom');
+          break;
+        }
+        case HOST_LEAVE_ROOM: {
+          const { room, member, isHostLeave }: { room: Room; member: Member; isHostLeave: Boolean } = result;
+          const currentRoom: Room = _store.state?.room?.room;
+
+          if (room?.roomId === currentRoom?.roomId && isHostLeave) {
+            _store.dispatch('room/leaveRoom');
+          }
+
           break;
         }
 
-        case HOST_LEAVE_ROOM:
         case MEMBER_LEAVE_ROOM: {
-          const { room, member, isHostLeave }: { room: Room; member: Member } = result;
+          const { room, member, isHostLeave }: { room: Room; member: Member; isHostLeave: Boolean } = result;
           const currentRoom: Room = _store.state?.room?.room;
-          console.log('@@@', isHostLeave);
-          if (room.roomId === currentRoom.roomId) {
-            /**
-             * @todo 나온 것만 leave 하도록 수정
-             */
+
+          if (room?.roomId === currentRoom.roomId) {
             const memberSocketId = member?.socketId;
             const memberIndex = currentRoom.members.findIndex(m => m.socketId === memberSocketId);
             currentRoom.members.splice(memberIndex, 1);

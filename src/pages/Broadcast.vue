@@ -1,7 +1,7 @@
 <template>
   <Layout class="broadcast">
-    <section class="room-viewer-wrap show-tab">
-      <div v-show="showTab" class="blur"></div>
+    <section class="room-viewer-wrap">
+      <div v-show="showBlur" class="blur"></div>
       <RoomViewer
         ref="roomViewer"
         :room="room"
@@ -25,7 +25,7 @@
         </button>
       </div> -->
       <div class="tab-content">
-        <MemberList v-show="tab === 'member'" :members="members" />
+        <!-- <MemberList v-show="tab === 'member'" :members="members" /> -->
         <BroadcastController v-show="tab === 'controller'" @createRoom="createRoomHandler" />
       </div>
     </section>
@@ -67,17 +67,22 @@ export default {
       if (this.room?.members?.length) {
         return this.room?.members.filter(m => m?.nickname !== this.accountInfo?.nickname);
       } else return [];
+    },
+    showBlur() {
+      return this.showTab;
     }
   },
   methods: {
     async createRoom(roomInfo) {
       await this._service.createRoom(roomInfo);
+      this.showTab = false;
     },
     async createRoomHandler(roomInfo) {
       await this.createRoom(roomInfo);
       this.isOnAir = true;
-      this.tab = 'member';
+      // this.tab = 'member';
     },
+    async closeRoom(roomInfo) {},
     tabItemHandler(itemKey) {
       this.tab = itemKey;
     }
@@ -85,6 +90,9 @@ export default {
   async mounted() {
     await mediaManager.initLocalStream();
     this.localStream = mediaManager.getLocalStream();
+  },
+  beforeUnmount() {
+    this._service.leaveRoom();
   }
 };
 </script>
@@ -100,9 +108,6 @@ export default {
     width: 100%;
     height: 100%;
     flex: 1;
-
-    &.show-tab {
-    }
   }
 
   .tab-wrap {

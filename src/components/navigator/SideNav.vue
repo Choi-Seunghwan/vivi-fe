@@ -33,8 +33,8 @@ export default {
     },
     navItemList() {
       return [
-        { name: 'home', strKey: 'HOME' },
-        { name: 'broadcast', strKey: 'BROADCASTING' }
+        { name: 'Home', strKey: 'HOME' },
+        { name: 'Broadcast', strKey: 'BROADCASTING' }
       ];
     }
   },

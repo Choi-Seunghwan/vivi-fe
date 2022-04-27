@@ -46,7 +46,7 @@ export default {
       this.$router.push('/');
     },
     broadcastHandler() {
-      this.$router.push({ name: 'broadcast' });
+      this.$router.push({ name: 'Broadcast' });
     },
     async nicknameHandler(v) {
       const result = await this._service.changeNickname(v);

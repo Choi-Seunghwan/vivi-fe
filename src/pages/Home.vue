@@ -5,7 +5,7 @@
       <h1 class="title">최신 라이브</h1>
       <div class="list-wrap">
         <h2 class="title">소통 💬</h2>
-        <RoomListContainer tag="CHAT" />
+        <RoomListContainer tag="TALK" />
       </div>
       <div class="list-wrap">
         <h2 class="title">노래 🎤🎶</h2>
@@ -59,6 +59,7 @@ export default {
     > .title {
       font-size: 24px;
       font-weight: bold;
+      margin-bottom: 8px;
     }
   }
 }

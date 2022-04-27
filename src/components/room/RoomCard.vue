@@ -1,7 +1,7 @@
 <template>
   <div @click="$emit('click')" class="room-card">
-    <div class="thumbnail"></div>
-    <span>{{ title }}</span>
+    <img class="thumbnail" />
+    <span class="title">{{ title }}</span>
   </div>
 </template>
 
@@ -19,6 +19,7 @@ export default {
 <style lang="scss" scoped>
 .room-card {
   width: 100%;
+  min-width: 300px;
   height: 260px;
   transition: box-shadow 150ms linear;
   border: 1px solid rgba(0, 0, 0, 0.12);
@@ -33,6 +34,11 @@ export default {
     width: 100%;
     height: 210px;
     background-color: silver;
+    border-radius: 8px;
+  }
+  .title {
+    color: #fff;
+    font-size: 14px;
   }
 }
 </style>

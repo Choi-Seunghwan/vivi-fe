@@ -26,8 +26,7 @@ export default {
   },
 
   data: () => ({
-    focus: false,
-    v: ''
+    focus: false
   }),
   computed: {
     _value: {
@@ -35,21 +34,19 @@ export default {
         return this.modelValue;
       },
       set(v) {
-        this.v = v;
-        this.$emit('update:modelValue', this.v);
+        this.$emit('update:modelValue', v);
       }
     }
   },
   methods: {
     keyEnter(e) {
       this.v = e.target.value;
-      this.$emit('update:modelValue', this.v);
-      this.$emit('confirm', this.v);
+      this.$emit('confirm', this.value);
       this.$refs.input?.blur();
       this.focus = false;
     },
     inputHandler(e) {
-      this.v = e.target.value;
+      this._value = e.target.value;
     }
   }
 };

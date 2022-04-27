@@ -21,9 +21,6 @@
         <VideoPlayer :media="getRemoteStream(member)"></VideoPlayer>
       </div>
     </div>
-    <!-- <div class="room-chat">
-      <ChatContainer v-if="hasRoom" />
-    </div> -->
   </div>
 </template>
 <script>
@@ -32,10 +29,9 @@ import eventManager from '@/modules/EventManager';
 import { EVENT_ON_TRACK } from '@/constant';
 import VideoPlayer from '@/components/video/VideoPlayer.vue';
 import Avatar from '@/components/common/Avatar.vue';
-import ChatContainer from '@/components/chat/ChatContainer.vue';
 
 export default {
-  components: { VideoPlayer, Avatar, ChatContainer },
+  components: { VideoPlayer, Avatar },
   props: {
     room: { default: () => ({}), type: Object },
     accountInfo: { default: () => ({}), type: Object },
@@ -65,8 +61,7 @@ export default {
   },
   mounted() {
     eventManager.setEvent(EVENT_ON_TRACK, this.remoteStreamHandler.bind(this));
-  },
-  beforeUnmount() {}
+  }
 };
 </script>
 
