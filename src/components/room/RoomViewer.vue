@@ -2,7 +2,7 @@
   <div class="room-viewer">
     <div class="room-info-wrap"></div>
     <div class="viewer-wrap">
-      <div v-show="hasLocalStream" class="member-item me">
+      <div v-show="hasLocalStream" class="member-item me" :class="{ 'max-member': isMaxMember }">
         <div class="member-info">
           <Avatar></Avatar>
           <p class="nickname">
@@ -29,6 +29,7 @@ import eventManager from '@/modules/EventManager';
 import { EVENT_ON_TRACK } from '@/constant';
 import VideoPlayer from '@/components/video/VideoPlayer.vue';
 import Avatar from '@/components/common/Avatar.vue';
+import { MAX_ROOM_MEMBER_COUNT } from '@/vivi-utils/constants';
 
 export default {
   components: { VideoPlayer, Avatar },
@@ -47,6 +48,9 @@ export default {
     },
     nickname() {
       return this.accountInfo?.nickname || '';
+    },
+    isMaxMember() {
+      return this.members?.length === MAX_ROOM_MEMBER_COUNT;
     }
   },
   methods: {
@@ -65,7 +69,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .room-viewer {
   width: 100%;
   height: 100%;
@@ -76,12 +80,25 @@ export default {
     width: 100%;
     height: 100%;
     flex-wrap: wrap;
-    background: #eee;
     gap: 8px;
 
     .member-item {
       position: relative;
       flex: 1;
+      flex-basis: 300px;
+
+      .video {
+        max-height: 300px;
+      }
+      &.me {
+        flex-basis: 100%;
+        .video {
+          max-height: unset;
+        }
+        &.max-member {
+          flex-basis: 300px;
+        }
+      }
 
       .member-info {
         display: flex;

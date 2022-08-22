@@ -1,11 +1,11 @@
-import axios from "axios";
-import type { ServiceResultRes } from "@/vivi-utils/types";
+import axios from 'axios';
+import type { ServiceResultRes } from '@/vivi-utils/types';
 
-class API {
-  _axios;
+export class API {
+  private _axios;
   constructor() {
     const _axios = axios.create({
-      baseURL: import.meta.env.VITE_API_ADDR + "/api",
+      baseURL: import.meta.env.VITE_API_ADDR + '/api'
     });
     _axios.interceptors.response.use(this.handleSuccess, this.handleError);
     this._axios = _axios;
@@ -15,48 +15,27 @@ class API {
     return response;
   }
 
-  handleError = (error) => {
-    switch (error.response.status) {
-      case 401:
-      case 404:
-      default:
-        break;
-    }
+  handleError = error => {
     return Promise.reject(error);
   };
 
   makeApiError(error) {
-    return { errorCode: "DEFAULT_ERROR", error };
+    return { errorCode: 'DEFAULT_ERROR', error };
   }
 
-  get(path): Promise<ServiceResultRes> {
-    return this._axios
-      .get(path)
-      .then((response) => response.data)
-      .catch((error) => this.makeApiError(error));
+  async get(path) {
+    const response = await this._axios.get(path).then(response => response.data);
+    return response;
   }
 
-  patch(path, payload) {
-    return this._axios
-      .request({
-        method: "PATCH",
-        url: path,
-        responseType: "json",
-        data: payload,
-      })
-      .then((response) => response.data)
-      .catch((error) => this.makeApiError(error));
+  async patch(path, payload) {
+    const response = await this._axios.patch(path, payload);
+    return response;
   }
 
-  post(path, payload) {
-    return this._axios
-      .request({
-        method: "POST",
-        url: path,
-        responseType: "json",
-        data: payload,
-      })
-      .then((response) => response.data);
+  async post(path, payload) {
+    const response = await this._axios.post(path, payload);
+    return response;
   }
 }
 

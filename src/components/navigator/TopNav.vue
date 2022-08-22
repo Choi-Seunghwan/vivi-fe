@@ -8,7 +8,7 @@
     <div class="right-wrap">
       <a class="broadcast" @click="broadcastHandler">{{ parseStr('BROADCASTING') }}</a>
       <div class="my">
-        <BasicInput class="nickname" :maxLength="10" v-model="_nickname" useConfirm />
+        <BasicInput class="nickname" :maxLength="10" v-model="_nickname" useConfirm @focus="nicknameFocusHandler" />
       </div>
     </div>
   </nav>
@@ -45,6 +45,7 @@ export default {
     titleClickHandler() {
       this.$router.push('/');
     },
+    nicknameFocusHandler() {},
     broadcastHandler() {
       this.$router.push({ name: 'Broadcast' });
     },
@@ -88,8 +89,8 @@ export default {
     align-items: center;
 
     .broadcast {
-      text-decoration: underline;
       cursor: pointer;
+      margin-right: 12px;
     }
     .my {
       .nickname {

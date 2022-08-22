@@ -10,10 +10,6 @@
         class="room-list__item"
       />
     </div>
-    <div class="no-room" v-else>
-      <p>지금은 이 주제의 라이브 방이 없습니다</p>
-      <p>내가 먼저 라이브 방을 만들어 볼까요?</p>
-    </div>
   </div>
 </template>
 <script>
@@ -60,13 +56,6 @@ export default {
   .room-list {
     display: flex;
     gap: 12px;
-  }
-
-  .no-room {
-    text-align: center;
-    p {
-      font-size: 18px;
-    }
   }
 }
 </style>
