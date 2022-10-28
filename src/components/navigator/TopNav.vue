@@ -7,6 +7,7 @@
     </div>
     <div class="right-wrap">
       <a class="broadcast" @click="broadcastHandler">{{ parseStr('BROADCASTING') }}</a>
+      <BasicButton @click="loginBtnHandler">로그인</BasicButton>
       <div class="my">
         <BasicInput class="nickname" :maxLength="10" v-model="_nickname" useConfirm @focus="nicknameFocusHandler" />
       </div>
@@ -48,6 +49,9 @@ export default {
     nicknameFocusHandler() {},
     broadcastHandler() {
       this.$router.push({ name: 'Broadcast' });
+    },
+    loginBtnHandler() {
+      this.$emit('login');
     },
     async nicknameHandler(v) {
       const result = await this._service.changeNickname(v);

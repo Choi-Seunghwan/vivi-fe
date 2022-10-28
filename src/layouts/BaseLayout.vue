@@ -1,7 +1,7 @@
 <template>
   <section :class="theme" class="base-layout">
     <Dimmed />
-    <TopNav />
+    <NavContainer />
     <SideNav />
     <div class="content">
       <slot></slot>
@@ -9,14 +9,14 @@
   </section>
 </template>
 <script>
-import TopNav from '@/components/navigator/TopNav.vue';
+import NavContainer from '@/components/navigator/NavContainer.vue';
 import SideNav from '@/components/navigator/SideNav.vue';
 import Dimmed from '../components/layout/Dimmed.vue';
 
 export default {
   name: 'BaseLayout',
   components: {
-    TopNav,
+    NavContainer,
     SideNav,
     Dimmed
   },
