@@ -31,7 +31,8 @@ export class ServiceManager {
   store;
 
   constructor() {
-    this.sWs = new ServiceWebSocket();
+    const socketHost = import.meta.env.VITE_SOCKET_ADDR;
+    this.sWs = new ServiceWebSocket(socketHost);
     eventManager.setEvent(EVENT_ICE_CANDIDATE, this.sendICECandidate.bind(this));
   }
 

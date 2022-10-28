@@ -1,40 +1,28 @@
 // import store from '@/store';
 import io, { Socket } from 'socket.io-client';
+import type { App as VueApp } from 'vue';
 import webSocketHandler from './webSocketHandler';
 
 class ServiceWebSocket {
   ws: Socket | undefined;
-  app;
-  connectionStatus;
-  connectionStatuses;
+  app: VueApp | undefined;
   handlers;
 
-  constructor() {
-    this.connectionStatus = 1;
-    this.connectionStatuses = {
-      IDLE: 1,
-      CONNECTING: 2,
-      CONNECTED: 3,
-      DISCONNECTED: 4,
-      WAITING: 5
-    };
-    this.wsInit();
+  constructor(host: string) {
+    this.connection(host);
   }
 
-  setApp(app) {
+  setApp(app: VueApp) {
     this.app = app;
   }
 
-  wsInit() {
-    this.connection();
-  }
-
   getSocketId() {
-    return this.ws?.id;
+    return this.ws?.id || '';
   }
 
-  connection() {
-    this.ws = io('localhost:3080');
+  connection(host: string) {
+    this.ws = io(host);
+    console.log('@@@ ws', this.ws);
     this.ws.on('replyMessage', args => {
       this.replyMessage(args);
     });
