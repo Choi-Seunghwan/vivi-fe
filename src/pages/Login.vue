@@ -29,8 +29,7 @@ export default {
     const authService = services.authService;
 
     const login = async () => {
-      const result = await authService.signIn({ email: email.value, password: password.value });
-      console.log('@@', result);
+      await authService.signIn({ email: email.value, password: password.value });
     };
     const loginBtnHandler = () => {
       login();

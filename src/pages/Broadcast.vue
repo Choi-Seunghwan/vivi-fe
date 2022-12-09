@@ -6,7 +6,7 @@
         ref="roomViewer"
         :room="room"
         :members="members"
-        :accountInfo="accountInfo"
+        :userInfo="userInfo"
         :localStream="localStream"
       ></RoomViewer>
     </section>
@@ -49,10 +49,10 @@ export default {
   }),
   computed: {
     ...mapState('room', ['room']),
-    ...mapGetters('auth', ['accountInfo']),
+    ...mapGetters('auth', ['userInfo']),
     members() {
       if (this.room?.members?.length) {
-        return this.room?.members.filter(m => m?.nickname !== this.accountInfo?.nickname);
+        return this.room?.members.filter(m => m?.nickname !== this.userInfo?.nickname);
       } else return [];
     },
     showBlur() {

@@ -15,7 +15,6 @@ export class API {
   }
 
   handleError = error => {
-    console.log('@@@ err');
     return Promise.reject(error);
   };
 
@@ -31,7 +30,6 @@ export class API {
 
   async post(path, payload) {
     const response = await this._axios.post(path, payload);
-    console.log('@@ res', response)
     const data = response.data;
     return data;
   }

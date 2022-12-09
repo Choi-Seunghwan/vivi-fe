@@ -8,15 +8,15 @@ const mutations = {
 
 const getters = {
   isLogin(state) {
-    return state.user ? true : false;
+    return !!state.user;
   },
-  userInfo(state) {
+  userInfo(state): User {
     return state.user;
   }
 };
 
 const actions = {
-  setUser({ commit }, { user }) {
+  setUser({ commit }, { user }: { user: User }) {
     commit('setUser', user);
   }
 };

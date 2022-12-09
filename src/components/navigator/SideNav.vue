@@ -27,9 +27,9 @@ export default {
   },
   computed: {
     ...mapState('context', ['showSideNav']),
-    ...mapGetters('auth', ['accountInfo']),
+    ...mapGetters('auth', ['userInfo']),
     nickname() {
-      return this.accountInfo?.nickname || '';
+      return this.userInfo?.nickname || '';
     },
     navItemList() {
       return [

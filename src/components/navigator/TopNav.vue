@@ -27,7 +27,7 @@ export default {
   name: 'TopNav',
   components: { Avatar, BasicButton, BasicInput },
   computed: {
-    ...mapGetters('auth', ['accountInfo']),
+    ...mapGetters('auth', ['userInfo']),
     _nickname: {
       set(v) {
         this.nicknameHandler(v);
@@ -36,11 +36,11 @@ export default {
         return this.nickname;
       }
     },
-    _accountInfo() {
-      return this.accountInfo || {};
+    _userInfo() {
+      return this.userInfo || {};
     },
     nickname() {
-      return this._accountInfo?.nickname || '';
+      return this._userInfo?.nickname || '';
     }
   },
   methods: {

@@ -145,12 +145,12 @@ export default class ServiceManager {
     const isLogin = this.store.getters['auth/isLogin'];
 
     if (!isLogin) {
-      const accountInfo: Account = this.store.getters['auth/accountInfo'];
-      const connectionId = accountInfo?.connectionId;
+      const userInfo: Account = this.store.getters['auth/userInfo'];
+      const connectionId = userInfo?.connectionId;
       const result: ServiceResultRes = await api.patch('account/nickname', { nickname, connectionId });
 
       const account = result?.result?.account;
-      this.store.dispatch('auth/setAccountInfo', { account });
+      this.store.dispatch('auth/setuserInfo', { account });
     }
   }
 }

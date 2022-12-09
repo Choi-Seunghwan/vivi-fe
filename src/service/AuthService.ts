@@ -10,11 +10,9 @@ export default class AuthService {
     this.app = app;
   }
 
-  async signIn({ email, password }: { email: string; password: string }) {
-    const result = await api.post(`${this.AUTH_PATH}/sign-in`, { email, password });
-    console.log('@@', result);
-    store.dispatch('auth/setUser');
-
-    return result;
+  async signIn({ email, password }: { email: string; password: string }): Promise<User> {
+    const user: User = await api.post(`${this.AUTH_PATH}/sign-in`, { email, password });
+    store.dispatch('auth/setUser', { user });
+    return user;
   }
 }

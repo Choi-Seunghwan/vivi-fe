@@ -28,7 +28,7 @@ const webSocketHandler = async ({ app, method, args }) => {
       switch (splitedMethod[1]) {
         case METHOD_MY_ACCOUNT_INFO: {
           const { account } = result;
-          _store.dispatch('auth/setAccountInfo', { account }, { root: true });
+          _store.dispatch('auth/setuserInfo', { account }, { root: true });
           break;
         }
       }

@@ -35,7 +35,7 @@ export default {
   components: { VideoPlayer, Avatar },
   props: {
     room: { default: () => ({}), type: Object },
-    accountInfo: { default: () => ({}), type: Object },
+    userInfo: { default: () => ({}), type: Object },
     members: { default: () => [], type: Array },
     localStream: null
   },
@@ -47,7 +47,7 @@ export default {
       return !!this.room?.roomId;
     },
     nickname() {
-      return this.accountInfo?.nickname || '';
+      return this.userInfo?.nickname || '';
     },
     isMaxMember() {
       return this.members?.length === MAX_ROOM_MEMBER_COUNT;
