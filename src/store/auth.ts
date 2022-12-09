@@ -1,25 +1,23 @@
-import type { Account } from '@/vivi-utils/types';
-
 const state = () => ({
-  info: null // Account
+  user: null
 });
 
 const mutations = {
-  setAccountInfo: (state, v) => (state.info = v)
+  setUser: (state, v) => (state.user = v)
 };
 
 const getters = {
   isLogin(state) {
-    return state.info?.accountId ? true : false;
+    return state.user ? true : false;
   },
-  accountInfo(state) {
-    return state.info;
+  userInfo(state) {
+    return state.user;
   }
 };
 
 const actions = {
-  setAccountInfo({ commit }, { account }: { account: Account }) {
-    commit('setAccountInfo', account);
+  setUser({ commit }, { user }) {
+    commit('setUser', user);
   }
 };
 

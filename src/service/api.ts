@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios, { type AxiosInstance } from 'axios';
 
 export class API {
-  private _axios;
+  private _axios: AxiosInstance;
   constructor() {
-    const _axios = axios.create({
+    const _axios: AxiosInstance = axios.create({
       baseURL: import.meta.env.VITE_API_HOST
     });
     _axios.interceptors.response.use(this.handleSuccess, this.handleError);
@@ -15,6 +15,7 @@ export class API {
   }
 
   handleError = error => {
+    console.log('@@@ err');
     return Promise.reject(error);
   };
 
@@ -30,7 +31,9 @@ export class API {
 
   async post(path, payload) {
     const response = await this._axios.post(path, payload);
-    return response;
+    console.log('@@ res', response)
+    const data = response.data;
+    return data;
   }
 }
 
