@@ -1,8 +1,3 @@
-/**
- * 웹소켓, API wrapping 하여 service.get, service.message 이런 형태로 쓰기 위함.
- */
-
-import ServiceWebSocket from '@/service/ServiceWebSocket';
 import { PeerConnection } from '@/modules/PeerConnection';
 import api from '@/service/api';
 import type { Member, Room, ServiceResultRes, Account } from '@/vivi-utils/types';
@@ -17,33 +12,34 @@ import {
 } from '@/vivi-utils/constants';
 import { EVENT_ICE_CANDIDATE } from '@/constant';
 import eventManager from '@/modules/EventManager';
+import ServiceWebSocket from '@/service/ServiceWebSocket';
 import mediaManager from '@/modules/MediaManager';
+import AuthService from './AuthService';
+import type { Store } from 'vuex';
+import type { App as VueApp } from 'vue';
 
+/*
 export const servicePlugin = {
   install(Vue) {
     Vue.config.globalProperties._service = new ServiceManager();
   }
 };
+*/
 
-export class ServiceManager {
-  app;
+export default class ServiceManager {
+  app: VueApp;
+  store: Store<any>;
   sWs: ServiceWebSocket;
-  store;
+  authService: AuthService;
 
-  constructor() {
-    const socketHost = import.meta.env.VITE_SOCKET_ADDR;
-    this.sWs = new ServiceWebSocket(socketHost);
-    eventManager.setEvent(EVENT_ICE_CANDIDATE, this.sendICECandidate.bind(this));
-  }
-
-  setApp(app) {
+  constructor(app: VueApp, store: Store<any>) {
     this.app = app;
-    this.sWs.setApp(app);
-    this.store = app.$store;
-  }
+    this.store = store;
+    // eventManager.setEvent(EVENT_ICE_CANDIDATE, this.sendICECandidate.bind(this));
 
-  getSocketId() {
-    return this.sWs.getSocketId();
+    /** Init Services... */
+    this.sWs = new ServiceWebSocket(app);
+    this.authService = new AuthService(app);
   }
 
   /**
@@ -63,19 +59,19 @@ export class ServiceManager {
   }
 
   async joinRoom({ roomId }: { roomId: number }) {
-    this.app.$store.dispatch('room/setRoomConnectionStatus', {
+    this.store.dispatch('room/setRoomConnectionStatus', {
       status: 'CONNECTING'
     });
     await this.sWs.sendMessage(`room/${METHOD_JOIN_ROOM}`, { roomId });
   }
 
   async leaveRoom() {
-    const room: Room = this.app.$store?.state?.room?.room;
+    const room: Room = this.store?.state?.room?.room;
     if (!room) return;
     await this.sWs.sendMessage(`room/${METHOD_LEAVE_ROOM}`, {
       roomId: room.roomId
     });
-    this.app.$store.dispatch('room/leaveRoom');
+    this.store.dispatch('room/leaveRoom');
   }
 
   /**
@@ -93,9 +89,9 @@ export class ServiceManager {
    * session description
    */
   async sendSessionDescOfferToRoomAllMembers() {
-    const room: Room = this.app.$store?.state?.room?.room;
+    const room: Room = this.store?.state?.room?.room;
     const members: Member[] = room.members;
-    const socketId = this.getSocketId();
+    const socketId = this.sWs.getSocketId();
 
     for (let i = 0; i < members.length; i++) {
       // 본인이 아니라면
@@ -104,7 +100,7 @@ export class ServiceManager {
   }
 
   async sendSessionDescOfferToRoomMember({ member }: { member: Member }) {
-    const room: Room = this.app.$store?.state?.room?.room;
+    const room: Room = this.store?.state?.room?.room;
     if (!room) return;
 
     const localStream = mediaManager.getLocalStream();
@@ -121,7 +117,7 @@ export class ServiceManager {
   }
 
   async sendSessionDescAnswer({ member, answer }: { member: Member; answer }) {
-    const room: Room = this.app.$store?.state?.room?.room;
+    const room: Room = this.store?.state?.room?.room;
     if (!room) return;
     await this.sWs.sendMessage(`room/${METHOD_SEND_SESSION_DESC_ANSWER}`, {
       roomId: room.roomId,
@@ -131,7 +127,7 @@ export class ServiceManager {
   }
 
   async sendICECandidate({ candidate, member }: { candidate; member: Member }) {
-    const room: Room = this.app.$store?.state?.room?.room;
+    const room: Room = this.store?.state?.room?.room;
     const _member = { ...member, peerConnection: null };
     if (!room) return;
     await this.sWs.sendMessage(`room/${METHOD_SEND_ICE_CANDIDATE}`, {

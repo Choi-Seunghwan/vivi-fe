@@ -8,10 +8,9 @@
 </template>
 <script lang="ts">
 import RoomListContainer from '@/components/room/RoomListContainer.vue';
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
-
-export default defineComponent( {
+export default defineComponent({
   name: 'Home',
   components: {
     RoomListContainer

@@ -5,31 +5,30 @@ import webSocketHandler from './webSocketHandler';
 
 class ServiceWebSocket {
   ws: Socket | undefined;
-  app: VueApp | undefined;
+  app: VueApp;
   handlers;
 
-  constructor(host: string) {
-    this.connection(host);
-  }
-
-  setApp(app: VueApp) {
+  constructor(app) {
     this.app = app;
+    const socketHost = import.meta.env.VITE_SOCKET_ADDR;
+    // const socketNamespace = import.meta.env.VITE_SOCKET_NAMESPACE_ROOM;
+    // const uri = `${socketHost}/${socketNamespace}`;
+    // this.connection(uri);
   }
 
   getSocketId() {
     return this.ws?.id || '';
   }
 
-  connection(host: string) {
-    this.ws = io(host);
-    console.log('@@@ ws', this.ws);
-    this.ws.on('replyMessage', args => {
-      this.replyMessage(args);
-    });
+  connection(uri: string) {
+    this.ws = io(uri);
+    // this.ws.on('replyMessage', args => {
+    //   this.replyMessage(args);
+    // });
 
-    this.ws.on('serverMessage', args => {
-      this.replyMessage(args);
-    });
+    // this.ws.on('serverMessage', args => {
+    //   this.replyMessage(args);
+    // });
   }
 
   setHandler(method, event) {

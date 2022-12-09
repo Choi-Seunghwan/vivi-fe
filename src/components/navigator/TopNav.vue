@@ -6,7 +6,9 @@
       </h2>
     </div>
     <div class="right-wrap">
-      <a class="broadcast" @click="broadcastHandler">{{ parseStr('BROADCASTING') }}</a>
+      <BasicButton
+        ><a class="broadcast" @click="broadcastHandler">{{ parseStr('BROADCASTING') }}</a></BasicButton
+      >
       <BasicButton @click="loginBtnHandler">로그인</BasicButton>
       <div class="my">
         <BasicInput class="nickname" :maxLength="10" v-model="_nickname" useConfirm @focus="nicknameFocusHandler" />

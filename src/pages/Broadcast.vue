@@ -11,19 +11,6 @@
       ></RoomViewer>
     </section>
     <section v-show="showTab" class="tab-wrap">
-      <!-- <div class="tab">
-        <button
-          @click="tabItemHandler('member')"
-          :disabled="!isOnAir"
-          :class="{ disabled: !isOnAir, active: tab === 'member' }"
-          class="tab-item"
-        >
-          <img src="images/user-icon.png" />
-        </button>
-        <button @click="tabItemHandler('controller')" :class="{ active: tab === 'controller' }" class="tab-item">
-          <img src="images/cogwheel-icon.png" />
-        </button>
-      </div> -->
       <div class="tab-content">
         <!-- <MemberList v-show="tab === 'member'" :members="members" /> -->
         <BroadcastController v-show="tab === 'controller'" @createRoom="createRoomHandler" />
@@ -80,7 +67,6 @@ export default {
     async createRoomHandler(roomInfo) {
       await this.createRoom(roomInfo);
       this.isOnAir = true;
-      // this.tab = 'member';
     },
     async closeRoom(roomInfo) {},
     tabItemHandler(itemKey) {
@@ -92,7 +78,7 @@ export default {
     this.localStream = mediaManager.getLocalStream();
   },
   beforeUnmount() {
-    this._service.leaveRoom();
+    // this._service.leaveRoom();
   }
 };
 </script>

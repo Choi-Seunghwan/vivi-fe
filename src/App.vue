@@ -9,18 +9,24 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { inject } from 'vue';
 import _remove from 'lodash/remove';
 import BaseLayout from '@/layouts/BaseLayout.vue';
 import AdSection from './components/layout/AdvSection.vue';
 import Toast from '@/components/common/Toast.vue';
-import { toast } from '@/utils/index.ts';
+import { toast } from '@/utils/index';
+import type ServiceManager from './service/ServiceManager';
 
 export default {
   name: 'App',
   components: { BaseLayout, AdSection, Toast },
-  beforeMount() {
-    this._service.setApp(this);
+  setup() {
+    const services: ServiceManager = inject('$service')!;
+
+    return {
+      services
+    };
   },
   mounted() {
     this.$nextTick(() => {

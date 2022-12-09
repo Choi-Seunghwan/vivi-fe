@@ -38,7 +38,7 @@ export default {
     },
     async init() {
       const tag = this.tag;
-      this.roomList = await this._service.getRoomList({ tag });
+      // this.roomList = await this._service.getRoomList({ tag });
       this.loading = false;
     }
   },

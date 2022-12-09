@@ -5,13 +5,15 @@
 <script lang="ts">
 import TopNav from '@/components/navigator/TopNav.vue';
 import { defineComponent } from 'vue';
+import pageRouteMixin from '@/mixin/pageRouteMixin';
 
 export default defineComponent({
   name: 'NavContainer',
+  mixins: [pageRouteMixin],
   components: { TopNav },
   methods: {
     loginHandler() {
-      // service
+      this.$_routeLoginPage();
     }
   }
 });

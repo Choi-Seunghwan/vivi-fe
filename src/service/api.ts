@@ -1,11 +1,10 @@
 import axios from 'axios';
-import type { ServiceResultRes } from '@/vivi-utils/types';
 
 export class API {
   private _axios;
   constructor() {
     const _axios = axios.create({
-      baseURL: import.meta.env.VITE_API_ADDR + '/api'
+      baseURL: import.meta.env.VITE_API_HOST
     });
     _axios.interceptors.response.use(this.handleSuccess, this.handleError);
     this._axios = _axios;
@@ -19,12 +18,8 @@ export class API {
     return Promise.reject(error);
   };
 
-  makeApiError(error) {
-    return { errorCode: 'DEFAULT_ERROR', error };
-  }
-
   async get(path) {
-    const response = await this._axios.get(path).then(response => response.data);
+    const response = await this._axios.get(path);
     return response;
   }
 

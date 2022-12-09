@@ -17,5 +17,7 @@
   "ROOM_TAG_TALK": "소통",
   "ROOM_TAG_SONG": "노래",
   "ROOM_TAG_DATE": "소개팅",
-  "TOAST_HOST_OUT": "호스트가 나갔습니다."
+  "TOAST_HOST_OUT": "호스트가 나갔습니다.",
+
+  "LOGIN_TITLE": "로그인"
 }
