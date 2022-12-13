@@ -1,7 +1,6 @@
 {
   "VIVI": "VIVI",
   "HOME": "홈",
-  "LOGIN": "로그인",
   "ADV_MAIN_TEXT": "소모임! 독서 토론! 스터디!\n이제 우린 VIVI 에서 만난다!",
   "BROADCAST": "방송",
   "BROADCASTING": "방송하기",
@@ -19,5 +18,6 @@
   "ROOM_TAG_DATE": "소개팅",
   "TOAST_HOST_OUT": "호스트가 나갔습니다.",
 
+  "LOGIN": "로그인",
   "LOGIN_TITLE": "로그인"
 }

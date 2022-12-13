@@ -1,33 +1,30 @@
-import _get from "lodash/get";
-import type { ChatMessage, Member, Room } from "@/vivi-utils/types";
+import _get from 'lodash/get';
 
 interface RoomState {
   room: Room | null;
   // members: Member[];
   localStream: any;
-  roomConnectionStatus: "NONE" | "CONNECTING" | "COMPLETE";
-  chatMessages: ChatMessage[];
+  roomConnectionStatus: 'NONE' | 'CONNECTING' | 'COMPLETE';
+  // chatMessages: ChatMessage[];
 }
 
 const state: RoomState = {
   room: null,
   // members: [],
   localStream: null,
-  roomConnectionStatus: "NONE",
-  chatMessages: [],
+  roomConnectionStatus: 'NONE',
+  // chatMessages: []
 };
 
 const mutations = {
   setRoom: (state: RoomState, room: Room) => (state.room = room),
-  setRoomConnectionStatus: (state: RoomState, status) =>
-    (state.roomConnectionStatus = status),
-  setChatMessages: (state: RoomState, messages) =>
-    (state.chatMessages = messages),
+  setRoomConnectionStatus: (state: RoomState, status) => (state.roomConnectionStatus = status),
+  // setChatMessages: (state: RoomState, messages) => (state.chatMessages = messages)
 };
 
 const getters = {
-  roomId: (state: RoomState) => state?.room?.roomId,
-  localStream: (state: RoomState) => state.localStream,
+  // roomId: (state: RoomState) => state?.room?.roomId,
+  localStream: (state: RoomState) => state.localStream
 };
 
 const actions = {
@@ -43,25 +40,22 @@ const actions = {
   }
   */
   setRoom({ commit }, { room }) {
-    commit("setRoom", room);
+    commit('setRoom', room);
   },
 
   setRoomConnectionStatus({ commit }, { status }) {
-    commit("setRoomConnectionStatus", status);
+    commit('setRoomConnectionStatus', status);
   },
 
   leaveRoom({ commit, dispatch }) {
-    commit("setChatMessages", []);
-    dispatch("setRoom", { room: null });
-    dispatch("setRoomConnectionStatus", { status: "NONE" });
+    commit('setChatMessages', []);
+    dispatch('setRoom', { room: null });
+    dispatch('setRoomConnectionStatus', { status: 'NONE' });
   },
 
-  pushChatMessage(
-    { state, commit },
-    { chatMessage }: { chatMessage: ChatMessage }
-  ) {
-    commit("setChatMessages", [chatMessage, ...state.chatMessages]);
-  },
+  // pushChatMessage({ state, commit }, { chatMessage }: { chatMessage: ChatMessage }) {
+  //   commit('setChatMessages', [chatMessage, ...state.chatMessages]);
+  // }
 };
 
 export default {
@@ -69,5 +63,5 @@ export default {
   mutations,
   getters,
   actions,
-  namespaced: true,
+  namespaced: true
 };

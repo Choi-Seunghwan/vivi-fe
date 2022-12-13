@@ -17,6 +17,7 @@ import mediaManager from '@/modules/MediaManager';
 import AuthService from './AuthService';
 import type { Store } from 'vuex';
 import type { App as VueApp } from 'vue';
+import RoomService from './RoomService';
 
 /*
 export const servicePlugin = {
@@ -31,6 +32,7 @@ export default class ServiceManager {
   store: Store<any>;
   sWs: ServiceWebSocket;
   authService: AuthService;
+  roomService: RoomService;
 
   constructor(app: VueApp, store: Store<any>) {
     this.app = app;
@@ -40,6 +42,7 @@ export default class ServiceManager {
     /** Init Services... */
     this.sWs = new ServiceWebSocket(app);
     this.authService = new AuthService(app);
+    this.roomService = new RoomService(app);
   }
 
   /**

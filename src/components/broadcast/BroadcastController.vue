@@ -33,43 +33,46 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { parseStr } from '@/utils';
 import BasicButton from '@/components/common/BasicButton.vue';
 import BasicInput from '@/components/common/BasicInput.vue';
+import { computed, ref } from '@vue/reactivity';
+import { inject } from '@vue/runtime-core';
+import type ServiceManager from '@/service/ServiceManager';
 
 export default {
   components: { BasicButton, BasicInput },
-  data() {
-    return {
-      title: '',
-      tag: ''
+  setup(props, context) {
+    const services: ServiceManager = inject('$service')!;
+    const roomService = services.roomService;
+
+    const title = ref('');
+    const tag = ref('');
+    const tagList = ['TALK', 'SONG', 'DATE'];
+
+    const tagHandler = (v: string) => {
+      tag.value = v;
     };
-  },
-  methods: {
-    parseStr,
-    startBtnHandler() {
-      const { title, tag } = this;
-      const roomInfo = { title, tag };
-      this.$emit('createRoom', roomInfo);
-    },
-    tagHandler(tag) {
-      this.tag = tag;
-    }
-  },
-  computed: {
-    tagList() {
-      return ['TALK', 'SONG', 'DATE'];
-    },
-    selectedTag() {
-      return this.tag;
-    },
-    startBtnDisabled() {
-      return !this.tag || !this.title;
-    }
-  },
-  async mounted() {
-    this.$emit('init');
+    const startBtnHandler = () => {};
+
+    const createRoom = async () => {
+      await roomService.createRoom({ title: title.value });
+    };
+
+    const selectedTag = computed(() => tag);
+    const startBtnDisabled = computed(() => !tag || !title);
+    return {
+      title,
+      tag,
+      tagList,
+      parseStr,
+      tagHandler,
+      startBtnHandler,
+      createRoom,
+      selectedTag,
+      startBtnDisabled
+    };
   }
 };
 </script>

@@ -6,58 +6,56 @@
       </h2>
     </div>
     <div class="right-wrap">
-      <BasicButton
-        ><a class="broadcast" @click="broadcastHandler">{{ parseStr('BROADCASTING') }}</a></BasicButton
-      >
-      <BasicButton @click="loginBtnHandler">로그인</BasicButton>
-      <div class="my">
-        <BasicInput class="nickname" :maxLength="10" v-model="_nickname" useConfirm @focus="nicknameFocusHandler" />
-      </div>
+      <BasicButton>
+        <a class="broadcast" @click="broadcastHandler">
+          {{ parseStr('BROADCASTING') }}
+        </a>
+      </BasicButton>
+      <BasicButton @click="loginBtnHandler">
+        {{ parseStr('LOGIN') }}
+      </BasicButton>
     </div>
   </nav>
 </template>
-<script>
+
+<script lang="ts">
 import { parseStr } from '@/utils';
 import { mapGetters } from 'vuex';
 import Avatar from '@/components/common/Avatar.vue';
 import BasicButton from '@/components/common/BasicButton.vue';
 import BasicInput from '@/components/common/BasicInput.vue';
+import type ServiceManager from '@/service/ServiceManager';
+import { inject } from '@vue/runtime-core';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'TopNav',
   components: { Avatar, BasicButton, BasicInput },
-  computed: {
-    ...mapGetters('auth', ['userInfo']),
-    _nickname: {
-      set(v) {
-        this.nicknameHandler(v);
-      },
-      get() {
-        return this.nickname;
-      }
-    },
-    _userInfo() {
-      return this.userInfo || {};
-    },
-    nickname() {
-      return this._userInfo?.nickname || '';
-    }
+  setup(props, context) {
+    const services: ServiceManager = inject('$service')!;
+    const router = useRouter();
+
+    const titleHandler = () => {
+      router.push('/');
+    };
+
+    const broadcastHandler = () => {
+      router.push({ name: 'Broadcast' });
+    };
+
+    const loginBtnHandler = () => {
+      context.emit('login');
+    };
+
+    return {
+      parseStr,
+      titleHandler,
+      broadcastHandler,
+      loginBtnHandler
+    };
   },
-  methods: {
-    parseStr,
-    titleClickHandler() {
-      this.$router.push('/');
-    },
-    nicknameFocusHandler() {},
-    broadcastHandler() {
-      this.$router.push({ name: 'Broadcast' });
-    },
-    loginBtnHandler() {
-      this.$emit('login');
-    },
-    async nicknameHandler(v) {
-      const result = await this._service.changeNickname(v);
-    }
+  computed: {
+    ...mapGetters('auth', ['userInfo'])
   }
 };
 </script>
@@ -93,10 +91,10 @@ export default {
   .right-wrap {
     display: flex;
     align-items: center;
+    gap: 8px;
 
     .broadcast {
       cursor: pointer;
-      margin-right: 12px;
     }
     .my {
       .nickname {
