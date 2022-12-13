@@ -1,7 +1,7 @@
 <template>
   <nav class="top-nav">
     <div class="left-wrap">
-      <h2 @click="titleClickHandler" class="logo">
+      <h2 @click="titleHandler" class="logo">
         {{ parseStr('VIVI') }}
       </h2>
     </div>
@@ -20,7 +20,6 @@
 
 <script lang="ts">
 import { parseStr } from '@/utils';
-import { mapGetters } from 'vuex';
 import Avatar from '@/components/common/Avatar.vue';
 import BasicButton from '@/components/common/BasicButton.vue';
 import BasicInput from '@/components/common/BasicInput.vue';
@@ -36,7 +35,7 @@ export default {
     const router = useRouter();
 
     const titleHandler = () => {
-      router.push('/');
+      router.push({ name: 'Home' });
     };
 
     const broadcastHandler = () => {
@@ -53,9 +52,6 @@ export default {
       broadcastHandler,
       loginBtnHandler
     };
-  },
-  computed: {
-    ...mapGetters('auth', ['userInfo'])
   }
 };
 </script>
