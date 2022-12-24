@@ -1,6 +1,5 @@
 import { PeerConnection } from '@/modules/PeerConnection';
 import api from '@/service/api';
-import type { Member, Room, ServiceResultRes, Account } from '@/vivi-utils/types';
 import {
   METHOD_CREATE_ROOM,
   METHOD_JOIN_ROOM,
@@ -9,8 +8,7 @@ import {
   METHOD_SEND_SESSION_DESC_OFFER,
   METHOD_SEND_SESSION_DESC_ANSWER,
   METHOD_SEND_ICE_CANDIDATE
-} from '@/vivi-utils/constants';
-import { EVENT_ICE_CANDIDATE } from '@/constant';
+} from '@/constant';
 import eventManager from '@/modules/EventManager';
 import ServiceWebSocket from '@/service/ServiceWebSocket';
 import mediaManager from '@/modules/MediaManager';
@@ -52,8 +50,8 @@ export default class ServiceManager {
   async getRoomList({ tag = '' } = {}): Promise<Room[]> {
     let query = '';
     query += !!tag ? `?tag=${tag}` : '';
-    const response: ServiceResultRes = await api.get('room/list' + query);
-    const { roomList }: { roomList: Room[] } = response?.result;
+    const response = await api.get('room/list' + query);
+    const { roomList }: { roomList: Room[] } = response?.data?.result;
     return roomList;
   }
 
@@ -69,7 +67,7 @@ export default class ServiceManager {
   }
 
   async leaveRoom() {
-    const room: Room = this.store?.state?.room?.room;
+    const room = this.store?.state?.room?.room;
     if (!room) return;
     await this.sWs.sendMessage(`room/${METHOD_LEAVE_ROOM}`, {
       roomId: room.roomId
@@ -92,8 +90,8 @@ export default class ServiceManager {
    * session description
    */
   async sendSessionDescOfferToRoomAllMembers() {
-    const room: Room = this.store?.state?.room?.room;
-    const members: Member[] = room.members;
+    const room = this.store?.state?.room?.room;
+    const members = room.members;
     const socketId = this.sWs.getSocketId();
 
     for (let i = 0; i < members.length; i++) {
@@ -102,8 +100,8 @@ export default class ServiceManager {
     }
   }
 
-  async sendSessionDescOfferToRoomMember({ member }: { member: Member }) {
-    const room: Room = this.store?.state?.room?.room;
+  async sendSessionDescOfferToRoomMember({ member }: { member }) {
+    const room = this.store?.state?.room?.room;
     if (!room) return;
 
     const localStream = mediaManager.getLocalStream();
@@ -119,8 +117,8 @@ export default class ServiceManager {
     });
   }
 
-  async sendSessionDescAnswer({ member, answer }: { member: Member; answer }) {
-    const room: Room = this.store?.state?.room?.room;
+  async sendSessionDescAnswer({ member, answer }: { member; answer }) {
+    const room = this.store?.state?.room?.room;
     if (!room) return;
     await this.sWs.sendMessage(`room/${METHOD_SEND_SESSION_DESC_ANSWER}`, {
       roomId: room.roomId,
@@ -129,8 +127,8 @@ export default class ServiceManager {
     });
   }
 
-  async sendICECandidate({ candidate, member }: { candidate; member: Member }) {
-    const room: Room = this.store?.state?.room?.room;
+  async sendICECandidate({ candidate, member }: { candidate; member }) {
+    const room = this.store?.state?.room?.room;
     const _member = { ...member, peerConnection: null };
     if (!room) return;
     await this.sWs.sendMessage(`room/${METHOD_SEND_ICE_CANDIDATE}`, {
@@ -148,12 +146,11 @@ export default class ServiceManager {
     const isLogin = this.store.getters['auth/isLogin'];
 
     if (!isLogin) {
-      const userInfo: Account = this.store.getters['auth/userInfo'];
+      const userInfo = this.store.getters['auth/userInfo'];
       const connectionId = userInfo?.connectionId;
-      const result: ServiceResultRes = await api.patch('account/nickname', { nickname, connectionId });
+      const result = await api.patch('account/nickname', { nickname, connectionId });
 
-      const account = result?.result?.account;
-      this.store.dispatch('auth/setuserInfo', { account });
+      //      this.store.dispatch('auth/setuserInfo', { account });
     }
   }
 }

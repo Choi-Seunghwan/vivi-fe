@@ -1,4 +1,4 @@
-import logger from '@/vivi-utils/logger';
+import logger from '@/utils/Logger';
 
 class MediaManager {
   localStream;

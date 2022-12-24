@@ -29,7 +29,7 @@ import eventManager from '@/modules/EventManager';
 import { EVENT_ON_TRACK } from '@/constant';
 import VideoPlayer from '@/components/video/VideoPlayer.vue';
 import Avatar from '@/components/common/Avatar.vue';
-import { MAX_ROOM_MEMBER_COUNT } from '@/vivi-utils/constants';
+import { MAX_ROOM_MEMBER_COUNT } from '@/constant';
 
 export default {
   components: { VideoPlayer, Avatar },

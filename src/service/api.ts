@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance } from 'axios';
+import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 
 export class API {
   private _axios: AxiosInstance;
@@ -18,17 +18,17 @@ export class API {
     return Promise.reject(error);
   };
 
-  async get(path) {
+  async get(path): Promise<AxiosResponse> {
     const response = await this._axios.get(path);
     return response;
   }
 
-  async patch(path, payload) {
+  async patch(path, payload): Promise<AxiosResponse> {
     const response = await this._axios.patch(path, payload);
     return response;
   }
 
-  async post(path, payload) {
+  async post(path, payload): Promise<AxiosResponse> {
     const response = await this._axios.post(path, payload);
     const data = response.data;
     return data;
