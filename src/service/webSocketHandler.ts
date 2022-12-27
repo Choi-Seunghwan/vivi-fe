@@ -12,8 +12,8 @@ import {
   ICE_CANDIDATE,
   HOST_LEAVE_ROOM,
   METHOD_MY_ACCOUNT_INFO
-} from '@/vivi-utils/constants';
-import type { Room, Member, ChatMessage } from '@/vivi-utils/types';
+} from '@/constant';
+
 import { PeerConnection } from '@/modules/PeerConnection';
 import mediaManager from '@/modules/MediaManager';
 

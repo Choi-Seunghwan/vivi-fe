@@ -17,7 +17,7 @@ import type { Store } from 'vuex';
 import type { App as VueApp } from 'vue';
 import RoomService from './RoomService';
 
-/*
+/* 
 export const servicePlugin = {
   install(Vue) {
     Vue.config.globalProperties._service = new ServiceManager();

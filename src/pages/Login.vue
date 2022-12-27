@@ -1,11 +1,13 @@
 <template>
   <div class="login">
     <div class="login-wrap">
-      <h1>{{ parseStr('LOGIN_TITLE') }}</h1>
+      <h1>{{ parseStr('SIGN_IN_TITLE') }}</h1>
       <div class="input-wrap">
         <input :placeholder="'Id'" v-model="email" class="input id" />
         <input :placeholder="'Pw'" v-model="password" class="input password" />
-        <button @click="loginBtnHandler" class="button">Login</button>
+
+        <button v-if="!isSignIn" @click="signBtnHandler" class="button">{{ parseStr('SIGN_IN') }}</button>
+        <button v-if="isLogin" @click="signOffBtnHandler" class="button">{{ parseStr('SIGN_OFF') }}</button>
       </div>
     </div>
   </div>
@@ -28,19 +30,27 @@ export default {
     const services: ServiceManager = inject('$service')!;
     const authService = services.authService;
 
-    const login = async () => {
+    const signIn = async () => {
       await authService.signIn({ email: email.value, password: password.value });
     };
-    const loginBtnHandler = () => {
-      login();
+
+    const signOff = async () => {};
+
+    const signInBtnHandler = () => {
+      signIn();
+    };
+
+    const signOffBtnHandler = () => {
+      signOff();
     };
 
     return {
       email,
       password,
       parseStr,
-      login,
-      loginBtnHandler
+      signIn,
+      signInBtnHandler,
+      signOffBtnHandler
     };
   }
 };

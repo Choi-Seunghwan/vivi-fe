@@ -37,6 +37,7 @@ export default {
     ChatContainer,
     MemberList
   },
+  setup() {},
   data: () => ({
     localStream: null,
     /**

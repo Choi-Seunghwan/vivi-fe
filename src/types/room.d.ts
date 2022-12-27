@@ -1,4 +1,8 @@
 declare interface Room {
-  id: string;
+  roomId: string;
   title: string;
+  host: User;
+  members: any[];
 }
+
+declare type ChatMessage = any;
