@@ -1,5 +1,5 @@
 <template>
-  <TopNav @navHome="navHome" @navLogin="navLogin" @navBroadcast="navBroadcast"></TopNav>
+  <TopNav @navHome="navHome" @navSignIn="navSignIn" @navBroadcast="navBroadcast"></TopNav>
 </template>
 
 <script lang="ts">
@@ -17,8 +17,8 @@ export default defineComponent({
       router.push({ name: 'Home' });
     };
 
-    const navLogin = () => {
-      router.push({ name: 'Login' });
+    const navSignIn = () => {
+      router.push({ name: 'SignIn' });
     };
 
     const navBroadcast = () => {
@@ -27,7 +27,7 @@ export default defineComponent({
 
     return {
       navHome,
-      navLogin,
+      navSignIn,
       navBroadcast
     };
   }

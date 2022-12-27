@@ -1,16 +1,16 @@
 import store from '@/store/store';
 
-export const loginPageGuard = (to, from, next) => {
+export const signInPageGuard = (to, from, next) => {
   const isLogin = store.getters['auth/isLogin'];
   const isAuthenticated = !!isLogin;
 
   if (!isAuthenticated) next();
 
-  return { name: 'Home' };
+  return next({ name: 'Home' });
 };
 
 export const authGuard = (to, from, next) => {
-  const isLogin = store.getters['auth/isLogin'];
+  const isLogin = store.getters['auth/isSignIn'];
   const isAuthenticated = !!isLogin;
 
   if (isAuthenticated) next();

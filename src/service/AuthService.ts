@@ -13,8 +13,7 @@ export default class AuthService {
 
   async signIn({ email, password }: { email: string; password: string }): Promise<User | void> {
     try {
-      const result = await this.api.post(`${this.AUTH_PATH}/sign-in`, { email, password });
-      const user: User = result.data;
+      const user: User = await this.api.post(`${this.AUTH_PATH}/sign-in`, { email, password });
       await store.dispatch('auth/setUser', { user });
       console.log('@@ signIn', user);
       return user;

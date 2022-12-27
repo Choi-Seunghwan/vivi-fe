@@ -11,9 +11,8 @@
           {{ parseStr('BROADCASTING') }}
         </a>
       </BasicButton>
-      <BasicButton @click="loginBtnHandler">
-        {{ parseStr('SIGN_IN') }}
-      </BasicButton>
+      <BasicButton v-if="!isSignIn" @click="signInBtnHandler">{{ parseStr('SIGN_IN') }}</BasicButton>
+      <BasicButton v-else @click="signOffBtnHandler">{{ parseStr('SIGN_OFF') }}</BasicButton>
     </div>
   </nav>
 </template>
@@ -25,13 +24,18 @@ import BasicButton from '@/components/common/BasicButton.vue';
 import BasicInput from '@/components/common/BasicInput.vue';
 import type ServiceManager from '@/service/ServiceManager';
 import { inject } from '@vue/runtime-core';
-import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 export default {
   name: 'TopNav',
   components: { Avatar, BasicButton, BasicInput },
   setup(props, context) {
-    const services: ServiceManager = inject('$service')!;
+    // const services: ServiceManager = inject('$service')!;
+    const store = useStore();
+
+    const isSignIn = (): boolean => {
+      return store.getters['auth/isSignIn'];
+    };
 
     const titleBtnHandler = () => {
       context.emit('navHome');
@@ -41,15 +45,21 @@ export default {
       context.emit('navBroadcast');
     };
 
-    const loginBtnHandler = () => {
-      context.emit('navLogin');
+    const signInBtnHandler = () => {
+      context.emit('navSignIn');
+    };
+
+    const signOffBtnHandler = () => {
+      context.emit('navSignOff');
     };
 
     return {
       parseStr,
+      isSignIn,
       titleBtnHandler,
       broadcastBtnHandler,
-      loginBtnHandler
+      signInBtnHandler,
+      signOffBtnHandler
     };
   }
 };
