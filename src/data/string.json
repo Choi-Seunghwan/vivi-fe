@@ -19,6 +19,7 @@
   "TOAST_HOST_OUT": "호스트가 나갔습니다.",
 
   "SIGN_IN": "로그인",
+  "SIGN_OFF": "로그아웃",
   "SIGN_IN_TITLE": "로그인",
 
   "CONNECTION_DIM_MESSAGE": "접속중입니다."

@@ -4,7 +4,7 @@ import Login from '@/pages/Login.vue';
 import Room from '@/pages/Room.vue';
 import Broadcast from '@/pages/Broadcast.vue';
 // import NotFound from "@/pages/NotFound.vue";
-import { authGuard } from './routerGuard';
+import { authGuard, loginPageGuard } from './routerGuard';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,7 +17,8 @@ const router = createRouter({
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      beforeEnter: loginPageGuard
     },
     {
       path: '/room/:roomId',

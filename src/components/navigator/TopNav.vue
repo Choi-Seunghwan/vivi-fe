@@ -1,18 +1,18 @@
 <template>
   <nav class="top-nav">
     <div class="left-wrap">
-      <h2 @click="titleHandler" class="logo">
+      <h2 @click="titleBtnHandler" class="logo">
         {{ parseStr('VIVI') }}
       </h2>
     </div>
     <div class="right-wrap">
       <BasicButton>
-        <a class="broadcast" @click="broadcastHandler">
+        <a class="broadcast" @click="broadcastBtnHandler">
           {{ parseStr('BROADCASTING') }}
         </a>
       </BasicButton>
       <BasicButton @click="loginBtnHandler">
-        {{ parseStr('LOGIN') }}
+        {{ parseStr('SIGN_IN') }}
       </BasicButton>
     </div>
   </nav>
@@ -32,24 +32,23 @@ export default {
   components: { Avatar, BasicButton, BasicInput },
   setup(props, context) {
     const services: ServiceManager = inject('$service')!;
-    const router = useRouter();
 
-    const titleHandler = () => {
-      router.push({ name: 'Home' });
+    const titleBtnHandler = () => {
+      context.emit('navHome');
     };
 
-    const broadcastHandler = () => {
-      router.push({ name: 'Broadcast' });
+    const broadcastBtnHandler = () => {
+      context.emit('navBroadcast');
     };
 
     const loginBtnHandler = () => {
-      context.emit('login');
+      context.emit('navLogin');
     };
 
     return {
       parseStr,
-      titleHandler,
-      broadcastHandler,
+      titleBtnHandler,
+      broadcastBtnHandler,
       loginBtnHandler
     };
   }

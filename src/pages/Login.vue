@@ -6,8 +6,8 @@
         <input :placeholder="'Id'" v-model="email" class="input id" />
         <input :placeholder="'Pw'" v-model="password" class="input password" />
 
-        <button v-if="!isSignIn" @click="signBtnHandler" class="button">{{ parseStr('SIGN_IN') }}</button>
-        <button v-if="isLogin" @click="signOffBtnHandler" class="button">{{ parseStr('SIGN_OFF') }}</button>
+        <button @click="signInBtnHandler" class="button">{{ parseStr('SIGN_IN') }}</button>
+        <!-- <button v-else @click="signOffBtnHandler" class="button">{{ parseStr('SIGN_OFF') }}</button> -->
       </div>
     </div>
   </div>
@@ -15,14 +15,12 @@
 
 <script lang="ts">
 import { parseStr } from '@/utils';
-import _get from 'lodash/get';
-import pageRouteMixin from '@/mixin/pageRouteMixin';
 import { ref } from '@vue/reactivity';
 import { inject } from '@vue/runtime-core';
 import type ServiceManager from '@/service/ServiceManager';
+import store from '@/store/store';
 
 export default {
-  mixins: [pageRouteMixin],
   setup() {
     const email = ref('');
     const password = ref('');
@@ -30,11 +28,17 @@ export default {
     const services: ServiceManager = inject('$service')!;
     const authService = services.authService;
 
+    const isSignIn = (): boolean => {
+      return store.getters['auth/isLogin'];
+    };
+
     const signIn = async () => {
       await authService.signIn({ email: email.value, password: password.value });
     };
 
-    const signOff = async () => {};
+    const signOff = async () => {
+      await authService.signOff();
+    };
 
     const signInBtnHandler = () => {
       signIn();
@@ -48,6 +52,7 @@ export default {
       email,
       password,
       parseStr,
+      isSignIn,
       signIn,
       signInBtnHandler,
       signOffBtnHandler

@@ -1,5 +1,4 @@
 import { PeerConnection } from '@/modules/PeerConnection';
-import api from '@/service/api';
 import {
   METHOD_CREATE_ROOM,
   METHOD_JOIN_ROOM,
@@ -16,6 +15,7 @@ import AuthService from './AuthService';
 import type { Store } from 'vuex';
 import type { App as VueApp } from 'vue';
 import RoomService from './RoomService';
+import API from './API';
 
 /* 
 export const servicePlugin = {
@@ -31,28 +31,18 @@ export default class ServiceManager {
   sWs: ServiceWebSocket;
   authService: AuthService;
   roomService: RoomService;
+  api: API;
 
   constructor(app: VueApp, store: Store<any>) {
     this.app = app;
     this.store = store;
+    this.api = new API();
     // eventManager.setEvent(EVENT_ICE_CANDIDATE, this.sendICECandidate.bind(this));
 
     /** Init Services... */
     this.sWs = new ServiceWebSocket(app);
-    this.authService = new AuthService(app);
-    this.roomService = new RoomService(app);
-  }
-
-  /**
-   * Room
-   */
-
-  async getRoomList({ tag = '' } = {}): Promise<Room[]> {
-    let query = '';
-    query += !!tag ? `?tag=${tag}` : '';
-    const response = await api.get('room/list' + query);
-    const { roomList }: { roomList: Room[] } = response?.data?.result;
-    return roomList;
+    this.authService = new AuthService(app, this.api);
+    this.roomService = new RoomService(app, this.api);
   }
 
   async createRoom({ title, type, tag }) {

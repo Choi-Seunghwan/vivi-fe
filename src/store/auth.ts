@@ -7,7 +7,7 @@ const mutations = {
 };
 
 const getters = {
-  isLogin(state) {
+  isLogin(state): boolean {
     return !!state.user;
   },
   userInfo(state): User {
