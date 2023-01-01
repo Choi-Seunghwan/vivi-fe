@@ -1,6 +1,5 @@
 import type { App as VueApp } from 'vue';
 import type API from './API';
-import store from '@/store/store';
 
 export default class RoomService {
   app: VueApp;
@@ -19,9 +18,9 @@ export default class RoomService {
   }
 
   // async createRoom({ title }: { title: string }) {
-  // const room: Room = await this.post(`${this.ROOM_PATH}/create`, { title });
+  // const room: Room = await this.api.post(`${this.ROOM_PATH}/create`, { title });
   // store.dispatch('room/setRoom', { room });
-  // }
+  }
 
   // async signIn({ email, password }: { email: string; password: string }): Promise<User> {
   // const user: User = await this.post(`${this.ROOM_PATH}/sign-in`, { email, password });

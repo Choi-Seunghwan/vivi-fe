@@ -15,11 +15,8 @@ export default class AuthService {
     try {
       const user: User = await this.api.post(`${this.AUTH_PATH}/sign-in`, { email, password });
       await store.dispatch('auth/setUser', { user });
-      console.log('@@ signIn', user);
       return user;
-    } catch (e) {
-      console.log('@@ catch', e);
-    }
+    } catch (e) {}
   }
 
   async signOff() {

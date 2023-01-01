@@ -6,6 +6,11 @@ export const TYPE_VIDEO = 'TYPE_VIDEO';
 
 export const MAX_ROOM_MEMBER_COUNT = '4';
 
+export const MESSAGE_ROOM = {
+  ROOM: 'ROOM',
+  CREATE_ROOM: 'ROOM/CREATE_ROOM'
+};
+
 export const METHOD_CREATE_ROOM = 'METHOD_CREATE_ROOM';
 export const METHOD_JOIN_ROOM = 'METHOD_JOIN_ROOM';
 export const METHOD_LEAVE_ROOM = 'METHOD_LEAVE_ROOM';

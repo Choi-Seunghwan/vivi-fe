@@ -4,7 +4,7 @@
       <h1>{{ parseStr('SIGN_IN_TITLE') }}</h1>
       <div class="input-wrap">
         <input :placeholder="'Id'" v-model="email" class="input id" />
-        <input :placeholder="'Pw'" v-model="password" class="input password" />
+        <input :placeholder="'Pw'" type="password" v-model="password" class="input password" />
 
         <button @click="signInBtnHandler" class="button">{{ parseStr('SIGN_IN') }}</button>
         <!-- <button v-else @click="signOffBtnHandler" class="button">{{ parseStr('SIGN_OFF') }}</button> -->

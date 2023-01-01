@@ -19,8 +19,8 @@
   </Layout>
 </template>
 
-<script>
-import { mapActions, mapState, mapGetters } from 'vuex';
+<script lang="ts">
+import { mapState, mapGetters } from 'vuex';
 import mediaManager from '@/modules/MediaManager';
 import BroadcastController from '@/components/broadcast/BroadcastController.vue';
 import RoomViewer from '@/components/room/RoomViewer.vue';
@@ -39,12 +39,6 @@ export default {
   },
   setup() {},
   data: () => ({
-    localStream: null,
-    /**
-     * tab: 'controller' 방송 설정, member: 참여 맴버
-     */
-    tab: 'controller',
-    tabList: ['controller', 'member'],
     showTab: true,
     isOnAir: false
   }),
@@ -61,26 +55,10 @@ export default {
     }
   },
   methods: {
-    async createRoom(roomInfo) {
-      await this._service.createRoom(roomInfo);
-      this.showTab = false;
-    },
-    async createRoomHandler(roomInfo) {
-      await this.createRoom(roomInfo);
-      this.isOnAir = true;
-    },
-    async closeRoom(roomInfo) {},
-    tabItemHandler(itemKey) {
-      this.tab = itemKey;
-    }
+
   },
-  async mounted() {
-    await mediaManager.initLocalStream();
-    this.localStream = mediaManager.getLocalStream();
-  },
-  beforeUnmount() {
-    // this._service.leaveRoom();
-  }
+  async mounted() {},
+  beforeUnmount() {}
 };
 </script>
 

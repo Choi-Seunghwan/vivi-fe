@@ -13,7 +13,7 @@ export const authGuard = (to, from, next) => {
   const isLogin = store.getters['auth/isSignIn'];
   const isAuthenticated = !!isLogin;
 
-  if (isAuthenticated) next();
+  if (isAuthenticated) next({ name: 'Broadcast' });
   return false;
   /** @todo show Toast */
 };

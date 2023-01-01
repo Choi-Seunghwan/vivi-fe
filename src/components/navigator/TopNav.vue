@@ -11,7 +11,7 @@
           {{ parseStr('BROADCASTING') }}
         </a>
       </BasicButton>
-      <BasicButton v-if="!isSignIn" @click="signInBtnHandler">{{ parseStr('SIGN_IN') }}</BasicButton>
+      <BasicButton v-if="!isSignIn()" @click="signInBtnHandler">{{ parseStr('SIGN_IN') }}</BasicButton>
       <BasicButton v-else @click="signOffBtnHandler">{{ parseStr('SIGN_OFF') }}</BasicButton>
     </div>
   </nav>

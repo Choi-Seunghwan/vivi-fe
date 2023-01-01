@@ -6,15 +6,7 @@
       <div class="tag">
         <h4 class="tag-text">방송 주제</h4>
         <div class="tag-list">
-          <BasicButton
-            v-for="tag in tagList"
-            :key="tag"
-            :value="tag"
-            @click="tagHandler(tag)"
-            :checked="tag === selectedTag"
-          >
-            {{ parseStr(`ROOM_TAG_${tag}`) }}
-          </BasicButton>
+          {{ parseStr(`ROOM_TAG_${tag}`) }}
         </div>
       </div>
       <div class="title">
@@ -39,13 +31,13 @@ import BasicButton from '@/components/common/BasicButton.vue';
 import BasicInput from '@/components/common/BasicInput.vue';
 import { computed, ref } from '@vue/reactivity';
 import { inject } from '@vue/runtime-core';
-import type ServiceManager from '@/service/ServiceManager';
+import type MessageManager from '@/service/MessageManager';
 
 export default {
   components: { BasicButton, BasicInput },
   setup(props, context) {
-    const services: ServiceManager = inject('$service')!;
-    const roomService = services.roomService;
+    const messageManager: MessageManager = inject('$service')!;
+    const roomMessageHandler = messageManager.roomMessageHandler;
 
     const title = ref('');
     const tag = ref('');
@@ -57,7 +49,7 @@ export default {
     const startBtnHandler = () => {};
 
     const createRoom = async () => {
-      await roomService.createRoom({ title: title.value });
+      await roomMessageHandler.createRoom({ title: title.value });
     };
 
     const selectedTag = computed(() => tag);
