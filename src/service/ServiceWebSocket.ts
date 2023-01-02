@@ -6,14 +6,12 @@ import webSocketHandler from './webSocketHandler';
 class ServiceWebSocket {
   ws: Socket | undefined;
   app: VueApp;
-  handlers;
 
   constructor(app) {
     this.app = app;
     const socketHost = import.meta.env.VITE_SOCKET_ADDR;
-    // const socketNamespace = import.meta.env.VITE_SOCKET_NAMESPACE_ROOM;
-    // const uri = `${socketHost}/${socketNamespace}`;
-    // this.connection(uri);
+
+    this.connection(socketHost);
   }
 
   getSocketId() {
@@ -31,16 +29,12 @@ class ServiceWebSocket {
     // });
   }
 
-  setHandler(method, event) {
-    this.handlers[method] = event;
-  }
-
   sendMessage(method, args) {
     if (!this.ws) return false;
     this.ws.emit('message', method, args);
   }
 
-  replyMessage(args) {
+  public replyMessage(args) {
     const { method } = args;
     console.log('replyMessage', args);
     webSocketHandler.call(this, { app: this.app, method, args });

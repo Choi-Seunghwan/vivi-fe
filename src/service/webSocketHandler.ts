@@ -1,3 +1,7 @@
+/**
+ * !! [Deprecated] !!
+ */
+
 import _remove from 'lodash/remove';
 import {
   METHOD_CREATE_ROOM,

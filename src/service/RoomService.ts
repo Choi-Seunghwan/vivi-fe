@@ -20,11 +20,10 @@ export default class RoomService {
   // async createRoom({ title }: { title: string }) {
   // const room: Room = await this.api.post(`${this.ROOM_PATH}/create`, { title });
   // store.dispatch('room/setRoom', { room });
-  }
-
-  // async signIn({ email, password }: { email: string; password: string }): Promise<User> {
-  // const user: User = await this.post(`${this.ROOM_PATH}/sign-in`, { email, password });
-  // store.dispatch('room/setUser', { user });
-  // return user;
-  // }
 }
+
+// async signIn({ email, password }: { email: string; password: string }): Promise<User> {
+// const user: User = await this.post(`${this.ROOM_PATH}/sign-in`, { email, password });
+// store.dispatch('room/setUser', { user });
+// return user;
+// }
