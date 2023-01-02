@@ -1,20 +1,18 @@
 import type { App as VueApp } from 'vue';
 import type ServiceWebSocket from './ServiceWebSocket';
 import { MESSAGE_ROOM, METHOD_CREATE_ROOM } from '@/constant';
+import { MessageHandler } from './MessageHandler';
 
-export class RoomMessageHandler extends{
+export class RoomMessageHandler extends MessageHandler {
   private app: VueApp;
   private serviceWebSocket: ServiceWebSocket;
-  private receiveHandlers = {};
 
   constructor(app: VueApp, serviceWebSocket: ServiceWebSocket) {
+    super();
     this.app = app;
     this.serviceWebSocket = serviceWebSocket;
-    this.receiveHandlers = {};
-  }
 
-  getReceiveHandlers() {
-    return this.receiveHandlers;
+    this.mappingReceiveHandlers({});
   }
 
   async createRoom({ title }) {

@@ -12,11 +12,11 @@ export class ChatMessageHandler extends MessageHandler {
     this.app = app;
     this.serviceWebSocket = serviceWebSocket;
     this.mappingReceiveHandlers({
-      MESSAGE_CHAT_MESSAGE['SEND_CHAT_MESSAGE'] : this.sendChatMessage
+      [MESSAGE_CHAT_MESSAGE.ON_RECEIVE_CHAT_MESSAGE]: this.onReceiveChatMessage
     });
   }
 
   sendChatMessage() {}
 
-  receiveChatMessage() {}
+  onReceiveChatMessage() {}
 }
