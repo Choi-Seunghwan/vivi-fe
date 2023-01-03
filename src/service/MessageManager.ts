@@ -1,5 +1,5 @@
-import ServiceWebSocket from './ServiceWebSocket';
 import type { App as VueApp } from 'vue';
+import ServiceWebSocket from './ServiceWebSocket';
 import type { Store } from 'vuex';
 import { RoomMessageHandler } from './RoomMessageHandler';
 import { ChatMessageHandler } from './ChatMessageHandler';
@@ -14,11 +14,16 @@ export default class MessageManager {
   constructor(app: VueApp, store: Store<any>) {
     this.app = app;
     this.store = store;
-    this.serviceWebSocket = new ServiceWebSocket(app);
+    this.serviceWebSocket = new ServiceWebSocket();
 
     this.roomMessageHandler = new RoomMessageHandler(app, this.serviceWebSocket);
     this.chatMessageHandler = new ChatMessageHandler(app, this.serviceWebSocket);
-    
+
+    this.serviceWebSocket.setReceiveHandlers({
+      ...this.chatMessageHandler.getReceiveHandlers(),
+      ...this.roomMessageHandler.getReceiveHandlers()
+    });
+
     // eventManager.setEvent(EVENT_ICE_CANDIDATE, this.sendICECandidate.bind(this));
   }
 
