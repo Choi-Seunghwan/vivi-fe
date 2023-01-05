@@ -17,6 +17,10 @@ class ServiceWebSocket {
   setReceiveHandlers(handlers: {}) {
     // this.ws.on  handlers key & method
   }
+
+  sendMessage(message, payload) {
+    this.ws.emit(message, payload);
+  }
 }
 
 export default ServiceWebSocket;

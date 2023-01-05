@@ -16,6 +16,8 @@ export class RoomMessageHandler extends MessageHandler {
   }
 
   async createRoom({ title }) {
-    await this.serviceWebSocket.sendMessage(MESSAGE_ROOM.CREATE_ROOM, { title });
+    this.serviceWebSocket.sendMessage(MESSAGE_ROOM.CREATE_ROOM, { title });
   }
+
+  async onCreateRoom() {}
 }
