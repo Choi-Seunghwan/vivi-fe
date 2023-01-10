@@ -27,7 +27,7 @@ export default {
 <style lang="scss" scoped>
 .toast {
   position: fixed;
-  top: -40px;
+  bottom: -40px;
   left: 0px;
   width: 100%;
   height: 40px;
@@ -44,7 +44,7 @@ export default {
   }
 
   &.show {
-    top: 0px;
+    bottom: 0px;
   }
 }
 </style>

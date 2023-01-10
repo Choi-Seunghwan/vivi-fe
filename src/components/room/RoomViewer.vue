@@ -73,7 +73,9 @@ export default {
 .room-viewer {
   width: 100%;
   height: 100%;
-  border-radius: 12px;
+  /* border-radius: 12px; */
+  background-color: rgba(#fff, 1);
+  background-color: #fff;
 
   .viewer-wrap {
     display: flex;

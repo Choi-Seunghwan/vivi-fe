@@ -1,19 +1,25 @@
+import { toast } from '@/utils';
 import store from '@/store/store';
 
+const isSignIn = () => {
+  const isSignIn = store.getters['auth/isSignIn'];
+  return !!isSignIn;
+};
+
 export const signInPageGuard = (to, from, next) => {
-  const isLogin = store.getters['auth/isLogin'];
-  const isAuthenticated = !!isLogin;
+  if (isSignIn()) return next({ name: 'Home' });
+  return next();
+};
 
-  if (!isAuthenticated) next();
-
-  return next({ name: 'Home' });
+export const BroadcastPageGuard = (to, from, next) => {
+  if (!isSignIn()) {
+    toast.showToast('need login');
+    return;
+  }
+  return next();
 };
 
 export const authGuard = (to, from, next) => {
-  const isLogin = store.getters['auth/isSignIn'];
-  const isAuthenticated = !!isLogin;
-
-  if (isAuthenticated) next({ name: 'Broadcast' });
-  return false;
-  /** @todo show Toast */
+  if (!isSignIn()) return next({ name: 'Home' });
+  return next();
 };

@@ -1,10 +1,11 @@
 <template>
-  <div class="app">
+  <div ref="app" class="app">
     <AdSection ad-section></AdSection>
     <BaseLayout class="main-section">
       <router-view />
     </BaseLayout>
     <section sub-section></section>
+
     <Toast ref="toast" />
   </div>
 </template>

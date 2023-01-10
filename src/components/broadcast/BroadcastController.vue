@@ -1,7 +1,6 @@
 <template>
   <div class="broadcast-controller">
     <h2 class="heading">{{ parseStr('BROADCAST_INFO') }}</h2>
-    <hr class="divider" />
     <div class="room-info">
       <div class="tag">
         <h4 class="tag-text">방송 주제</h4>

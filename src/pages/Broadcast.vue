@@ -1,19 +1,13 @@
 <template>
   <Layout class="broadcast">
     <section class="room-viewer-wrap">
-      <div v-show="showBlur" class="blur"></div>
-      <RoomViewer
-        ref="roomViewer"
-        :room="room"
-        :members="members"
-        :userInfo="userInfo"
-        :localStream="localStream"
-      ></RoomViewer>
+      <!-- <div v-show="showBlur" class="blur"></div> -->
+      <RoomViewer ref="roomViewer" :room="room" :members="members" :userInfo="userInfo"></RoomViewer>
     </section>
     <section v-show="showTab" class="tab-wrap">
       <div class="tab-content">
-        <!-- <MemberList v-show="tab === 'member'" :members="members" /> -->
-        <BroadcastController v-show="tab === 'controller'" @createRoom="createRoomHandler" />
+        <MemberList :members="members" />
+        <BroadcastController />
       </div>
     </section>
   </Layout>
@@ -54,9 +48,7 @@ export default {
       return this.showTab;
     }
   },
-  methods: {
-
-  },
+  methods: {},
   async mounted() {},
   beforeUnmount() {}
 };
@@ -71,19 +63,18 @@ export default {
   .room-viewer-wrap {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 60%;
     flex: 1;
+    border-bottom: #eee 2px solid;
   }
 
   .tab-wrap {
-    position: absolute;
     width: 100%;
-    height: 100%;
+    height: 40%;
+    border-top: 2px;
+    border-color: #eee;
     border-radius: 6px;
     overflow: hidden;
-    top: 0;
-    left: 0;
-    z-index: 2;
 
     .tab {
       display: flex;

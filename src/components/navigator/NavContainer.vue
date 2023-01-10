@@ -22,13 +22,13 @@ export default defineComponent({
     };
 
     const navBroadcast = () => {
-      router.push({ name: 'Home' });
+      router.push({ name: 'Broadcast' });
     };
 
     return {
       navHome,
       navSignIn,
-      navBroadcast
+      navBroadcast,
     };
   }
 });
