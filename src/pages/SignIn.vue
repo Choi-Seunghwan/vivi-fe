@@ -19,9 +19,11 @@ import { ref } from '@vue/reactivity';
 import { inject } from '@vue/runtime-core';
 import type ServiceManager from '@/service/ServiceManager';
 import store from '@/store/store';
+import { useRouter } from 'vue-router';
 
 export default {
   setup() {
+    const router = useRouter();
     const email = ref('');
     const password = ref('');
 
@@ -34,6 +36,7 @@ export default {
 
     const signIn = async () => {
       await authService.signIn({ email: email.value, password: password.value });
+      router.push({ name: 'Home' });
     };
 
     const signOff = async () => {

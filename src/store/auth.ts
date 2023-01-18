@@ -18,6 +18,10 @@ const getters = {
 const actions = {
   setUser({ commit }, { user }: { user: User }) {
     commit('setUser', user);
+  },
+
+  signOff({ commit }) {
+    commit('setUser', null);
   }
 };
 
