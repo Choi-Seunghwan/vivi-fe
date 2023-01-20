@@ -1,13 +1,27 @@
 // import store from '@/store';
-import io, { Socket } from 'socket.io-client';
+import io, { Socket, type SocketOptions, type ManagerOptions } from 'socket.io-client';
+import store from '@/store/store';
+import auth from '@/store/auth';
 
 class ServiceWebSocket {
-  ws: Socket;
+  ws!: Socket;
   receiveHandlers: any[] = [];
 
   constructor() {
+    this.connection();
+  }
+
+  connection() {
     const socketHost = import.meta.env.VITE_SOCKET_ADDR;
-    this.ws = io(socketHost);
+    const token = store.getters['auth/authToken'];
+    const wsOptions: Partial<ManagerOptions & SocketOptions> = {
+      forceNew: true,
+      extraHeaders: {
+        Authorization: `Bearer ${token as string}`
+      }
+    };
+
+    this.ws = io(socketHost, wsOptions);
   }
 
   getSocketId() {

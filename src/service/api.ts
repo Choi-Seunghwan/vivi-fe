@@ -1,4 +1,5 @@
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
+import store from '@/store/store';
 
 export default class API {
   private _axios: AxiosInstance;
@@ -7,8 +8,20 @@ export default class API {
     const _axios: AxiosInstance = axios.create({
       baseURL: import.meta.env.VITE_API_HOST
     });
+    _axios.interceptors.request.use(this.requestInterceptor);
     _axios.interceptors.response.use(this.handleSuccess, this.handleError);
     this._axios = _axios;
+    this._axios.defaults.headers.common;
+  }
+
+  requestInterceptor(config) {
+    const token = store.getters['auth/authToken'];
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
   }
 
   handleSuccess(response: AxiosResponse) {
