@@ -9,6 +9,10 @@ export const setAuthTokenFromLocalStorage = token => {
   localStorage.setItem('token', token);
 };
 
+export const removeAuthTokenLocalStorage = () => {
+  localStorage.removeItem('token');
+};
+
 export const initAuth = () => {
   const token = getAuthTokenFromLocalStorage();
 };

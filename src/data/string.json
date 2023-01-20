@@ -18,9 +18,15 @@
   "ROOM_TAG_DATE": "소개팅",
   "TOAST_HOST_OUT": "호스트가 나갔습니다.",
 
+  "ROOM_SETTING": "방 설정",
+
   "SIGN_IN": "로그인",
   "SIGN_OFF": "로그아웃",
   "SIGN_IN_TITLE": "로그인",
 
-  "CONNECTION_DIM_MESSAGE": "접속중입니다."
+  "AUTO_SIGN_IN": "자동 로그인",
+
+  "CONNECTION_DIM_MESSAGE": "접속중입니다.",
+
+  "SETTING": "설정"
 }

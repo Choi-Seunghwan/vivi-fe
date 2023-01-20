@@ -7,6 +7,7 @@
         <input :placeholder="'Pw'" type="password" v-model="password" class="input password" />
 
         <button @click="signInBtnHandler" class="button">{{ parseStr('SIGN_IN') }}</button>
+        <input type="checkbox" v-model="isAutoSignIn" />{{ parseStr('AUTO_SIGN_IN') }}
         <!-- <button v-else @click="signOffBtnHandler" class="button">{{ parseStr('SIGN_OFF') }}</button> -->
       </div>
     </div>
@@ -26,6 +27,7 @@ export default {
     const router = useRouter();
     const email = ref('');
     const password = ref('');
+    const isAutoSignIn = ref(false);
 
     const services: ServiceManager = inject('$service')!;
     const authService = services.authService;
@@ -35,12 +37,13 @@ export default {
     };
 
     const signIn = async () => {
-      await authService.signIn({ email: email.value, password: password.value });
+      await authService.signIn({ email: email.value, password: password.value, isSave: isAutoSignIn.value });
       router.push({ name: 'Home' });
     };
 
     const signOff = async () => {
       await authService.signOff();
+      router.push({ name: 'Home' });
     };
 
     const signInBtnHandler = () => {
@@ -54,6 +57,7 @@ export default {
     return {
       email,
       password,
+      isAutoSignIn,
       parseStr,
       isSignIn,
       signIn,

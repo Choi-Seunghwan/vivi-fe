@@ -1,7 +1,7 @@
 import type { App as VueApp } from 'vue';
 import store from '@/store/store';
 import type API from './API';
-import { setAuthTokenFromLocalStorage } from '@/common/auth';
+import { setAuthTokenFromLocalStorage, getAuthTokenFromLocalStorage, removeAuthTokenLocalStorage } from '@/common/auth';
 export default class AuthService {
   app: VueApp;
   AUTH_PATH: string = import.meta.env.VITE_API_PATH_AUTH;
@@ -10,6 +10,27 @@ export default class AuthService {
   constructor(app: VueApp, api: API) {
     this.app = app;
     this.api = api;
+
+    this.autoSignIn();
+  }
+
+  async autoSignIn() {
+    const token = getAuthTokenFromLocalStorage();
+    if (token) {
+      await store.dispatch('auth/setAuthToken', { token });
+      await this.tokenSignIn();
+    }
+  }
+
+  async tokenSignIn() {
+    try {
+      const user: User = await this.api.post(`${this.AUTH_PATH}/token-sign-in`, {});
+      await store.dispatch('auth/setUser', { user });
+
+      return user;
+    } catch (e) {
+      throw e;
+    }
   }
 
   async signIn({
@@ -34,6 +55,7 @@ export default class AuthService {
   }
 
   async signOff() {
+    removeAuthTokenLocalStorage();
     await store.dispatch('auth/signOff');
   }
 }
