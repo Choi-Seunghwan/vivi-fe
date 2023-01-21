@@ -12,12 +12,16 @@ export class RoomMessageHandler extends MessageHandler {
     this.app = app;
     this.serviceWebSocket = serviceWebSocket;
 
-    this.mappingReceiveHandlers({});
+    this.mappingReceiveHandlers({
+      [MESSAGE_ROOM.CREATE_ROOM]: this.onCreateRoom.bind(this)
+    });
   }
 
   async createRoom({ title }) {
     this.serviceWebSocket.sendMessage(MESSAGE_ROOM.CREATE_ROOM, { title });
   }
 
-  async onCreateRoom() {}
+  async onCreateRoom() {
+    console.log('@@ roomCreated');
+  }
 }

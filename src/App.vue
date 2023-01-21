@@ -13,7 +13,7 @@
 <script lang="ts">
 import { inject } from 'vue';
 import _remove from 'lodash/remove';
-import BaseLayout from '@/layouts/BaseLayout.vue';
+import BaseLayout from '@/components/layout/BaseLayout.vue';
 import AdSection from './components/layout/AdvSection.vue';
 import Toast from '@/components/common/Toast.vue';
 import { toast } from '@/utils/index';

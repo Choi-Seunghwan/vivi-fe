@@ -1,56 +1,41 @@
 <template>
   <Layout class="broadcast">
-    <section class="room-viewer-wrap">
-      <!-- <div v-show="showBlur" class="blur"></div> -->
-      <RoomViewer ref="roomViewer" :room="room" :members="members" :userInfo="userInfo"></RoomViewer>
+    <section class="room-viewer">
+      <RoomViewerContainer @toggleSetting="toggleSetting" :isHost="true" ref="roomViewer"></RoomViewerContainer>
     </section>
-    <section v-show="showTab" class="tab-wrap">
-      <div class="tab-content">
-        <MemberList :members="members" />
-        <BroadcastController />
-      </div>
-    </section>
+    <div v-show="isShowSetting" class="modal">
+      <BroadcastController />
+    </div>
   </Layout>
 </template>
 
 <script lang="ts">
-import { mapState, mapGetters } from 'vuex';
-import mediaManager from '@/modules/MediaManager';
 import BroadcastController from '@/components/broadcast/BroadcastController.vue';
-import RoomViewer from '@/components/room/RoomViewer.vue';
+import RoomViewerContainer from '@/components/room/RoomViewerContainer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import Layout from '@/components/layout/Layout.vue';
 import MemberList from '@/components/room/MemberList.vue';
+import { ref } from 'vue';
 
 export default {
   name: 'Broadcast',
   components: {
     Layout,
     BroadcastController,
-    RoomViewer,
+    RoomViewerContainer,
     ChatContainer,
     MemberList
   },
-  setup() {},
-  data: () => ({
-    showTab: true,
-    isOnAir: false
-  }),
-  computed: {
-    ...mapState('room', ['room']),
-    ...mapGetters('auth', ['userInfo']),
-    members() {
-      if (this.room?.members?.length) {
-        return this.room?.members.filter(m => m?.nickname !== this.userInfo?.nickname);
-      } else return [];
-    },
-    showBlur() {
-      return this.showTab;
-    }
-  },
-  methods: {},
-  async mounted() {},
-  beforeUnmount() {}
+  setup() {
+    const isShowSetting = ref(true);
+
+    const toggleSetting = (v = undefined) => {
+      if (v !== undefined) isShowSetting.value = v;
+      else isShowSetting.value = !isShowSetting.value;
+    };
+
+    return { isShowSetting, toggleSetting };
+  }
 };
 </script>
 
@@ -60,67 +45,25 @@ export default {
   column-gap: 12px;
   padding: 0;
 
-  .room-viewer-wrap {
+  .room-viewer {
     position: relative;
     width: 100%;
-    height: 60%;
+    height: 100%;
     flex: 1;
     border-bottom: #eee 2px solid;
   }
 
-  .tab-wrap {
-    width: 100%;
-    height: 40%;
-    border-top: 2px;
-    border-color: #eee;
+  .modal {
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    top: 58px;
+    right: 12px;
+    background-color: rgba(#000, 0.7);
+    border: solid 1px #fff;
     border-radius: 6px;
-    overflow: hidden;
-
-    .tab {
-      display: flex;
-      width: 100%;
-      height: 40px;
-      background: #eee;
-
-      .tab-item {
-        display: flex;
-        flex: 1;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        border-left: solid 1px #000;
-        background: #aaa;
-
-        &:hover {
-          background: #aaa;
-        }
-
-        &.disabled {
-          background: #aaa;
-          cursor: not-allowed;
-        }
-
-        &:nth-of-type(1) {
-          border: none;
-        }
-
-        &.active {
-          background: #eee;
-        }
-
-        > img {
-          width: 32px;
-          height: 32px;
-        }
-      }
-    }
-
-    .tab-content {
-      display: flex;
-      width: 100%;
-      height: calc(100% - 40px);
-      padding: 20px;
-    }
+    box-sizing: border-box;
+    padding: 14px;
   }
 }
 </style>

@@ -1,4 +1,3 @@
-export * from './vuex';
 export * from './event';
 export * from './message';
 

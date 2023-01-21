@@ -1,13 +1,7 @@
 <template>
   <div class="broadcast-controller">
-    <h2 class="heading">{{ parseStr('BROADCAST_INFO') }}</h2>
+    <h2 class="heading">{{ parseStr('SETTING') }}</h2>
     <div class="room-info">
-      <div class="tag">
-        <h4 class="tag-text">방송 주제</h4>
-        <div class="tag-list">
-          {{ parseStr(`ROOM_TAG_${tag}`) }}
-        </div>
-      </div>
       <div class="title">
         <h4 class="title-text">{{ parseStr('BROADCAST_TITLE') }}</h4>
         <BasicInput
@@ -18,9 +12,11 @@
         />
       </div>
     </div>
-    <BasicButton @click="startBtnHandler" :disabled="startBtnDisabled" class="start-btn">
-      {{ parseStr('BROADCAST_START') }}
-    </BasicButton>
+    <div class="bottom">
+      <BasicButton @click="startBtnHandler" :disabled="startBtnDisabled" class="start-btn">
+        {{ parseStr('BROADCAST_START') }}
+      </BasicButton>
+    </div>
   </div>
 </template>
 
@@ -35,17 +31,20 @@ import type MessageManager from '@/service/MessageManager';
 export default {
   components: { BasicButton, BasicInput },
   setup(props, context) {
-    const messageManager: MessageManager = inject('$service')!;
+    const messageManager: MessageManager = inject('$message')!;
     const roomMessageHandler = messageManager.roomMessageHandler;
 
     const title = ref('');
     const tag = ref('');
-    const tagList = ['TALK', 'SONG', 'DATE'];
+    // const tagList = ['TALK', 'SONG', 'DATE'];
 
     const tagHandler = (v: string) => {
       tag.value = v;
     };
-    const startBtnHandler = () => {};
+
+    const startBtnHandler = async () => {
+      createRoom();
+    };
 
     const createRoom = async () => {
       await roomMessageHandler.createRoom({ title: title.value });
@@ -55,8 +54,8 @@ export default {
     const startBtnDisabled = computed(() => !tag || !title);
     return {
       title,
-      tag,
-      tagList,
+      // tag,
+      // tagList,
       parseStr,
       tagHandler,
       startBtnHandler,
@@ -76,7 +75,7 @@ export default {
   height: 100%;
 
   .heading {
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
   }
 
@@ -86,20 +85,9 @@ export default {
   .room-info {
     margin-top: 30px;
 
-    .tag {
-      .tag-text {
-        font-size: 18px;
-      }
-      .tag-list {
-        display: flex;
-        margin-top: 12px;
-        gap: 8px;
-      }
-    }
     .title {
-      margin-top: 20px;
       .title-text {
-        font-size: 18px;
+        font-size: 16px;
       }
       .title-input {
         margin-top: 6px;
@@ -108,14 +96,15 @@ export default {
     }
   }
 
-  .start-btn {
-    width: 100px;
-    font-size: 16px;
-    font-weight: bold;
+  .bottom {
     margin-top: auto;
-    margin-bottom: 40px;
     margin-left: auto;
     margin-right: auto;
+    .start-btn {
+      width: 80px;
+      font-size: 14px;
+      font-weight: bold;
+    }
   }
 }
 </style>

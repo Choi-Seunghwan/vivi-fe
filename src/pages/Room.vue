@@ -11,13 +11,13 @@
 <script>
 import mediaManager from '@/modules/MediaManager';
 import { mapState, mapActions } from 'vuex';
-import RoomViewer from '@/components/room/RoomViewer.vue';
+// import RoomViewer from '@/components/room/RoomViewer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import { toast, parseStr } from '@/utils';
 
 export default {
   components: {
-    RoomViewer,
+    // RoomViewer,
     ChatContainer
   },
   watch: {

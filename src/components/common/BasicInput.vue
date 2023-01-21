@@ -4,10 +4,10 @@
       ref="input"
       :value="_value"
       :maxlength="maxLength"
+      :placeholder="placeholder"
       @input="inputHandler"
       @focus="focus = true"
       @blur="focus = false"
-      @keyup.enter="keyEnter"
     />
     <button v-if="useConfirm && focus" class="" @click="$emit('confirm', v)">
       <img src="/images/check-icon-white.svg" />
@@ -15,14 +15,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'BasicInput',
   props: {
     modelValue: { type: String, default: '' },
     maxLength: { type: Number, default: null },
     useConfirm: { type: Boolean, default: false },
-    underline: { type: Boolean, default: false }
+    underline: { type: Boolean, default: false },
+    placeholder: { type: String, default: '' }
   },
 
   data: () => ({
@@ -39,12 +40,6 @@ export default {
     }
   },
   methods: {
-    keyEnter(e) {
-      this.v = e.target.value;
-      this.$emit('confirm', this.value);
-      this.$refs.input?.blur();
-      this.focus = false;
-    },
     inputHandler(e) {
       this._value = e.target.value;
     }

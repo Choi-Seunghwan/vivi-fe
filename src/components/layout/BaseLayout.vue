@@ -8,10 +8,10 @@
     </div>
   </section>
 </template>
-<script>
+<script lang="ts">
 import NavContainer from '@/components/navigator/NavContainer.vue';
 import SideNav from '@/components/navigator/SideNav.vue';
-import Dimmed from '../components/layout/Dimmed.vue';
+import Dimmed from './Dimmed.vue';
 
 export default {
   name: 'BaseLayout',

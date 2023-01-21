@@ -3,59 +3,33 @@ import _get from 'lodash/get';
 interface RoomState {
   room: Room | null;
   // members: Member[];
-  localStream: any;
-  roomConnectionStatus: 'NONE' | 'CONNECTING' | 'COMPLETE';
-  // chatMessages: ChatMessage[];
 }
 
 const state: RoomState = {
-  room: null,
+  room: null
   // members: [],
-  localStream: null,
-  roomConnectionStatus: 'NONE',
   // chatMessages: []
 };
 
 const mutations = {
-  setRoom: (state: RoomState, room: Room) => (state.room = room),
-  setRoomConnectionStatus: (state: RoomState, status) => (state.roomConnectionStatus = status),
-  // setChatMessages: (state: RoomState, messages) => (state.chatMessages = messages)
+  setRoom: (state: RoomState, room: Room) => (state.room = room)
 };
 
 const getters = {
   // roomId: (state: RoomState) => state?.room?.roomId,
-  localStream: (state: RoomState) => state.localStream
+  isHost: (state: RoomState, getters, rootState, rootGatters) => {
+    const user: User | null = getters.userInfo;
+
+    if (!user) return false;
+    if (user.id === state.room?.host?.id) return true;
+    else return false;
+  }
 };
 
 const actions = {
-  /*
-  async handleMessage({ state, commit, dispatch }, args) {
-    const { method, result, statusCode } = args;
-    const splittedMethod = method.split('/');
-
-    switch (splittedMethod[1]) {
-      default:
-        break;
-    }
-  }
-  */
   setRoom({ commit }, { room }) {
     commit('setRoom', room);
-  },
-
-  setRoomConnectionStatus({ commit }, { status }) {
-    commit('setRoomConnectionStatus', status);
-  },
-
-  leaveRoom({ commit, dispatch }) {
-    commit('setChatMessages', []);
-    dispatch('setRoom', { room: null });
-    dispatch('setRoomConnectionStatus', { status: 'NONE' });
-  },
-
-  // pushChatMessage({ state, commit }, { chatMessage }: { chatMessage: ChatMessage }) {
-  //   commit('setChatMessages', [chatMessage, ...state.chatMessages]);
-  // }
+  }
 };
 
 export default {

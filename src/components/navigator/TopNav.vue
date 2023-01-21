@@ -13,6 +13,7 @@
       </BasicButton>
       <BasicButton v-if="!isSignIn()" @click="signInBtnHandler">{{ parseStr('SIGN_IN') }}</BasicButton>
       <BasicButton v-else @click="signOffBtnHandler">{{ parseStr('SIGN_OFF') }}</BasicButton>
+      <BasicButton @click="testBtnHandler">{{ parseStr('TEST') }}</BasicButton>
     </div>
   </nav>
 </template>
@@ -30,8 +31,10 @@ export default {
   name: 'TopNav',
   components: { Avatar, BasicButton, BasicInput },
   setup(props, context) {
-    // const services: ServiceManager = inject('$service')!;
     const store = useStore();
+
+    /** Test code */
+    // const services: ServiceManager = inject('$service')!;
 
     const isSignIn = (): boolean => {
       return store.getters['auth/isSignIn'];
@@ -53,13 +56,16 @@ export default {
       context.emit('navSignOff');
     };
 
+    const testBtnHandler = () => {};
+
     return {
       parseStr,
       isSignIn,
       titleBtnHandler,
       broadcastBtnHandler,
       signInBtnHandler,
-      signOffBtnHandler
+      signOffBtnHandler,
+      testBtnHandler
     };
   }
 };
