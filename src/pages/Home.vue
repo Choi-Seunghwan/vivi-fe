@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="live-chat">
-      <h1 class="title">최신 라이브</h1>
+      <h1 class="title">목록</h1>
       <RoomListContainer />
     </div>
   </div>

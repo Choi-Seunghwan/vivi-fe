@@ -1,33 +1,11 @@
 <template>
-  <div class="chat-container w-full h-full"></div>
+  <div class="chat-container"></div>
 </template>
 
-<script>
+<script lang="ts">
 import { mapState } from 'vuex';
 
-export default {
-  props: {
-    roomId: {
-      type: String,
-      default: ''
-    }
-  },
-  computed: {
-    ...mapState('room', ['room', 'chatMessages']),
-    members() {
-      return this.room?.members;
-    },
-    messages() {
-      return this.chatMessages;
-    }
-  },
-  methods: {
-    sendMessage(message) {
-      if (!this.room) return;
-      this._service.sendChatMessage({ roomId: this.room?.roomId, message });
-    }
-  }
-};
+export default {};
 </script>
 
 <style lang="scss">

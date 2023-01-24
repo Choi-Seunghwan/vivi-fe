@@ -1,19 +1,20 @@
 <template>
   <div class="room-list-container">
-    <div v-if="hasRoomList" class="room-list">
-      <RoomCard
-        v-for="roomItem in roomList"
-        :key="roomItem.roomId"
-        @click="roomCardHandler(roomItem)"
-        :title="roomItem.title"
-        :memberCount="roomItem.memberCount"
-        class="room-list__item"
-      />
-    </div>
+    <RoomCard
+      v-for="roomItem in rooms"
+      :key="roomItem.roomId"
+      :title="roomItem.title"
+      :memberCount="roomItem?.members.length + 1"
+      class="room-list__item"
+    />
   </div>
 </template>
-<script>
+
+<script lang="ts">
 import RoomCard from './RoomCard.vue';
+import { inject, onMounted, ref } from 'vue';
+import type ServiceManager from '@/service/ServiceManager';
+import type RoomService from '@/service/RoomService';
 
 export default {
   components: {
@@ -22,28 +23,22 @@ export default {
   props: {
     tag: { type: String, default: '' }
   },
-  data: () => ({
-    loading: true,
-    roomList: []
-  }),
-  computed: {
-    hasRoomList() {
-      return !!this.roomList?.length;
-    }
-  },
-  methods: {
-    roomCardHandler(roomItem) {
-      const { roomId } = roomItem;
-      this.$router.push({ name: 'Room', params: { roomId } });
-    },
-    async init() {
-      const tag = this.tag;
-      // this.roomList = await this._service.getRoomList({ tag });
-      this.loading = false;
-    }
-  },
-  async beforeMount() {
-    this.init();
+  setup() {
+    const services: ServiceManager = inject('$service')!;
+    const roomService: RoomService = services.roomService;
+
+    const rooms = ref<Room[]>([]);
+
+    const getRooms = async () => {
+      const result = await roomService.getRoomList();
+      rooms.value = result;
+    };
+
+    onMounted(async () => {
+      await getRooms();
+    });
+
+    return { rooms };
   }
 };
 </script>
