@@ -1,9 +1,16 @@
 <template>
-  <TopNav @navHome="navHome" @navSignOff="navSignOff" @navSignIn="navSignIn" @navBroadcast="navBroadcast"></TopNav>
+  <TopNav
+    @navHome="navHome"
+    @navSignOff="navSignOff"
+    @navSignIn="navSignIn"
+    @navBroadcast="navBroadcast"
+    @test="test"
+  ></TopNav>
 </template>
 
 <script lang="ts">
 import TopNav from '@/components/navigator/TopNav.vue';
+import type MessageManager from '@/service/MessageManager';
 import type ServiceManager from '@/service/ServiceManager';
 import { defineComponent, inject } from 'vue';
 import { useRouter } from 'vue-router';
@@ -15,6 +22,9 @@ export default defineComponent({
     const router = useRouter();
     const services: ServiceManager = inject('$service')!;
     const authService = services.authService;
+
+    const messageManager: MessageManager = inject('$message')!;
+    const roomMessageHandler = messageManager.roomMessageHandler;
 
     const navHome = () => {
       router.push({ name: 'Home' });
@@ -32,11 +42,16 @@ export default defineComponent({
       router.push({ name: 'Broadcast' });
     };
 
+    const test = () => {
+      roomMessageHandler.test();
+    };
+
     return {
       navHome,
       navSignIn,
       navBroadcast,
-      navSignOff
+      navSignOff,
+      test
     };
   }
 });

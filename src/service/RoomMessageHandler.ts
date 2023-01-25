@@ -24,4 +24,8 @@ export class RoomMessageHandler extends MessageHandler {
   async onCreateRoom() {
     console.log('@@ roomCreated');
   }
+
+  async test() {
+    this.serviceWebSocket.sendMessage('ROOM/test', {});
+  }
 }

@@ -56,7 +56,9 @@ export default {
       context.emit('navSignOff');
     };
 
-    const testBtnHandler = () => {};
+    const testBtnHandler = () => {
+      context.emit('test');
+    };
 
     return {
       parseStr,

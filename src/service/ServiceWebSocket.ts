@@ -15,11 +15,14 @@ class ServiceWebSocket {
     const socketHost = import.meta.env.VITE_SOCKET_ADDR;
     const token = store.getters['auth/authToken'];
     const wsOptions: Partial<ManagerOptions & SocketOptions> = {
-      forceNew: true,
-      extraHeaders: {
-        Authorization: `Bearer ${token as string}`
-      }
+      forceNew: true
     };
+
+    if (token) {
+      wsOptions.extraHeaders = {
+        Authorization: `Bearer ${token as string}`
+      };
+    }
 
     this.ws = io(socketHost, wsOptions);
   }
