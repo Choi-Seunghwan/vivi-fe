@@ -24,7 +24,9 @@ export default class AuthService {
 
   async tokenSignIn() {
     try {
-      const user: User = await this.api.post(`${this.AUTH_PATH}/token-sign-in`, {});
+      const signResult: SignResponse = await this.api.post(`${this.AUTH_PATH}/token-sign-in`, {});
+      const { user, token } = signResult;
+
       await store.dispatch('auth/setUser', { user });
 
       return user;
@@ -43,10 +45,12 @@ export default class AuthService {
     isSave?: boolean;
   }): Promise<User | void> {
     try {
-      const user: User = await this.api.post(`${this.AUTH_PATH}/sign-in`, { email, password });
+      const signResult: SignResponse = await this.api.post(`${this.AUTH_PATH}/sign-in`, { email, password });
+      const { user, token } = signResult;
+
       await store.dispatch('auth/setUser', { user });
 
-      if (isSave) setAuthTokenFromLocalStorage(user.token);
+      if (isSave) setAuthTokenFromLocalStorage(token);
 
       return user;
     } catch (e) {

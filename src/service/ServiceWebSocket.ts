@@ -32,11 +32,15 @@ class ServiceWebSocket {
   }
 
   setReceiveHandlers(handlers: {}) {
-    // this.ws.on  handlers key & method
+    for (let message in handlers) {
+      this.ws.on(message, handlers[message]);
+    }
   }
 
-  sendMessage(message, payload) {
-    this.ws.emit(message, payload);
+  sendMessage(message, payload, ack: any = null) {
+    this.ws.emit(message, payload, res => {
+      if (ack) ack(res);
+    });
   }
 }
 

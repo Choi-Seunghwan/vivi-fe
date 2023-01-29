@@ -6,6 +6,7 @@
       :title="roomItem.title"
       :memberCount="roomItem?.members.length + 1"
       class="room-list__item"
+      @click="roomCardClick(roomItem)"
     />
   </div>
 </template>
@@ -34,11 +35,13 @@ export default {
       rooms.value = result;
     };
 
+    const roomCardClick = (room: Room) => {};
+
     onMounted(async () => {
       await getRooms();
     });
 
-    return { rooms };
+    return { rooms, roomCardClick };
   }
 };
 </script>
@@ -47,6 +50,7 @@ export default {
   display: flex;
   min-height: 100px;
   align-items: center;
+  flex-wrap: wrap;
 
   .room-list {
     display: flex;

@@ -12,8 +12,7 @@ export default class RoomService {
   }
 
   async getRoomList(): Promise<Room[]> {
-    const result = await this.api.get(`${this.ROOM_PATH}`);
-    const rooms: Room[] = result.data;
+    const rooms: Room[] = await this.api.get(`${this.ROOM_PATH}`);
     return rooms;
   }
 

@@ -8,45 +8,37 @@
     </section>
   </div>
 </template>
-<script>
-import mediaManager from '@/modules/MediaManager';
+<script lang="ts">
 import { mapState, mapActions } from 'vuex';
-// import RoomViewer from '@/components/room/RoomViewer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
-import { toast, parseStr } from '@/utils';
+import type MessageManager from '@/service/MessageManager';
+import { inject, onMounted } from '@vue/runtime-core';
+import { useRoute } from 'vue-router';
 
 export default {
   components: {
     // RoomViewer,
     ChatContainer
   },
-  watch: {
-    room(v) {
-      if (!v) {
-        toast.showToast(parseStr('TOAST_HOST_OUT'));
-        this.$router.push({ name: 'Home' });
-      }
-    },
-    roomConnectionStatus(v, oldV) {
-      if (v === 'COMPLETE') {
-        this._service.sendSessionDescOfferToRoomAllMembers();
-      }
-    }
+  setup() {
+    const route = useRoute();
+    const messageManager: MessageManager = inject('$message')!;
+    const roomMessageHandler = messageManager.roomMessageHandler;
+    const roomId = route.params?.roomId || '';
+
+    const joinRoom = async () => {
+      roomMessageHandler.joinRoom(roomId);
+    };
+
+    onMounted(async () => {
+      await joinRoom();
+    });
   },
   computed: {
-    ...mapState('room', ['room', 'roomConnectionStatus']),
-    roomId() {
-      return Number(this.$route?.params?.roomId);
-    }
+    ...mapState('room', ['room', 'roomConnectionStatus'])
   },
-  async mounted() {
-    const { roomId } = this;
-    await mediaManager.initLocalStream();
-    this._service.joinRoom({ roomId });
-  },
-  beforeUnmount() {
-    this._service.leaveRoom();
-  }
+  async mounted() {},
+  beforeUnmount() {}
 };
 </script>
 

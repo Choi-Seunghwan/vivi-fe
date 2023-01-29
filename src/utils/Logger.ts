@@ -1,10 +1,14 @@
 class Logger {
-  info(message: string): void {
-    console.log('[Info]' + message);
+  info(...messages): void {
+    console.log('[Info]', ...messages);
   }
 
-  debug(message: string): void {
-    console.log('[Debug]' + message);
+  debug(...messages): void {
+    console.log('[Debug]', ...messages);
+  }
+
+  error(error, ...messages): void {
+    console.log('[Error]', error, ...messages);
   }
 }
 
