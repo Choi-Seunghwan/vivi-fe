@@ -1,7 +1,16 @@
 import { toast } from '@/utils';
 import store from '@/store/store';
+import type { RouteLocationNormalized } from 'vue-router';
 
-const isSignIn = () => {
+export const globalGuard = async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+  const setTopNav = (val: boolean) => {
+    store.dispatch('context/setTopNav', val);
+  };
+  if (to.name === 'Room' || to.name === 'Broadcast') setTopNav(false);
+  else setTopNav(true);
+};
+
+export const isSignIn = () => {
   const isSignIn = store.getters['auth/isSignIn'];
   return !!isSignIn;
 };

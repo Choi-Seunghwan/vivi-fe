@@ -2,6 +2,7 @@ const state = () => ({
   isMobileSize: undefined,
   isDimmed: false,
   showSideNav: false,
+  showTopNav: true
 });
 
 const mutations = {
@@ -12,36 +13,46 @@ const mutations = {
   setSideNav(state, showSideNav) {
     state.showSideNav = showSideNav;
   },
+
+  setTopNav(state, showTopNav) {
+    state.showTopNav = showTopNav;
+  }
 };
 
-const getters = {};
+const getters = {
+  showTopNav: state => state.showTopNav
+};
 
 const actions = {
   initContext() {},
 
   setDimmed({ commit }, dimmed) {
-    commit("setDimmed", dimmed);
+    commit('setDimmed', dimmed);
   },
 
   toggleSideNav({ state, commit }) {
     if (state.showSideNav) {
-      commit("setSideNav", false);
-      commit("setDimmed", false);
+      commit('setSideNav', false);
+      commit('setDimmed', false);
     } else {
-      commit("setSideNav", true);
-      commit("setDimmed", true);
+      commit('setSideNav', true);
+      commit('setDimmed', true);
     }
   },
 
   setSideNav({ commit }, showSideNav) {
     if (showSideNav) {
-      commit("setSideNav", true);
-      commit("setDimmed", true);
+      commit('setSideNav', true);
+      commit('setDimmed', true);
     } else {
-      commit("setSideNav", false);
-      commit("setDimmed", false);
+      commit('setSideNav', false);
+      commit('setDimmed', false);
     }
   },
+
+  setTopNav({ commit }, showTopNav) {
+    commit('setTopNav', showTopNav);
+  }
 };
 
 export default {
@@ -49,5 +60,5 @@ export default {
   state,
   mutations,
   getters,
-  actions,
+  actions
 };

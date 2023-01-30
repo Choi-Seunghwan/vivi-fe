@@ -12,8 +12,9 @@
 </template>
 
 <script lang="ts">
-import RoomCard from './RoomCard.vue';
 import { inject, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import RoomCard from './RoomCard.vue';
 import type ServiceManager from '@/service/ServiceManager';
 import type RoomService from '@/service/RoomService';
 
@@ -25,6 +26,7 @@ export default {
     tag: { type: String, default: '' }
   },
   setup() {
+    const router = useRouter();
     const services: ServiceManager = inject('$service')!;
     const roomService: RoomService = services.roomService;
 
@@ -35,7 +37,10 @@ export default {
       rooms.value = result;
     };
 
-    const roomCardClick = (room: Room) => {};
+    const roomCardClick = (room: Room) => {
+      const roomId = room.roomId;
+      router.push({ name: 'Room', params: { roomId } });
+    };
 
     onMounted(async () => {
       await getRooms();

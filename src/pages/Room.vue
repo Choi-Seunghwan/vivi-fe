@@ -1,10 +1,10 @@
 <template>
   <div class="room">
     <section class="room-viewer-wrap">
-      <RoomViewer ref="roomViewer" :roomInfo="room" />
+      <RoomViewerContainer ref="RoomViewerContainer"></RoomViewerContainer>
     </section>
     <section class="chat-wrap">
-      <ChatContainer />
+      <!-- <ChatContainer /> -->
     </section>
   </div>
 </template>

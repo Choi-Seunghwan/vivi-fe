@@ -1,5 +1,5 @@
 <template>
-  <nav class="top-nav">
+  <nav class="top-nav" :class="{ hide: !showTopNav }">
     <div class="left-wrap">
       <h2 @click="titleBtnHandler" class="logo">
         {{ parseStr('VIVI') }}
@@ -24,7 +24,7 @@ import Avatar from '@/components/common/Avatar.vue';
 import BasicButton from '@/components/common/BasicButton.vue';
 import BasicInput from '@/components/common/BasicInput.vue';
 import type ServiceManager from '@/service/ServiceManager';
-import { inject } from '@vue/runtime-core';
+import { computed, inject } from '@vue/runtime-core';
 import { useStore } from 'vuex';
 
 export default {

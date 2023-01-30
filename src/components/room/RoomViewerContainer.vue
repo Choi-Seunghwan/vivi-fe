@@ -1,6 +1,9 @@
 <template>
   <div class="room-viewer-container">
     <div class="room-info">
+      <BasicButton @click="goBackBtnHandler" class="go-back-btn">
+        {{ parseStr('GO_BACK') }}
+      </BasicButton>
       <BasicButton v-show="isHost" @click="settingBtnHandler" class="setting-btn">
         {{ parseStr('SETTING') }}
       </BasicButton>
@@ -29,9 +32,14 @@ export default {
       context.emit('toggleSetting');
     };
 
+    const goBackBtnHandler = () => {
+      context.emit('goBack');
+    };
+
     return {
       parseStr,
       isHost,
+      goBackBtnHandler,
       settingBtnHandler
     };
   }
@@ -65,6 +73,10 @@ export default {
     top: 0;
     left: 0;
     background: rgba(#000, 0.2);
+
+    .go-back-btn {
+      margin-left: 12px;
+    }
 
     .setting-btn {
       margin-left: auto;

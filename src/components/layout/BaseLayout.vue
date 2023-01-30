@@ -9,6 +9,9 @@
   </section>
 </template>
 <script lang="ts">
+import { computed, inject } from '@vue/runtime-core';
+import { useStore } from 'vuex';
+
 import NavContainer from '@/components/navigator/NavContainer.vue';
 import SideNav from '@/components/navigator/SideNav.vue';
 import Dimmed from './Dimmed.vue';
@@ -19,6 +22,11 @@ export default {
     NavContainer,
     SideNav,
     Dimmed
+  },
+  setup() {
+    const store = useStore();
+
+    const showTopNav = computed(() => store.getters['context/showTopNav']);
   },
   data() {
     return {

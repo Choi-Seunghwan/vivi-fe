@@ -35,8 +35,8 @@ export class RoomMessageHandler extends MessageHandler {
     }
   }
 
-  async ackJoinRoom() {
-    logger.debug(this.ackJoinRoom.name);
+  async ackJoinRoom(room: Room) {
+    logger.debug(this.ackJoinRoom.name, room);
   }
 
   async test() {

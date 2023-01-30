@@ -4,7 +4,7 @@ import SignIn from '@/pages/SignIn.vue';
 import Room from '@/pages/Room.vue';
 import Broadcast from '@/pages/Broadcast.vue';
 // import NotFound from "@/pages/NotFound.vue";
-import { BroadcastPageGuard, authGuard, signInPageGuard } from './routerGuard';
+import { BroadcastPageGuard, authGuard, globalGuard, signInPageGuard } from './routerGuard';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,5 +38,7 @@ const router = createRouter({
     // },
   ]
 });
+
+router.beforeEach(globalGuard);
 
 export default router;
