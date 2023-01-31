@@ -1,5 +1,5 @@
 <template>
-  <div class="member-screen">
+  <div class="screen">
     <!-- <div class="member-info">
       <div></div>
     </div> -->
@@ -10,7 +10,9 @@
 </template>
 
 <script lang="ts">
-export default {};
+export default {
+  name: 'Screen'
+};
 </script>
 
 <style lang="scss" scoped>

@@ -9,7 +9,7 @@
       </BasicButton>
     </div>
     <div class="viewer">
-      <MemberScreen />
+      <Screen />
     </div>
   </div>
 </template>
@@ -17,12 +17,12 @@
 <script lang="ts">
 import { mapActions, mapState, mapGetters } from 'vuex';
 import { parseStr } from '@/utils';
-import MemberScreen from './MemberScreen.vue';
+import Screen from '@/components/screen/Screen.vue';
 import BasicButton from '@/components/common/BasicButton.vue';
 
 export default {
   name: 'RoomViewerContainer',
-  components: { MemberScreen, BasicButton },
+  components: { Screen, BasicButton },
   props: {
     isHost: { type: Boolean, default: false }
   },
