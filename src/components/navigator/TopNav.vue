@@ -1,5 +1,5 @@
 <template>
-  <nav class="top-nav" :class="{ hide: !showTopNav }">
+  <nav class="top-nav">
     <div class="left-wrap">
       <h2 @click="titleBtnHandler" class="logo">
         {{ parseStr('VIVI') }}
