@@ -3,6 +3,7 @@
     <div class="room-info"></div>
     <div class="viewer">
       <Screen />
+      <ChatContainer class="chat-container" />
     </div>
   </div>
 </template>
@@ -12,10 +13,11 @@ import { mapActions, mapState, mapGetters } from 'vuex';
 import { parseStr } from '@/utils';
 import Screen from '@/components/screen/Screen.vue';
 import BasicButton from '@/components/common/BasicButton.vue';
+import ChatContainer from '@/components/chat/ChatContainer.vue';
 
 export default {
   name: 'RoomViewerContainer',
-  components: { Screen, BasicButton },
+  components: { Screen, BasicButton, ChatContainer },
   props: {
     isHost: { type: Boolean, default: false }
   },
@@ -56,8 +58,8 @@ export default {
     align-items: center;
     flex-direction: row;
     width: 100%;
-    height: 50px;
-    z-index: 1;
+    height: 56px;
+    z-index: 2;
     top: 0;
     left: 0;
     background: rgba(#000, 0.2);
@@ -66,6 +68,15 @@ export default {
       margin-left: auto;
       margin-right: 12px;
     }
+  }
+
+  .chat-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

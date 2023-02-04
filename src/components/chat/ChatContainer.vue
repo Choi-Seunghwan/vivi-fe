@@ -5,12 +5,14 @@
 <script lang="ts">
 import { mapState } from 'vuex';
 
-export default {};
+export default {
+  components: {}
+};
 </script>
 
-<style lang="scss">
+<style lang="scss" scpoed>
 .chat-container {
-  background-color: #d3d3d3;
-  margin-bottom: 20px;
+  width: 100%;
+  height: 100%;
 }
 </style>

@@ -1,39 +1,33 @@
 <template>
   <div class="screen">
-    <!-- <div class="member-info">
-      <div></div>
-    </div> -->
-    <div class="screen">
-      <p>카메라 준비중</p>
-    </div>
+    <video class="videoRef" ref="videoRef" autoplay />
   </div>
 </template>
 
 <script lang="ts">
+import { onMounted, ref, watch } from '@vue/runtime-core';
 export default {
-  name: 'Screen'
+  name: 'Screen',
+  props: {
+    stream: {}
+  },
+  setup(props, context) {
+    const videoRef = ref();
+
+    watch(
+      () => props.stream,
+      (newVal, prevVal) => {
+        if (newVal && videoRef?.value) videoRef.value.srcObject = newVal;
+      }
+    );
+
+    onMounted(() => {});
+    return { videoRef };
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-.member-screen {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-}
-
-.member-info {
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 48px;
-  z-index: 1;
-  top: 0;
-  left: 0;
-}
-
 .screen {
   display: flex;
   width: 100%;

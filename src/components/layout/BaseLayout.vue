@@ -1,7 +1,7 @@
 <template>
   <section :class="THEME" class="base-layout">
     <Dimmed />
-    <NavContainer />
+    <NavContainer class="nav-container" />
     <SideNav />
     <div class="content">
       <slot></slot>
@@ -49,13 +49,20 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-
-  .content {
-    /* position: absolute; */
-    /* top: 56px; */
+  .nav-container {
+    position: absolute;
+    top: 0px;
     width: 100%;
-    height: calc(100% - 56px);
+    height: 56px;
+    z-index: 1;
+  }
+  .content {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
     overflow: auto;
+    z-index: 0;
   }
 }
 </style>

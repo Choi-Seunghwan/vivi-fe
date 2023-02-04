@@ -1,25 +1,29 @@
+import type { App as VueApp } from 'vue';
 import logger from '@/utils/Logger';
 
-class MediaManager {
-  localStream;
+export default class MediaManager {
+  localStream: MediaStream | null;
+  app: VueApp;
 
-  constructor() {
+  constructor(app: VueApp) {
+    this.app = app;
     this.localStream = null;
   }
 
-  async initLocalStream() {
-    if (!navigator?.mediaDevices) return;
+  async initLocalStream(): Promise<MediaStream | void> {
     try {
-      this.localStream = await await navigator?.mediaDevices?.getUserMedia({ video: true });
+      if (!navigator?.mediaDevices) return;
+      else return await navigator?.mediaDevices?.getUserMedia({ video: true, audio: true });
     } catch (err) {
-      logger.debug('media error');
+      logger.debug('initLocalStream Error');
     }
   }
 
-  getLocalStream() {
+  clearlocalStream() {
+    this.localStream = null;
+  }
+
+  getLocalStream(): MediaStream | null {
     return this.localStream;
   }
 }
-
-const mediaManager = new MediaManager();
-export default mediaManager;

@@ -1,29 +1,25 @@
 <template>
   <div class="ChatControl">
     <div class="inputWrap">
-      <input v-model="chatText" class="inputWrap__chatText" />
+      <input class="inputWrap__chatText" />
     </div>
     <div class="btnWrap">
       <button @click="sendBtnHandler" class="controller__submit">
-        {{ parseStr("send") }}
+        {{ parseStr('send') }}
       </button>
     </div>
   </div>
 </template>
 
-<script>
-import { parseStr } from "@/utils";
+<script lang="ts">
+import { parseStr } from '@/utils';
 export default {
-  data: () => ({
-    chatText: "",
-  }),
-  methods: {
-    parseStr,
-    sendBtnHandler() {
-      this.$emit("sendMessage", this.chatText);
-      this.chatText = "";
-    },
-  },
+  name: 'ChatController',
+  setup() {
+    const sendBtnHandler = () => {};
+
+    return { parseStr, sendBtnHandler };
+  }
 };
 </script>
 

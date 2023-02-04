@@ -1,21 +1,23 @@
 <template>
   <Layout class="broadcast">
     <section class="room-viewer">
-      <RoomViewerContainer @toggleSetting="toggleSetting" :isHost="true" ref="roomViewer"></RoomViewerContainer>
+      <RoomViewerContainer :isHost="true" ref="roomViewer"></RoomViewerContainer>
     </section>
     <div v-show="isShowSetting" class="modal">
-      <BroadcastController @setSettingVisibility="setSettingVisibility" />
+      <BroadcastController />
     </div>
   </Layout>
 </template>
 
 <script lang="ts">
+import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
+
 import BroadcastController from '@/components/broadcast/BroadcastController.vue';
 import RoomViewerContainer from '@/components/room/RoomViewerContainer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import Layout from '@/components/layout/Layout.vue';
 import MemberList from '@/components/room/MemberList.vue';
-import { ref } from 'vue';
 
 export default {
   name: 'Broadcast',
@@ -27,18 +29,12 @@ export default {
     MemberList
   },
   setup() {
-    const isShowSetting = ref(true);
+    const store = useStore();
+    const isShowSetting = computed(() => {
+      return store.getters['room/isShowSettingPanel'];
+    });
 
-    const toggleSetting = (v = undefined) => {
-      if (v !== undefined) isShowSetting.value = v;
-      else isShowSetting.value = !isShowSetting.value;
-    };
-
-    const setSettingVisibility = (v: boolean) => {
-      isShowSetting.value = v;
-    };
-
-    return { isShowSetting, toggleSetting, setSettingVisibility };
+    return { isShowSetting };
   }
 };
 </script>

@@ -1,10 +1,10 @@
 <template>
   <nav class="broadcast-top-nav">
     <button @click="backBtnHandler" class="back-btn">
-      <Arrow :width="40" :height="40" />
+      <Arrow :width="24" :height="24" />
     </button>
 
-    <BasicButton v-show="isBroadcastHost" @click="settingBtnHandler" class="setting-btn">
+    <BasicButton v-show="true" @click="settingBtnHandler" class="setting-btn">
       {{ parseStr('SETTING') }}
     </BasicButton>
   </nav>
@@ -13,6 +13,7 @@
 <script lang="ts">
 import { useRouter } from 'vue-router';
 import { parseStr } from '@/utils';
+import { useStore } from 'vuex';
 
 import Arrow from '../svg/Arrow.vue';
 import { computed } from '@vue/runtime-core';
@@ -26,18 +27,18 @@ export default {
   name: 'BroadcastTopNav',
   setup() {
     const router = useRouter();
+    const store = useStore();
 
     const backBtnHandler = () => {
       router.back();
     };
 
-    const isBroadcastHost = computed(() => {
-      return true;
-    });
+    const settingBtnHandler = () => {
+      if (store.getters['room/isShowSettingPanel']) store.dispatch('room/setShowSettingPanel', { value: false });
+      else store.dispatch('room/setShowSettingPanel', { value: true });
+    };
 
-    const settingBtnHandler = () => {};
-
-    return { parseStr, backBtnHandler, isBroadcastHost, settingBtnHandler };
+    return { parseStr, backBtnHandler, settingBtnHandler };
   }
 };
 </script>
