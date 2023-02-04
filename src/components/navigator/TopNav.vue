@@ -23,8 +23,6 @@ import { parseStr } from '@/utils';
 import Avatar from '@/components/common/Avatar.vue';
 import BasicButton from '@/components/common/BasicButton.vue';
 import BasicInput from '@/components/common/BasicInput.vue';
-import type ServiceManager from '@/service/ServiceManager';
-import { computed, inject } from '@vue/runtime-core';
 import { useStore } from 'vuex';
 
 export default {
@@ -32,9 +30,6 @@ export default {
   components: { Avatar, BasicButton, BasicInput },
   setup(props, context) {
     const store = useStore();
-
-    /** Test code */
-    // const services: ServiceManager = inject('$service')!;
 
     const isSignIn = (): boolean => {
       return store.getters['auth/isSignIn'];

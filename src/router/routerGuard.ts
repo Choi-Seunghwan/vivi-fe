@@ -23,7 +23,7 @@ export const signInPageGuard = (to, from, next) => {
 export const BroadcastPageGuard = (to, from, next) => {
   if (!isSignIn()) {
     toast.showToast('need login');
-    return;
+    return next({ name: 'Home' });
   }
   return next();
 };

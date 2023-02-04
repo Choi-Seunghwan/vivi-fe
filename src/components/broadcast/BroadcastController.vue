@@ -48,6 +48,7 @@ export default {
 
     const createRoom = async () => {
       await roomMessageHandler.createRoom({ title: title.value });
+      context.emit('setSettingVisibility', false);
     };
 
     const selectedTag = computed(() => tag);

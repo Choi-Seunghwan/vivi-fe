@@ -4,7 +4,7 @@
       <RoomViewerContainer @toggleSetting="toggleSetting" :isHost="true" ref="roomViewer"></RoomViewerContainer>
     </section>
     <div v-show="isShowSetting" class="modal">
-      <BroadcastController />
+      <BroadcastController @setSettingVisibility="setSettingVisibility" />
     </div>
   </Layout>
 </template>
@@ -34,7 +34,11 @@ export default {
       else isShowSetting.value = !isShowSetting.value;
     };
 
-    return { isShowSetting, toggleSetting };
+    const setSettingVisibility = (v: boolean) => {
+      isShowSetting.value = v;
+    };
+
+    return { isShowSetting, toggleSetting, setSettingVisibility };
   }
 };
 </script>
