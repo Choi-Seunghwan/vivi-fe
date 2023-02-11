@@ -1,22 +1,30 @@
 import type { App as VueApp } from 'vue';
 import type ServiceWebSocket from './ServiceWebSocket';
 import { MessageHandler } from './MessageHandler';
-import { MESSAGE_CHAT_MESSAGE } from '@/constant';
+import { MESSAGE_CHAT } from '@/constant';
+import type { Store } from 'vuex';
 
 export class ChatMessageHandler extends MessageHandler {
   private app: VueApp;
+  private store: Store<any>;
   private serviceWebSocket: ServiceWebSocket;
 
-  constructor(app: VueApp, serviceWebSocket: ServiceWebSocket) {
+  constructor(app: VueApp, store: Store<any>, serviceWebSocket: ServiceWebSocket) {
     super();
     this.app = app;
+    this.store = store;
     this.serviceWebSocket = serviceWebSocket;
     this.mappingReceiveHandlers({
-      [MESSAGE_CHAT_MESSAGE.ON_RECEIVE_CHAT_MESSAGE]: this.onReceiveChatMessage
+      [MESSAGE_CHAT.ROOM_CHAT_MESSAGE]: this.onRoomChatMessage.bind(this)
     });
   }
 
-  sendChatMessage() {}
+  sendRoomChatMessage(message: string) {
+    this.serviceWebSocket.sendMessage(MESSAGE_CHAT.SEND_ROOM_CHAT_MESSAGE, { message });
+  }
 
-  onReceiveChatMessage() {}
+  onRoomChatMessage(message) {
+    console.log('@@ message', message);
+    // this.store.dispatch()
+  }
 }

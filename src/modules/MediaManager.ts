@@ -10,17 +10,25 @@ export default class MediaManager {
     this.localStream = null;
   }
 
-  async initLocalStream(): Promise<MediaStream | void> {
+  async initLocalStream(callback: Function): Promise<MediaStream | void> {
     try {
       if (!navigator?.mediaDevices) return;
-      else return await navigator?.mediaDevices?.getUserMedia({ video: true, audio: true });
+      else
+        this.localStream = await navigator?.mediaDevices?.getUserMedia({
+          video: { width: 1280, height: 720, facingMode: 'user' }
+          // audio: true
+        });
+      callback();
     } catch (err) {
       logger.debug('initLocalStream Error');
     }
   }
 
   clearlocalStream() {
-    this.localStream = null;
+    const tracks = this.localStream?.getTracks();
+    tracks?.forEach(track => {
+      track.stop();
+    });
   }
 
   getLocalStream(): MediaStream | null {

@@ -1,6 +1,6 @@
 <template>
   <div class="screen">
-    <video class="videoRef" ref="videoRef" autoplay />
+    <video class="video" ref="videoRef" autoplay />
   </div>
 </template>
 
@@ -34,5 +34,10 @@ export default {
   height: 100%;
   background: #aaa;
   align-items: center;
+
+  .video {
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

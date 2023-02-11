@@ -2,18 +2,20 @@
   <div class="room-viewer-container">
     <div class="room-info"></div>
     <div class="viewer">
-      <Screen />
+      <Screen :stream="localStream" class="screen" />
       <ChatContainer class="chat-container" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { mapActions, mapState, mapGetters } from 'vuex';
+import { inject, onMounted, onUnmounted, ref } from 'vue';
+import type { Ref } from 'vue';
 import { parseStr } from '@/utils';
 import Screen from '@/components/screen/Screen.vue';
 import BasicButton from '@/components/common/BasicButton.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
+import type MediaManager from '@/modules/MediaManager';
 
 export default {
   name: 'RoomViewerContainer',
@@ -23,13 +25,30 @@ export default {
   },
   setup(props, context) {
     const isHost = props.isHost;
+    const localStream: Ref<MediaStream | null> = ref(null);
+
     const settingBtnHandler = () => {
       context.emit('toggleSetting');
     };
 
+    const mediaManager: MediaManager = inject('$media')!;
+
+    const initLocalStreamCb = () => {
+      localStream.value = mediaManager.getLocalStream();
+    };
+
+    onMounted(async () => {
+      if (isHost) await mediaManager.initLocalStream(initLocalStreamCb.bind(this));
+    });
+
+    onUnmounted(() => {
+      if (isHost) mediaManager.clearlocalStream();
+    });
+
     return {
       parseStr,
       isHost,
+      localStream,
       settingBtnHandler
     };
   }
@@ -37,11 +56,12 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/assets/scss/base';
+
 .room-viewer-container {
   width: 100%;
   height: 100%;
-  background-color: rgba(#fff, 1);
-  background-color: #fff;
+  background-color: rgba(#111, 1);
 
   .viewer {
     display: flex;
@@ -49,7 +69,7 @@ export default {
     height: 100%;
     flex-wrap: wrap;
     gap: 8px;
-    background: #ccc;
+    background: #111;
   }
 
   .room-info {
@@ -59,7 +79,7 @@ export default {
     flex-direction: row;
     width: 100%;
     height: 56px;
-    z-index: 2;
+    z-index: 3;
     top: 0;
     left: 0;
     background: rgba(#000, 0.2);
@@ -71,12 +91,25 @@ export default {
   }
 
   .chat-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
     width: 100%;
     height: 100%;
+    padding-top: 432px;
+  }
+
+  .screen {
+    position: fixed;
+    left: 50%;
+    right: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 768px;
+    height: 432px;
+    z-index: 1;
+
+    @include tm {
+      width: 768px;
+      height: 432px;
+    }
   }
 }
 </style>

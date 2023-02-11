@@ -1,27 +1,32 @@
-const state = () => ({});
+type ChatState = {
+  chatMessages: ChatMessage[];
+};
 
-const mutations = {};
+const state: ChatState = {
+  chatMessages: []
+};
 
-const getters = {};
+const mutations = {
+  setChatMessages: (state: ChatState, chatMessages: ChatMessage) => {
+    state.chatMessages = chatMessages;
+  }
+};
+
+const getters = {
+  chatMessages: (state: ChatState) => {
+    return state.chatMessages;
+  }
+};
 
 const actions = {
-  /*
-  handleMessage({ state, dispatch }, args) {
-    const { method } = args;
-    const splittedMethod = method.split('/');
-    console.log('chat handleMessage', state, args);
+  clearChatMessages({ commit }, {}) {
+    commit('setChatMessages', []);
+  },
 
-    switch (splittedMethod[1]) {
-      case 'receiveChatMessage': {
-        dispatch('receiveChatMessage', args);
-        break;
-      }
-      default: {
-        break;
-      }
-    }
+  addChatMessage({ commit, state }, { chatMessage }) {
+    const newChatMessages = [...state.chatMessages, chatMessage];
+    commit('setChatMessages', newChatMessages);
   }
-  */
 };
 
 export default {

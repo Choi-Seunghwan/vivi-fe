@@ -17,7 +17,7 @@ export default class MessageManager {
     this.serviceWebSocket = new ServiceWebSocket();
 
     this.roomMessageHandler = new RoomMessageHandler(app, this.serviceWebSocket);
-    this.chatMessageHandler = new ChatMessageHandler(app, this.serviceWebSocket);
+    this.chatMessageHandler = new ChatMessageHandler(app, store, this.serviceWebSocket);
 
     this.serviceWebSocket.setReceiveHandlers({
       ...this.chatMessageHandler.getReceiveHandlers(),

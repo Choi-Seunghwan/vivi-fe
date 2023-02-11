@@ -14,7 +14,7 @@ export class RoomMessageHandler extends MessageHandler {
     this.serviceWebSocket = serviceWebSocket;
 
     this.mappingReceiveHandlers({
-      // [MESSAGE_ROOM.CREATE_ROOM]: this.onCreateRoom.bind(this)
+      [MESSAGE_ROOM.NEW_ROOM_MEMBER_JOINED]: this.onNewRoomMemberJoined
     });
   }
 
@@ -41,5 +41,10 @@ export class RoomMessageHandler extends MessageHandler {
 
   async test() {
     this.serviceWebSocket.sendMessage('ROOM/test', {});
+  }
+
+  async onNewRoomMemberJoined(message) {
+    logger.debug(message);
+    logger.debug(this);
   }
 }

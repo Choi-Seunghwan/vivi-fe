@@ -70,6 +70,7 @@ export default {
 
 <style lang="scss" scoped>
 .login {
+  margin-top: 56px;
   .login-wrap {
     .input-wrap {
       .input {

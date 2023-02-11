@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { computed, ref } from 'vue';
+import { computed, onUnmounted } from 'vue';
 import { useStore } from 'vuex';
 
 import BroadcastController from '@/components/broadcast/BroadcastController.vue';
@@ -34,6 +34,10 @@ export default {
       return store.getters['room/isShowSettingPanel'];
     });
 
+    onUnmounted(() => {
+      store.dispatch('chat/clearChatMessages');
+    });
+
     return { isShowSetting };
   }
 };
@@ -50,7 +54,6 @@ export default {
     width: 100%;
     height: 100%;
     flex: 1;
-    border-bottom: #eee 2px solid;
   }
 
   .modal {
@@ -64,6 +67,7 @@ export default {
     border-radius: 6px;
     box-sizing: border-box;
     padding: 14px;
+    z-index: 100;
   }
 }
 </style>
