@@ -19,7 +19,7 @@ export class ChatMessageHandler extends MessageHandler {
     });
   }
 
-  sendRoomChatMessage(message: string) {
+  sendRoomChatMessage(message: SendChatMessage) {
     this.serviceWebSocket.sendMessage(MESSAGE_CHAT.SEND_ROOM_CHAT_MESSAGE, { message });
   }
 

@@ -53,6 +53,7 @@ export default {
 
     const selectedTag = computed(() => tag);
     const startBtnDisabled = computed(() => !tag || !title);
+
     return {
       title,
       // tag,

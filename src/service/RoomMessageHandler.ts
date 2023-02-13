@@ -1,16 +1,19 @@
 import type { App as VueApp } from 'vue';
 import type ServiceWebSocket from './ServiceWebSocket';
-import { MESSAGE_ROOM, METHOD_CREATE_ROOM } from '@/constant';
+import { MESSAGE_ROOM } from '@/constant';
 import { MessageHandler } from './MessageHandler';
 import logger from '@/utils/Logger';
+import type { Store } from 'vuex';
 
 export class RoomMessageHandler extends MessageHandler {
   private app: VueApp;
+  private store: Store<any>;
   private serviceWebSocket: ServiceWebSocket;
 
-  constructor(app: VueApp, serviceWebSocket: ServiceWebSocket) {
+  constructor(app: VueApp, store: Store<any>, serviceWebSocket: ServiceWebSocket) {
     super();
     this.app = app;
+    this.store = store;
     this.serviceWebSocket = serviceWebSocket;
 
     this.mappingReceiveHandlers({
@@ -36,6 +39,13 @@ export class RoomMessageHandler extends MessageHandler {
   }
 
   async ackJoinRoom(room: Room) {
+    try {
+      if (!room) throw new Error(`ackJoinRoom Error`);
+
+      await this.store.dispatch('room/setRoom', room);
+    } catch (e) {
+      throw e;
+    }
     logger.debug(this.ackJoinRoom.name, room);
   }
 

@@ -13,6 +13,7 @@
 </template>
 
 <script lang="ts">
+import { computed, inject } from '@vue/runtime-core';
 import { ref } from '@vue/reactivity';
 import { useStore } from 'vuex';
 
@@ -20,7 +21,6 @@ import { parseStr } from '@/utils';
 import BasicInput from '../common/BasicInput.vue';
 import BasicButton from '../common/BasicButton.vue';
 import type MessageManager from '@/service/MessageManager';
-import { inject } from '@vue/runtime-core';
 
 export default {
   name: 'ChatContainer',
@@ -30,11 +30,13 @@ export default {
     const messageManager: MessageManager = inject('$message')!;
     const chatMessageHandler = messageManager.chatMessageHandler;
     const inputMessage = ref('');
+
     const sendBtnHandler = () => {
-      chatMessageHandler.sendRoomChatMessage('test');
+      chatMessageHandler.sendRoomChatMessage(inputMessage.value);
     };
 
-    const chatMessages = store.getters['chat/chatMessages'];
+    const chatMessages = computed(() => store.getters['chat/chatMessages']);
+
     return { parseStr, sendBtnHandler, inputMessage, chatMessages };
   }
 };
