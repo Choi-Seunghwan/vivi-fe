@@ -2,7 +2,8 @@
   <div class="chat-container">
     <div class="chat-messages">
       <div v-for="(chatMessage, i) in chatMessages" :key="i" class="message-item">
-        <span>{{ chatMessage.message }}</span>
+        <p>{{ chatMessage?.user?.nickname }}</p>
+        <span>{{ chatMessage?.message }}</span>
       </div>
     </div>
     <div class="input-wrap">
@@ -13,6 +14,7 @@
 </template>
 
 <script lang="ts">
+import type { ComputedRef } from 'vue';
 import { computed, inject } from '@vue/runtime-core';
 import { ref } from '@vue/reactivity';
 import { useStore } from 'vuex';
@@ -30,12 +32,15 @@ export default {
     const messageManager: MessageManager = inject('$message')!;
     const chatMessageHandler = messageManager.chatMessageHandler;
     const inputMessage = ref('');
+    const room: ComputedRef<Room> = computed(() => store.getters['room/getRoom']);
+    const chatMessages = computed(() => store.getters['chat/chatMessages']);
 
     const sendBtnHandler = () => {
-      chatMessageHandler.sendRoomChatMessage(inputMessage.value);
-    };
+      if (!room?.value?.roomId) return;
 
-    const chatMessages = computed(() => store.getters['chat/chatMessages']);
+      const sendMessage: SendChatMessage = { roomId: room.value.roomId, message: inputMessage.value };
+      chatMessageHandler.sendRoomChatMessage(sendMessage);
+    };
 
     return { parseStr, sendBtnHandler, inputMessage, chatMessages };
   }
@@ -45,6 +50,15 @@ export default {
 <style lang="scss" scoped>
 .chat-container {
   display: flex;
+  flex-direction: column;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 20px;
+}
+
+.chat-messages {
+  width: 100%;
+  height: 100%;
 }
 
 .input-wrap {

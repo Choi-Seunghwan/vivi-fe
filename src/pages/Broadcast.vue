@@ -33,6 +33,7 @@ export default {
     const isShowSetting = computed(() => store.getters['room/isShowSettingPanel']);
 
     onUnmounted(() => {
+      store.dispatch('room/clearRoom');
       store.dispatch('chat/clearChatMessages');
     });
 

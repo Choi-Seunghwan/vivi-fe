@@ -7,6 +7,10 @@ class Logger {
     console.log('[Debug]', ...messages);
   }
 
+  warn(error, ...messages): void {
+    console.log('[Warn]', error, ...messages);
+  }
+
   error(error, ...messages): void {
     console.log('[Error]', error, ...messages);
   }

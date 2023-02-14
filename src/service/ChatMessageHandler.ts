@@ -20,11 +20,10 @@ export class ChatMessageHandler extends MessageHandler {
   }
 
   sendRoomChatMessage(message: SendChatMessage) {
-    this.serviceWebSocket.sendMessage(MESSAGE_CHAT.SEND_ROOM_CHAT_MESSAGE, { message });
+    this.serviceWebSocket.sendMessage(MESSAGE_CHAT.SEND_ROOM_CHAT_MESSAGE, { ...message });
   }
 
-  onRoomChatMessage(message) {
-    console.log('@@ message', message);
-    // this.store.dispatch()
+  onRoomChatMessage(message: ChatMessage) {
+    this.store.dispatch('chat/addChatMessage', { message });
   }
 }

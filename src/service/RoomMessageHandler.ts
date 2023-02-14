@@ -26,7 +26,13 @@ export class RoomMessageHandler extends MessageHandler {
   }
 
   async ackCreateRoom(room: Room) {
-    logger.debug(this.ackCreateRoom.name, room);
+    try {
+      if (!room) throw new Error('ackCreateRoom room Error');
+
+      await this.store.dispatch('room/setRoom', { room });
+    } catch (e) {
+      logger.warn(this.ackCreateRoom.name, room);
+    }
   }
 
   async joinRoom(roomId) {

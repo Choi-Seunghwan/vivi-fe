@@ -9,11 +9,12 @@
   </div>
 </template>
 <script lang="ts">
-import { mapState, mapActions } from 'vuex';
+import { useStore, mapState, mapActions } from 'vuex';
+import { useRoute } from 'vue-router';
+
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import type MessageManager from '@/service/MessageManager';
-import { inject, onMounted } from '@vue/runtime-core';
-import { useRoute } from 'vue-router';
+import { inject, onMounted, onUnmounted } from '@vue/runtime-core';
 
 export default {
   components: {
@@ -22,6 +23,7 @@ export default {
   },
   setup() {
     const route = useRoute();
+    const store = useStore();
     const messageManager: MessageManager = inject('$message')!;
     const roomMessageHandler = messageManager.roomMessageHandler;
     const roomId = route.params?.roomId || '';
@@ -33,12 +35,15 @@ export default {
     onMounted(async () => {
       await joinRoom();
     });
+
+    onUnmounted(() => {
+      store.dispatch('room/clearRoom');
+      store.dispatch('chat/clearChatMessages');
+    });
   },
   computed: {
     ...mapState('room', ['room', 'roomConnectionStatus'])
-  },
-  async mounted() {},
-  beforeUnmount() {}
+  }
 };
 </script>
 

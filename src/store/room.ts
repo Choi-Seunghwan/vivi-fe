@@ -24,6 +24,9 @@ const getters = {
     if (user.id === state.room?.host?.id) return true;
     else return false;
   },
+
+  getRoom: (state: RoomState) => state.room,
+
   isShowSettingPanel: (state: RoomState) => {
     if (state.showSettingPanel) return true;
     else return false;
@@ -34,6 +37,11 @@ const actions = {
   setRoom({ commit }, { room }) {
     commit('setRoom', room);
   },
+
+  clearRoom({ commit }, {}) {
+    commit('setRoom', null);
+  },
+
   setShowSettingPanel({ commit }, { value }) {
     commit('setShowSettingPanel', value);
   }
