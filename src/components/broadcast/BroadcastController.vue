@@ -4,12 +4,7 @@
     <div class="room-info">
       <div class="title">
         <h4 class="title-text">{{ parseStr('BROADCAST_TITLE') }}</h4>
-        <BasicInput
-          :placeholder="parseStr('BROADCAST_TITLE_PLACEHOLDER')"
-          v-model="title"
-          class="title-input"
-          underline
-        />
+        <BasicInput :placeholder="parseStr('BROADCAST_TITLE_PLACEHOLDER')" v-model="title" class="title-input" />
       </div>
     </div>
     <div class="bottom">
@@ -93,7 +88,7 @@ export default {
       }
       .title-input {
         margin-top: 6px;
-        width: 50%;
+        width: 100%;
       }
     }
   }

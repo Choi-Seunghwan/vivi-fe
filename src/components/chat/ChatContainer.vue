@@ -7,8 +7,13 @@
       </div>
     </div>
     <div class="input-wrap">
-      <BasicInput v-model="inputMessage" :placeholder="parseStr('input')" />
-      <BasicButton @click="sendBtnHandler">{{ parseStr('CHAT_SEND') }}</BasicButton>
+      <BasicInput
+        v-model="inputMessage"
+        underline
+        :placeholder="parseStr('CHAT_MESSAGE_INPUT_PLACEHOLDER')"
+        class="message-input"
+      />
+      <BasicButton @click="sendBtnHandler" class="message-send-btn">{{ parseStr('CHAT_MESSAGE_SEND') }}</BasicButton>
     </div>
   </div>
 </template>
@@ -62,6 +67,19 @@ export default {
 }
 
 .input-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: auto;
+  padding-right: 25%;
+
+  .message-input {
+    width: 100%;
+    margin-right: 20px;
+  }
+
+  .message-send-btn {
+    width: 80px;
+  }
 }
 </style>

@@ -18,6 +18,9 @@
   "ROOM_TAG_DATE": "소개팅",
   "TOAST_HOST_OUT": "호스트가 나갔습니다.",
 
+  "CHAT_MESSAGE_INPUT_PLACEHOLDER": "메세지 입력",
+  "CHAT_MESSAGE_SEND": "전송",
+
   "ROOM_SETTING": "방 설정",
 
   "SIGN_IN": "로그인",
