@@ -38,7 +38,7 @@ const actions = {
     commit('setRoom', room);
   },
 
-  clearRoom({ commit }, {}) {
+  clearRoom({ commit }) {
     commit('setRoom', null);
   },
 

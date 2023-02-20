@@ -37,7 +37,7 @@ const getters = {
 };
 
 const actions = {
-  clearChatMessages({ commit }, {}) {
+  clearChatMessages({ commit }) {
     commit('setChatMessages', []);
   },
 

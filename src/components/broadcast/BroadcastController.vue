@@ -22,16 +22,17 @@ import BasicInput from '@/components/common/BasicInput.vue';
 import { computed, ref } from '@vue/reactivity';
 import { inject } from '@vue/runtime-core';
 import type MessageManager from '@/service/MessageManager';
+import { useStore } from 'vuex';
 
 export default {
   components: { BasicButton, BasicInput },
   setup(props, context) {
+    const store = useStore();
     const messageManager: MessageManager = inject('$message')!;
     const roomMessageHandler = messageManager.roomMessageHandler;
 
     const title = ref('');
     const tag = ref('');
-    // const tagList = ['TALK', 'SONG', 'DATE'];
 
     const tagHandler = (v: string) => {
       tag.value = v;
@@ -43,7 +44,7 @@ export default {
 
     const createRoom = async () => {
       await roomMessageHandler.createRoom({ title: title.value });
-      context.emit('setSettingVisibility', false);
+      store.dispatch('room/setShowSettingPanel', { value: false });
     };
 
     const selectedTag = computed(() => tag);
