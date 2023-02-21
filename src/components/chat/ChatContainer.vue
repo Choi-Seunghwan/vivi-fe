@@ -1,10 +1,12 @@
 <template>
   <div class="chat-container">
     <div class="chat-messages">
-      <div v-for="(chatMessage, i) in chatMessages" :key="i" class="message-item">
-        <p>{{ chatMessage?.user?.nickname }}</p>
-        <span>{{ chatMessage?.message }}</span>
-      </div>
+      <ChatMessage
+        v-for="(chatMessage, i) in chatMessages"
+        :key="i"
+        :user="chatMessage.user"
+        :message="chatMessage.message"
+      />
     </div>
     <div class="input-wrap">
       <BasicInput
@@ -27,11 +29,12 @@ import { useStore } from 'vuex';
 import { parseStr } from '@/utils';
 import BasicInput from '../common/BasicInput.vue';
 import BasicButton from '../common/BasicButton.vue';
+import ChatMessage from './ChatMessage.vue';
 import type MessageManager from '@/service/MessageManager';
 
 export default {
   name: 'ChatContainer',
-  components: { BasicInput, BasicButton },
+  components: { BasicInput, BasicButton, ChatMessage },
   setup() {
     const store = useStore();
     const messageManager: MessageManager = inject('$message')!;
@@ -62,8 +65,13 @@ export default {
 }
 
 .chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   width: 100%;
   height: 100%;
+  padding-top: 12px;
+  overflow: auto;
 }
 
 .input-wrap {
@@ -71,7 +79,7 @@ export default {
   justify-content: center;
   align-items: center;
   margin-top: auto;
-  padding-right: 25%;
+  /* padding-right: 25%; */
 
   .message-input {
     width: 100%;
