@@ -13,16 +13,8 @@
   "BROADCAST_TYPE": "방송 유형",
   "BROADCAST_TYPE_VIDEO": "비디오",
   "BROADCAST_TYPE_RADIO": "라디오",
-  "ROOM_TAG_TALK": "소통",
-  "ROOM_TAG_SONG": "노래",
-  "ROOM_TAG_DATE": "소개팅",
   "TOAST_HOST_OUT": "호스트가 나갔습니다.",
-
-  "CHAT_MESSAGE_INPUT_PLACEHOLDER": "메세지 입력",
-  "CHAT_MESSAGE_SEND": "전송",
-
   "ROOM_SETTING": "방 설정",
-
   "SIGN_IN": "로그인",
   "SIGN_OFF": "로그아웃",
   "SIGN_IN_TITLE": "로그인",

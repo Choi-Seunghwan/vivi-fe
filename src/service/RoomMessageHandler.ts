@@ -32,6 +32,7 @@ export class RoomMessageHandler extends MessageHandler {
       await this.store.dispatch('room/setRoom', { room });
     } catch (e) {
       logger.warn(this.ackCreateRoom.name, room);
+      throw e;
     }
   }
 

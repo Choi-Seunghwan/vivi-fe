@@ -1,4 +1,8 @@
-import stringJson from '@/data/string.json';
+import mainJson from '@/data/string.main.json';
+import chatJson from '@/data/string.chat.json';
+import roomJson from '@/data/string.room.json';
+
+const stringJson = Object.assign({}, mainJson, chatJson, roomJson);
 
 class Toast {
   private vNode: any = null;
