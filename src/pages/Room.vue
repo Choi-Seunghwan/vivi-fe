@@ -3,9 +3,6 @@
     <section class="room-viewer-wrap">
       <RoomViewerContainer ref="RoomViewerContainer"></RoomViewerContainer>
     </section>
-    <section class="chat-wrap">
-      <!-- <ChatContainer /> -->
-    </section>
   </div>
 </template>
 <script lang="ts">

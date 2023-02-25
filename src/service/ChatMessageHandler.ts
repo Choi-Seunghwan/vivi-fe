@@ -24,6 +24,6 @@ export class ChatMessageHandler extends MessageHandler {
   }
 
   onRoomChatMessage(message: ChatMessage) {
-    this.store.dispatch('chat/addChatMessage', { message });
+    this.store.dispatch('chat/addChatMessage', { chatMessage: message });
   }
 }
