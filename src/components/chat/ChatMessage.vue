@@ -2,8 +2,10 @@
   <div class="chat-message">
     <p class="nickname">{{ user?.nickname }}</p>
     <span v-if="type === CHAT_MESSAGE_TYPE_NORMAL" class="message">{{ message }}</span>
-    <span v-else-if="type === CHAT_MESSAGE_TYPE_SYSTEM" class="message">{{ parseStr(message) }}</span>
-    <span v-else class="message system">{{ message }}</span>
+    <span v-else-if="type === CHAT_MESSAGE_TYPE_SYSTEM" class="message system">
+      <span>{{ parseStr(message) }}</span>
+    </span>
+    <span v-else class="message">{{ message }}</span>
   </div>
 </template>
 

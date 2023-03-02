@@ -53,14 +53,9 @@ export class RoomMessageHandler extends MessageHandler {
     } catch (e) {
       throw e;
     }
-    logger.debug(this.ackJoinRoom.name, room);
   }
 
-  async test() {
-    this.serviceWebSocket.sendMessage('ROOM/test', {});
-  }
-
-  async onNewRoomMemberJoined(message) {
+  async onNewRoomMemberJoined() {
     logger.debug(message);
     logger.debug(this);
   }
