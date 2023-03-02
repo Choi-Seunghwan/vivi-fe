@@ -6,7 +6,7 @@
   </div>
 </template>
 <script lang="ts">
-import { useStore, mapState, mapActions } from 'vuex';
+import { useStore, mapState } from 'vuex';
 import { useRoute } from 'vue-router';
 
 import ChatContainer from '@/components/chat/ChatContainer.vue';

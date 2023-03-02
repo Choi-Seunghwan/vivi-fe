@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { computed, onUnmounted } from 'vue';
+import { computed, inject, onUnmounted } from 'vue';
 import { useStore } from 'vuex';
 
 import BroadcastController from '@/components/broadcast/BroadcastController.vue';
@@ -18,6 +18,7 @@ import RoomViewerContainer from '@/components/room/RoomViewerContainer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import Layout from '@/components/layout/Layout.vue';
 import MemberList from '@/components/room/MemberList.vue';
+import type MessageManager from '@/service/MessageManager';
 
 export default {
   name: 'Broadcast',
@@ -31,6 +32,8 @@ export default {
   setup() {
     const store = useStore();
     const isShowSetting = computed(() => store.getters['room/isShowSettingPanel']);
+    const messageManager: MessageManager = inject('$message')!;
+    const roomMessageHandler = messageManager.roomMessageHandler;
 
     onUnmounted(() => {
       store.dispatch('room/clearRoom');

@@ -2,7 +2,7 @@
   <div class="room-viewer-container">
     <div class="room-info"></div>
     <div class="viewer">
-      <Screen :stream="localStream" class="screen" />
+      <Screen :stream="stream" class="screen" />
       <ChatContainer class="chat-container" />
     </div>
   </div>
@@ -25,7 +25,7 @@ export default {
   },
   setup(props, context) {
     const isHost = props.isHost;
-    const localStream: Ref<MediaStream | null> = ref(null);
+    const stream: Ref<MediaStream | null> = ref(null);
 
     const settingBtnHandler = () => {
       context.emit('toggleSetting');
@@ -34,7 +34,7 @@ export default {
     const mediaManager: MediaManager = inject('$media')!;
 
     const initLocalStreamCb = () => {
-      localStream.value = mediaManager.getLocalStream();
+      stream.value = mediaManager.getLocalStream();
     };
 
     onMounted(async () => {
@@ -48,7 +48,7 @@ export default {
     return {
       parseStr,
       isHost,
-      localStream,
+      stream,
       settingBtnHandler
     };
   }
