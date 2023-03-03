@@ -11,7 +11,7 @@ import { useRoute } from 'vue-router';
 
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import type MessageManager from '@/service/MessageManager';
-import { inject, onMounted, onUnmounted } from '@vue/runtime-core';
+import { computed, inject, onMounted, onUnmounted, watch } from '@vue/runtime-core';
 
 export default {
   components: {
@@ -26,8 +26,18 @@ export default {
     const roomId = route.params?.roomId || '';
 
     const joinRoom = async () => {
-      roomMessageHandler.joinRoom(roomId);
+      await roomMessageHandler.joinRoom(roomId);
     };
+
+    const leaveRoom = async () => {
+      await roomMessageHandler.leaveRoom();
+    };
+
+    const room = computed(() => store.getters['room/getRoom']);
+
+    watch(room, (newVal, prevVal) => {
+      if (!!prevVal && !newVal) leaveRoom();
+    });
 
     onMounted(async () => {
       await joinRoom();
@@ -37,9 +47,6 @@ export default {
       store.dispatch('room/clearRoom');
       store.dispatch('chat/clearChatMessages');
     });
-  },
-  computed: {
-    ...mapState('room', ['room', 'roomConnectionStatus'])
   }
 };
 </script>

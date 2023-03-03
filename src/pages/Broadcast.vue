@@ -35,7 +35,12 @@ export default {
     const messageManager: MessageManager = inject('$message')!;
     const roomMessageHandler = messageManager.roomMessageHandler;
 
+    const leaveRoom = async () => {
+      await roomMessageHandler.leaveRoom();
+    };
+
     onUnmounted(() => {
+      leaveRoom();
       store.dispatch('room/clearRoom');
       store.dispatch('chat/clearChatMessages');
     });

@@ -17,7 +17,8 @@ export class RoomMessageHandler extends MessageHandler {
     this.serviceWebSocket = serviceWebSocket;
 
     this.mappingReceiveHandlers({
-      [MESSAGE_ROOM.NEW_ROOM_MEMBER_JOINED]: this.onNewRoomMemberJoined
+      [MESSAGE_ROOM.NEW_ROOM_MEMBER_JOINED]: this.onNewRoomMemberJoined,
+      [MESSAGE_ROOM.HOST_LEAVED]: this.onHostLeaved
     });
   }
 
@@ -55,8 +56,27 @@ export class RoomMessageHandler extends MessageHandler {
     }
   }
 
-  async onNewRoomMemberJoined() {
-    logger.debug(message);
-    logger.debug(this);
+  async onNewRoomMemberJoined() {}
+
+  async leaveRoom() {
+    try {
+      const room: Room = this.store.getters['room/getRoom'];
+      if (!room) return;
+
+      this.serviceWebSocket.sendMessage(MESSAGE_ROOM.LEAVE_ROOM, { roomId: room.roomId });
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async onHostLeaved() {
+    try {
+      const room: Room = this.store.getters['room/getRoom'];
+      if (!room) return;
+
+      await this.store.dispatch('room/setRoom', null);
+    } catch (e) {
+      throw e;
+    }
   }
 }
