@@ -9,5 +9,3 @@ declare type SignResponse = {
   user: User;
   token: string;
 };
-
-declare type Member = any;

@@ -34,7 +34,7 @@ const getters = {
 };
 
 const actions = {
-  setRoom({ commit }, { room }) {
+  setRoom({ commit }, { room }: { room: Room }) {
     commit('setRoom', room);
   },
 
@@ -44,6 +44,12 @@ const actions = {
 
   setShowSettingPanel({ commit }, { value }) {
     commit('setShowSettingPanel', value);
+  },
+
+  addRoomMember({ state, commit }, { roomMember }) {
+    const room: Room = state.room;
+    room?.members?.push(roomMember);
+    commit('setRoom', room);
   }
 };
 

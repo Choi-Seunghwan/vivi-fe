@@ -6,3 +6,9 @@ declare type Room = {
 };
 
 declare type ChatMessage = any;
+
+declare type RoomMember = {
+  id: string;
+  email: string;
+  nickname: string;
+};

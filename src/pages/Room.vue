@@ -6,16 +6,17 @@
   </div>
 </template>
 <script lang="ts">
-import { useStore, mapState } from 'vuex';
+import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
+import RoomViewerContainer from '@/components/room/RoomViewerContainer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import type MessageManager from '@/service/MessageManager';
 import { computed, inject, onMounted, onUnmounted, watch } from '@vue/runtime-core';
 
 export default {
   components: {
-    // RoomViewer,
+    RoomViewerContainer,
     ChatContainer
   },
   setup() {
