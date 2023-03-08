@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { CHAT_MESSAGE_TYPE_NORMAL, CHAT_MESSAGE_TYPE_SYSTEM } from '@/constant/chat';
+import { CHAT_MESSAGE_TYPE_NORMAL, CHAT_MESSAGE_TYPE_SYSTEM } from '@/constant';
 import { parseStr } from '@/utils';
 
 export default {

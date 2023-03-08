@@ -23,7 +23,11 @@ export class RoomMessageHandler extends MessageHandler {
   }
 
   async createRoom({ title }) {
-    this.serviceWebSocket.sendMessage(MESSAGE_ROOM.CREATE_ROOM, { title }, this.ackCreateRoom.bind(this));
+    try {
+      this.serviceWebSocket.sendMessage(MESSAGE_ROOM.CREATE_ROOM, { title }, this.ackCreateRoom.bind(this));
+    } catch (e) {
+      throw e;
+    }
   }
 
   async ackCreateRoom(room: Room) {
@@ -32,7 +36,6 @@ export class RoomMessageHandler extends MessageHandler {
 
       await this.store.dispatch('room/setRoom', { room });
     } catch (e) {
-      logger.warn(this.ackCreateRoom.name, room);
       throw e;
     }
   }

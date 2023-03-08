@@ -16,13 +16,13 @@
 </template>
 
 <script lang="ts">
+import { useStore } from 'vuex';
 import { parseStr } from '@/utils';
 import BasicButton from '@/components/common/BasicButton.vue';
 import BasicInput from '@/components/common/BasicInput.vue';
 import { computed, ref } from '@vue/reactivity';
 import { inject } from '@vue/runtime-core';
 import type MessageManager from '@/service/MessageManager';
-import { useStore } from 'vuex';
 
 export default {
   components: { BasicButton, BasicInput },

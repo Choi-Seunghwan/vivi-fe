@@ -1,7 +1,7 @@
 // import store from '@/store';
 import io, { Socket, type SocketOptions, type ManagerOptions } from 'socket.io-client';
 import store from '@/store/store';
-import auth from '@/store/auth';
+import auth from '@/store/auth.store';
 
 class ServiceWebSocket {
   ws!: Socket;

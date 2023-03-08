@@ -3,6 +3,7 @@ declare interface User {
   email: string;
   nickname: string;
   createdDate?: string;
+  token?: any;
 }
 
 declare type SignResponse = {

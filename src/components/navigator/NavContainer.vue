@@ -53,7 +53,7 @@ export default defineComponent({
     };
 
     const test = () => {
-      roomMessageHandler.test();
+      // roomMessageHandler.test();
     };
 
     const showTopNav = computed(() => store.getters['context/showTopNav']);

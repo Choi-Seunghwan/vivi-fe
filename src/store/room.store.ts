@@ -2,17 +2,14 @@ import _get from 'lodash/get';
 
 interface RoomState {
   room: Room | null;
-  showSettingPanel: boolean;
 }
 
 const state: RoomState = {
-  room: null,
-  showSettingPanel: true
+  room: null
 };
 
 const mutations = {
-  setRoom: (state: RoomState, room: Room) => (state.room = room),
-  setShowSettingPanel: (state: RoomState, value: boolean) => (state.showSettingPanel = value)
+  setRoom: (state: RoomState, room: Room) => (state.room = room)
 };
 
 const getters = {
@@ -25,12 +22,7 @@ const getters = {
     else return false;
   },
 
-  getRoom: (state: RoomState) => state.room,
-
-  isShowSettingPanel: (state: RoomState) => {
-    if (state.showSettingPanel) return true;
-    else return false;
-  }
+  getRoom: (state: RoomState) => state.room
 };
 
 const actions = {
@@ -40,10 +32,6 @@ const actions = {
 
   clearRoom({ commit }) {
     commit('setRoom', null);
-  },
-
-  setShowSettingPanel({ commit }, { value }) {
-    commit('setShowSettingPanel', value);
   },
 
   addRoomMember({ state, commit }, { roomMember }) {

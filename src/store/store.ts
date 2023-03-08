@@ -1,8 +1,8 @@
 import Vuex, { Store } from 'vuex';
-import context from './context';
-import room from './room';
-import auth from './auth';
-import chat from './chat';
+import context from './context.store';
+import room from './room.store';
+import auth from './auth.store';
+import chat from './chat.store';
 
 // Vue.use(Vuex);
 const store: Store<any> = new Vuex.Store({
