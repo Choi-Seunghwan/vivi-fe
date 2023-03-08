@@ -23,8 +23,11 @@ export default class MessageManager {
       ...this.chatMessageHandler.getReceiveHandlers(),
       ...this.roomMessageHandler.getReceiveHandlers()
     });
-
     // eventManager.setEvent(EVENT_ICE_CANDIDATE, this.sendICECandidate.bind(this));
+  }
+
+  getServiceWebSocket(): ServiceWebSocket {
+    return this.serviceWebSocket;
   }
 
   /**

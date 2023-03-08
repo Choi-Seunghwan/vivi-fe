@@ -1,11 +1,10 @@
 import eventManager from '@/modules/EventManager';
 import { EVENT_ICE_CANDIDATE, EVENT_ON_TRACK } from '@/constant';
-import type { Member } from '@/vivi-utils/types';
 
 export class PeerConnection {
   pc: RTCPeerConnection;
-  member: Member;
-  localStream;
+  member: RoomMember;
+  localStream: MediaStream;
   remoteStream;
   iceServers = [
     {
@@ -19,7 +18,7 @@ export class PeerConnection {
     }
   ];
 
-  constructor({ localStream = null, member }: { localStream?; member: Member }) {
+  constructor({ localStream, member, socket }) {
     this.pc = new RTCPeerConnection({ iceServers: this.iceServers });
     this.localStream = localStream;
     this.member = member;

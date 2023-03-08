@@ -16,6 +16,8 @@ import Screen from '@/components/screen/Screen.vue';
 import BasicButton from '@/components/common/BasicButton.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import type MediaManager from '@/modules/MediaManager';
+import { PeerConnection } from '@/modules/PeerConnection';
+import type MessageManager from '@/service/MessageManager';
 
 export default {
   name: 'RoomViewerContainer',
@@ -26,15 +28,15 @@ export default {
   setup(props, context) {
     const isHost = props.isHost;
     const stream: Ref<MediaStream | null> = ref(null);
+    const mediaManager: MediaManager = inject('$media')!;
 
     const settingBtnHandler = () => {
       context.emit('toggleSetting');
     };
 
-    const mediaManager: MediaManager = inject('$media')!;
-
-    const initLocalStreamCb = () => {
-      stream.value = mediaManager.getLocalStream();
+    const initLocalStreamCb = async () => {
+      const localStream: MediaStream = <MediaStream>await mediaManager.getLocalStream();
+      stream.value = localStream;
     };
 
     onMounted(async () => {

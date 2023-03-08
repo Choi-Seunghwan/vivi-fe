@@ -26,6 +26,9 @@ export default {
     const roomMessageHandler = messageManager.roomMessageHandler;
     const roomId = route.params?.roomId || '';
 
+    // const sws = messageManage.getServiceWebSocket();
+    // const pc = new PeerConnection({ localStream, member: null, socket: sws });
+
     const joinRoom = async () => {
       await roomMessageHandler.joinRoom(roomId);
     };
