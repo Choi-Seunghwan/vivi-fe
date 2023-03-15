@@ -1,13 +1,15 @@
 <template>
-  <div ref="app" class="app">
-    <AdSection ad-section></AdSection>
-    <BaseLayout class="main-section">
-      <router-view />
-    </BaseLayout>
-    <section sub-section></section>
+  <v-app>
+    <div ref="app" class="app">
+      <AdSection ad-section></AdSection>
+      <BaseLayout class="main-section">
+        <router-view />
+      </BaseLayout>
+      <section sub-section></section>
 
-    <Toast ref="toast" />
-  </div>
+      <Toast ref="toast" />
+    </div>
+  </v-app>
 </template>
 
 <script lang="ts">

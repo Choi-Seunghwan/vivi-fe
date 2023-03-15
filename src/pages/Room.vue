@@ -1,12 +1,12 @@
 <template>
-  <Layout class="room">
+  <Ladyout class="room">
     <section class="room-viewer">
       <RoomViewerContainer :isHost="isHost" ref="RoomViewerContainer" />
     </section>
     <div v-show="isShowSetting" class="modal">
       <BroadcastController />
     </div>
-  </Layout>
+  </Ladyout>
 </template>
 <script lang="ts">
 import { useStore } from 'vuex';
@@ -16,13 +16,13 @@ import { computed, inject, onMounted, onUnmounted, watch } from '@vue/runtime-co
 import RoomViewerContainer from '@/components/room/RoomViewerContainer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import type MessageManager from '@/service/MessageManager';
-import Layout from '@/components/layout/Layout.vue';
+import PageLayout from '@/components/layout/PageLayout.vue';
 
 export default {
   components: {
     RoomViewerContainer,
     ChatContainer,
-    Layout
+    PageLayout
   },
   setup() {
     const route = useRoute();

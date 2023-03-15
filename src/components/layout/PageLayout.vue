@@ -1,17 +1,17 @@
 <template>
-  <div class="layout">
+  <div class="page-layout">
     <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'layout'
+  name: 'PageLayout'
 };
 </script>
 
 <style lang="scss" scoped>
-.layout {
+.page-layout {
   padding: 0 20px 40px 20px;
   width: 100%;
   height: 100%;

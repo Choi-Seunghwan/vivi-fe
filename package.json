@@ -2,31 +2,37 @@
   "name": "vivi-fe",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview --port 5050",
-    "test:e2e": "start-server-and-test preview http://127.0.0.1:5050/ 'cypress open'",
-    "test:e2e:ci": "start-server-and-test preview http://127.0.0.1:5050/ 'cypress run'",
+    "serve": "vite preview",
+    "build": "vite build",
     "test:unit": "cypress open-ct",
+    "test:e2e": "start-server-and-test preview http://127.0.0.1:5050/ 'cypress open'",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "dev": "vite",
+    "preview": "vite preview --port 5050",
+    "test:e2e:ci": "start-server-and-test preview http://127.0.0.1:5050/ 'cypress run'",
     "test:unit:ci": "cypress run-ct --quiet --reporter spec",
-    "typecheck": "vue-tsc --noEmit",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+    "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@mdi/font": "5.9.55",
     "@types/lodash": "^4.14.179",
     "axios": "^0.26.0",
     "lodash": "^4.17.21",
+    "roboto-fontface": "*",
     "socket.io-client": "^4.4.1",
     "vue": "^3.2.41",
     "vue-axios": "^3.4.1",
     "vue-router": "^4.0.13",
-    "vuex": "^4.1.0"
+    "vuetify": "^3.0.0-beta.0",
+    "vuex": "^4.1.0",
+    "webfontloader": "^1.0.0"
   },
   "devDependencies": {
     "@cypress/vite-dev-server": "^2.2.2",
     "@cypress/vue": "^3.1.1",
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/node": "^16.11.25",
+    "@types/webfontloader": "^1.0.0",
     "@vitejs/plugin-vue": "^3.2.0",
     "@vitejs/plugin-vue-jsx": "^2.1.0",
     "@vue/eslint-config-prettier": "^7.0.0",
@@ -42,6 +48,8 @@
     "start-server-and-test": "^1.14.0",
     "typescript": "~4.5.5",
     "vite": "^3.2.0",
+    "vite-plugin-vuetify": "^1.0.0-alpha.12",
+    "vue-cli-plugin-vuetify": "~2.5.8",
     "vue-tsc": "^0.31.4"
   }
 }

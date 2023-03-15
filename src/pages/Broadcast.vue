@@ -1,5 +1,5 @@
 <template>
-  <Layout class="broadcast">
+  <PageLayout class="broadcast">
     <h2 class="heading">{{ parseStr('BROADCAST_SETTING') }}</h2>
     <div class="room-info">
       <div class="title">
@@ -12,7 +12,7 @@
         {{ parseStr('BROADCAST_START') }}
       </BasicButton>
     </div>
-  </Layout>
+  </PageLayout>
 </template>
 
 <script lang="ts">
@@ -22,14 +22,14 @@ import { parseStr } from '@/utils';
 import type MessageManager from '@/service/MessageManager';
 import { useRouter } from 'vue-router';
 
-import Layout from '@/components/layout/Layout.vue';
+import PageLayout from '@/components/layout/PageLayout.vue';
 import BasicInput from '@/components/common/BasicInput.vue';
 import BasicButton from '@/components/common/BasicButton.vue';
 
 export default {
   name: 'Broadcast',
   components: {
-    Layout,
+    PageLayout,
     BasicInput,
     BasicButton
   },

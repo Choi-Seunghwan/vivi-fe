@@ -1,18 +1,22 @@
 <template>
-  <div class="home">
+  <PageLayout class="home">
+    <v-progress-circular indeterminate></v-progress-circular>
     <div class="live-chat">
       <h1 class="title">목록</h1>
       <RoomListContainer />
     </div>
-  </div>
+  </PageLayout>
 </template>
 <script lang="ts">
-import RoomListContainer from '@/components/room/RoomListContainer.vue';
 import { defineComponent } from 'vue';
+
+import RoomListContainer from '@/components/room/RoomListContainer.vue';
+import PageLayout from '@/components/layout/PageLayout.vue';
 
 export default defineComponent({
   name: 'Home',
   components: {
+    PageLayout,
     RoomListContainer
   },
   data: () => ({}),
@@ -21,6 +25,8 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+@import '@/assets/scss/base.scss';
+
 .home {
   padding: 20px;
 
