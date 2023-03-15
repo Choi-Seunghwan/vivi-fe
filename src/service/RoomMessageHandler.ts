@@ -35,6 +35,7 @@ export class RoomMessageHandler extends MessageHandler {
       if (!room) throw new Error('ackCreateRoom room Error');
 
       await this.store.dispatch('room/setRoom', { room });
+      this.runAckHandler(this.ackCreateRoom.name);
     } catch (e) {
       throw e;
     }
@@ -54,6 +55,7 @@ export class RoomMessageHandler extends MessageHandler {
       if (!room) throw new Error(`ackJoinRoom Error`);
 
       await this.store.dispatch('room/setRoom', room);
+      this.runAckHandler(this.ackJoinRoom.name);
     } catch (e) {
       throw e;
     }

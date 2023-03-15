@@ -19,17 +19,22 @@
 import { computed, inject, onMounted, onUnmounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { parseStr } from '@/utils';
+import type MessageManager from '@/service/MessageManager';
+import { useRouter } from 'vue-router';
 
 import Layout from '@/components/layout/Layout.vue';
-import type MessageManager from '@/service/MessageManager';
+import BasicInput from '@/components/common/BasicInput.vue';
+import BasicButton from '@/components/common/BasicButton.vue';
 
 export default {
   name: 'Broadcast',
   components: {
-    Layout
+    Layout,
+    BasicInput,
+    BasicButton
   },
   setup() {
-    const store = useStore();
+    const router = useRouter();
     const messageManager: MessageManager = inject('$message')!;
     const roomMessageHandler = messageManager.roomMessageHandler;
 
@@ -45,10 +50,13 @@ export default {
     };
 
     const createRoom = async () => {
+      if (!title.value) return;
       await roomMessageHandler.createRoom({ title: title.value });
     };
 
-    const ackCreateRoom = () => {};
+    const ackCreateRoom = () => {
+      router.push({ name: 'Room' });
+    };
 
     const selectedTag = computed(() => tag);
     const startBtnDisabled = computed(() => !tag || !title);

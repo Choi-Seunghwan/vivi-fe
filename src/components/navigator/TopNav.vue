@@ -6,10 +6,8 @@
       </h2>
     </div>
     <div class="right-wrap">
-      <BasicButton>
-        <a class="broadcast" @click="broadcastBtnHandler">
-          {{ parseStr('BROADCASTING') }}
-        </a>
+      <BasicButton @click="broadcastBtnHandler">
+        {{ parseStr('BROADCASTING') }}
       </BasicButton>
       <BasicButton v-if="!isSignIn()" @click="signInBtnHandler">{{ parseStr('SIGN_IN') }}</BasicButton>
       <BasicButton v-else @click="signOffBtnHandler">{{ parseStr('SIGN_OFF') }}</BasicButton>

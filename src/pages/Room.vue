@@ -32,6 +32,7 @@ export default {
     const roomMessageHandler = messageManager.roomMessageHandler;
     const roomId = route.params?.roomId || '';
     const isHost = route.query?.isHost ? Boolean(route.query?.isHost) : false;
+    const room = computed(() => store.getters['room/getRoom']);
 
     // const sws = messageManage.getServiceWebSocket();
     // const pc = new PeerConnection({ localStream, member: null, socket: sws });
@@ -40,21 +41,24 @@ export default {
       await roomMessageHandler.joinRoom(roomId);
     };
 
+    const ackJoinRoom = async () => {};
+
     const leaveRoom = async () => {
       await roomMessageHandler.leaveRoom();
     };
-
-    const room = computed(() => store.getters['room/getRoom']);
 
     watch(room, (newVal, prevVal) => {
       if (!!prevVal && !newVal) leaveRoom();
     });
 
     onMounted(async () => {
-      await joinRoom();
+      roomMessageHandler.setAckHandler(roomMessageHandler.ackJoinRoom.name, ackJoinRoom.bind(this));
+
+      if (!room) await joinRoom();
     });
 
     onUnmounted(() => {
+      roomMessageHandler.releaseAckHandler(roomMessageHandler.ackJoinRoom.name);
       store.dispatch('room/clearRoom');
       store.dispatch('chat/clearChatMessages');
     });

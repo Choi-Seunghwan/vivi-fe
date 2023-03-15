@@ -1,5 +1,5 @@
 export type AckHandler = {
-  key: string;
+  key: string; // function name. ex) function.name
   handler: any;
 };
 
@@ -21,5 +21,9 @@ export class MessageHandler {
 
   public releaseAckHandler(key) {
     delete this.ackHandlers[key];
+  }
+
+  public runAckHandler(handlerKey) {
+    this.ackHandlers[handlerKey]?.();
   }
 }
