@@ -11,14 +11,14 @@
 <script lang="ts">
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-import { computed, inject, onMounted, onUnmounted, watch } from '@vue/runtime-core';
+import { computed, defineComponent, inject, onMounted, onUnmounted, watch } from '@vue/runtime-core';
 
 import RoomViewerContainer from '@/components/room/RoomViewerContainer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import type MessageManager from '@/service/MessageManager';
 import PageLayout from '@/components/layout/PageLayout.vue';
 
-export default {
+export default defineComponent({
   components: {
     RoomViewerContainer,
     ChatContainer,
@@ -68,7 +68,7 @@ export default {
       isHost
     };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

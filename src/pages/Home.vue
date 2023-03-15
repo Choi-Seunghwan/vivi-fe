@@ -1,6 +1,5 @@
 <template>
   <PageLayout class="home">
-    <v-progress-circular indeterminate></v-progress-circular>
     <div class="live-chat">
       <h1 class="title">목록</h1>
       <RoomListContainer />

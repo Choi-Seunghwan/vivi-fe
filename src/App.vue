@@ -8,6 +8,7 @@
       <section sub-section></section>
 
       <Toast ref="toast" />
+      <GlobalProgress v-if="showGlobalProgress" />
     </div>
   </v-app>
 </template>
@@ -20,15 +21,20 @@ import AdSection from './components/layout/AdvSection.vue';
 import Toast from '@/components/common/Toast.vue';
 import { toast } from '@/utils/index';
 import type ServiceManager from './service/ServiceManager';
+import GlobalProgress from './components/common/GlobalProgress.vue';
+import { useStore } from 'vuex';
 
 export default {
   name: 'App',
-  components: { BaseLayout, AdSection, Toast },
-  setup() {
+  components: { BaseLayout, AdSection, Toast, GlobalProgress },
+  setup(props) {
     const services: ServiceManager = inject('$service')!;
+    const store = useStore();
+    const showGlobalProgress = store.getters['context/showGlobalProgress'];
 
     return {
-      services
+      services,
+      showGlobalProgress
     };
   },
   mounted() {

@@ -2,7 +2,8 @@ const state = () => ({
   isMobileSize: undefined,
   isDimmed: false,
   showSideNav: false,
-  showTopNav: true
+  showTopNav: true,
+  showGlobalProgress: true
 });
 
 const mutations = {
@@ -16,11 +17,16 @@ const mutations = {
 
   setTopNav(state, showTopNav) {
     state.showTopNav = showTopNav;
+  },
+
+  setGlobalProgress(state, showGlobalProgress) {
+    state.showGlobalProgress = showGlobalProgress;
   }
 };
 
 const getters = {
-  showTopNav: state => state.showTopNav
+  showTopNav: state => state.showTopNav,
+  showGlobalProgress: state => state.showGlobalProgress
 };
 
 const actions = {
@@ -52,6 +58,10 @@ const actions = {
 
   setTopNav({ commit }, showTopNav) {
     commit('setTopNav', showTopNav);
+  },
+
+  setGlobalProgress({ commit }, showGlobalProgress) {
+    commit('setGlobalProgress', showGlobalProgress);
   }
 };
 
