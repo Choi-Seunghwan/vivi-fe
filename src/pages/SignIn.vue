@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <PageLayout class="login">
     <div class="login-wrap">
       <h1>{{ parseStr('SIGN_IN_TITLE') }}</h1>
       <div class="input-wrap">
@@ -11,7 +11,7 @@
         <!-- <button v-else @click="signOffBtnHandler" class="button">{{ parseStr('SIGN_OFF') }}</button> -->
       </div>
     </div>
-  </div>
+  </PageLayout>
 </template>
 
 <script lang="ts">
@@ -22,7 +22,12 @@ import type ServiceManager from '@/service/ServiceManager';
 import store from '@/store/store';
 import { useRouter } from 'vue-router';
 
+import PageLayout from '@/components/layout/PageLayout.vue';
+
 export default {
+  components: {
+    PageLayout
+  },
   setup() {
     const router = useRouter();
     const email = ref('');

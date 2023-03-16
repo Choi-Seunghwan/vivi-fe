@@ -50,12 +50,15 @@ export class RoomMessageHandler extends MessageHandler {
     }
   }
 
-  async ackJoinRoom(room: Room) {
+  async ackJoinRoom(result) {
     try {
-      if (!room) throw new Error(`ackJoinRoom Error`);
+      if (result?.error) {
+        this.runAckHandler(this.ackJoinRoom.name, { result: false });
+        throw new Error(`ackJoinRoom Error`);
+      }
 
-      await this.store.dispatch('room/setRoom', room);
-      this.runAckHandler(this.ackJoinRoom.name);
+      await this.store.dispatch('room/setRoom', result);
+      this.runAckHandler(this.ackJoinRoom.name, { result });
     } catch (e) {
       throw e;
     }

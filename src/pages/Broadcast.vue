@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { computed, inject, onMounted, onUnmounted, ref } from 'vue';
+import { computed, inject, onMounted, onUnmounted, ref, type ComputedRef } from 'vue';
 import { useStore } from 'vuex';
 import { parseStr } from '@/utils';
 import type MessageManager from '@/service/MessageManager';
@@ -35,6 +35,8 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const store = useStore();
+    const room: ComputedRef<Room> = computed(() => store.getters['room/getRoom']);
     const messageManager: MessageManager = inject('$message')!;
     const roomMessageHandler = messageManager.roomMessageHandler;
 
@@ -55,7 +57,8 @@ export default {
     };
 
     const ackCreateRoom = () => {
-      router.push({ name: 'Room' });
+      const roomId = room.value.roomId;
+      router.push({ name: 'Room', params: { roomId } });
     };
 
     const selectedTag = computed(() => tag);
@@ -75,6 +78,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/base.scss';
+
 .broadcast {
   display: flex;
   flex-direction: column;

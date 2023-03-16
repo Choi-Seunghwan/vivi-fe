@@ -23,7 +23,7 @@ export class MessageHandler {
     delete this.ackHandlers[key];
   }
 
-  public runAckHandler(handlerKey) {
-    this.ackHandlers[handlerKey]?.();
+  public runAckHandler(handlerKey, args: Object = {}) {
+    this.ackHandlers[handlerKey]?.(args);
   }
 }

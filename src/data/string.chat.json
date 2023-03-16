@@ -1,5 +1,6 @@
 {
   "SYSTEM_CHAT_MESSAGE_ROOM_CREATED": "방송이 시작 되었습니다.",
+  "SYSTEM_CHAT_MESSAGE_ROOM_MEMBER_JOINED": "님이 참여 하였습니다.",
   "CHAT_MESSAGE_INPUT_PLACEHOLDER": "메세지 입력",
   "CHAT_MESSAGE_SEND": "전송"
 }

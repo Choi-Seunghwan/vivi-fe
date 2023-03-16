@@ -4,9 +4,9 @@
       <Arrow :width="24" :height="24" />
     </button>
 
-    <BasicButton v-show="true" @click="settingBtnHandler" class="setting-btn">
+    <!-- <BasicButton v-show="true" @click="settingBtnHandler" class="setting-btn">
       {{ parseStr('SETTING') }}
-    </BasicButton>
+    </BasicButton> -->
   </nav>
 </template>
 
@@ -30,7 +30,7 @@ export default {
     const store = useStore();
 
     const backBtnHandler = () => {
-      router.back();
+      router.push({ name: 'Home' });
     };
 
     const settingBtnHandler = () => {
@@ -38,7 +38,7 @@ export default {
       else store.dispatch('room/setShowSettingPanel', { value: true });
     };
 
-    return { parseStr, backBtnHandler, settingBtnHandler };
+    return { parseStr, backBtnHandler };
   }
 };
 </script>
@@ -52,7 +52,6 @@ export default {
 }
 
 .back-btn {
-  padding: 0;
   cursor: pointer;
 }
 </style>

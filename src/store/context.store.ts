@@ -3,7 +3,7 @@ const state = () => ({
   isDimmed: false,
   showSideNav: false,
   showTopNav: true,
-  showGlobalProgress: true
+  showGlobalProgress: false
 });
 
 const mutations = {

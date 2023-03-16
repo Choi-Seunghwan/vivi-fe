@@ -1,3 +1,5 @@
+import type { ChatMessage } from '@/types/chat';
+
 type ChatState = {
   chatMessages: ChatMessage[];
 };

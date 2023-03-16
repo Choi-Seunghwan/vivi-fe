@@ -1,14 +1,19 @@
-type SendChatMessage = {
+export type SendChatMessage = {
   message: string;
   roomId: string;
 };
 
-type CHAT_MESSAGE_TYPE = 'NORMAL' | 'SYSTEM';
+export type CHAT_MESSAGE_TYPE = 'NORMAL' | 'SYSTEM';
 
-type ChatMessage = {
+export type MessageInfo = {
+  message: string;
+  nickname?: string;
+};
+
+export type ChatMessage = {
   id: string;
   user: User;
-  message: string;
+  messageInfo: MessageInfo;
   createdDate?: Date;
   type: CHAT_MESSAGE_TYPE;
 };

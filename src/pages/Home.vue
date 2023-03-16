@@ -30,6 +30,7 @@ export default defineComponent({
   padding: 20px;
 
   .live-chat {
+    margin-top: 80px;
     > .title {
       font-size: 30px;
       font-weight: bold;

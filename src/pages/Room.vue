@@ -1,22 +1,30 @@
 <template>
-  <Ladyout class="room">
+  <PageLayout class="room">
     <section class="room-viewer">
-      <RoomViewerContainer :isHost="isHost" ref="RoomViewerContainer" />
+      <RoomViewerContainer :isHost="isHost" :stream="stream" ref="RoomViewerContainer" />
     </section>
-    <div v-show="isShowSetting" class="modal">
-      <BroadcastController />
-    </div>
-  </Ladyout>
+  </PageLayout>
 </template>
 <script lang="ts">
 import { useStore } from 'vuex';
-import { useRoute } from 'vue-router';
-import { computed, defineComponent, inject, onMounted, onUnmounted, watch } from '@vue/runtime-core';
+import { useRoute, useRouter } from 'vue-router';
+import {
+  computed,
+  defineComponent,
+  inject,
+  onMounted,
+  onUnmounted,
+  ref,
+  watch,
+  type ComputedRef,
+  type Ref
+} from '@vue/runtime-core';
 
 import RoomViewerContainer from '@/components/room/RoomViewerContainer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import type MessageManager from '@/service/MessageManager';
 import PageLayout from '@/components/layout/PageLayout.vue';
+import type MediaManager from '@/modules/MediaManager';
 
 export default defineComponent({
   components: {
@@ -26,22 +34,28 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const store = useStore();
     const isShowSetting = computed(() => store.getters['room/isShowSettingPanel']);
     const messageManager: MessageManager = inject('$message')!;
     const roomMessageHandler = messageManager.roomMessageHandler;
     const roomId = route.params?.roomId || '';
-    const isHost = route.query?.isHost ? Boolean(route.query?.isHost) : false;
-    const room = computed(() => store.getters['room/getRoom']);
+    const isHost: ComputedRef<boolean> = computed(() => store.getters['room/isHost']);
+    const room: ComputedRef<Room> = computed(() => store.getters['room/getRoom']);
 
     // const sws = messageManage.getServiceWebSocket();
     // const pc = new PeerConnection({ localStream, member: null, socket: sws });
+
+    const stream: Ref<MediaStream | {}> = ref({});
+    const mediaManager: MediaManager = inject('$media')!;
 
     const joinRoom = async () => {
       await roomMessageHandler.joinRoom(roomId);
     };
 
-    const ackJoinRoom = async () => {};
+    const ackJoinRoom = async args => {
+      if (!args?.result) router.push({ name: 'Home' });
+    };
 
     const leaveRoom = async () => {
       await roomMessageHandler.leaveRoom();
@@ -51,21 +65,32 @@ export default defineComponent({
       if (!!prevVal && !newVal) leaveRoom();
     });
 
+    const initLocalStreamCb = async () => {
+      const localStream: MediaStream = <MediaStream>await mediaManager.getLocalStream();
+      stream.value = localStream;
+    };
+
     onMounted(async () => {
       roomMessageHandler.setAckHandler(roomMessageHandler.ackJoinRoom.name, ackJoinRoom.bind(this));
 
-      if (!room) await joinRoom();
+      if (isHost.value) {
+        await mediaManager.initLocalStream(initLocalStreamCb.bind(this));
+      }
+
+      if (!isHost.value && !room.value) await joinRoom();
     });
 
     onUnmounted(() => {
       roomMessageHandler.releaseAckHandler(roomMessageHandler.ackJoinRoom.name);
+      if (isHost) mediaManager.clearlocalStream();
       store.dispatch('room/clearRoom');
       store.dispatch('chat/clearChatMessages');
     });
 
     return {
       isShowSetting,
-      isHost
+      isHost,
+      stream
     };
   }
 });

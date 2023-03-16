@@ -5,8 +5,6 @@ declare type Room = {
   members: any[];
 };
 
-declare type ChatMessage = any;
-
 declare type RoomMember = {
   id: string;
   email: string;

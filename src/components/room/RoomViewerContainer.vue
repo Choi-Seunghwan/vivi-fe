@@ -23,29 +23,20 @@ export default {
   name: 'RoomViewerContainer',
   components: { Screen, BasicButton, ChatContainer },
   props: {
-    isHost: { type: Boolean, default: false }
+    isHost: { type: Boolean, default: false },
+    stream: { type: Object, default: null }
   },
   setup(props, context) {
     const isHost = props.isHost;
-    const stream: Ref<MediaStream | null> = ref(null);
-    const mediaManager: MediaManager = inject('$media')!;
+    const stream = props.stream;
 
     const settingBtnHandler = () => {
       context.emit('toggleSetting');
     };
 
-    const initLocalStreamCb = async () => {
-      const localStream: MediaStream = <MediaStream>await mediaManager.getLocalStream();
-      stream.value = localStream;
-    };
+    onMounted(async () => {});
 
-    onMounted(async () => {
-      if (isHost) await mediaManager.initLocalStream(initLocalStreamCb.bind(this));
-    });
-
-    onUnmounted(() => {
-      if (isHost) mediaManager.clearlocalStream();
-    });
+    onUnmounted(() => {});
 
     return {
       parseStr,

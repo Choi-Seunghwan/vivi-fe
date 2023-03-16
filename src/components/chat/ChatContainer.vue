@@ -5,7 +5,8 @@
         v-for="(chatMessage, i) in chatMessages"
         :key="i"
         :user="chatMessage.user"
-        :message="chatMessage.message"
+        :messageInfo="chatMessage?.messageInfo"
+        :type="chatMessage?.type"
       />
     </div>
     <div class="input-wrap">
@@ -22,7 +23,7 @@
 
 <script lang="ts">
 import type { ComputedRef } from 'vue';
-import { computed, inject } from '@vue/runtime-core';
+import { computed, inject, defineComponent } from '@vue/runtime-core';
 import { ref } from '@vue/reactivity';
 import { useStore } from 'vuex';
 
@@ -31,8 +32,9 @@ import BasicInput from '../common/BasicInput.vue';
 import BasicButton from '../common/BasicButton.vue';
 import ChatMessage from './ChatMessage.vue';
 import type MessageManager from '@/service/MessageManager';
+import type { ChatMessage as ChatMessageType, SendChatMessage } from '@/types/chat';
 
-export default {
+export default defineComponent({
   name: 'ChatContainer',
   components: { BasicInput, BasicButton, ChatMessage },
   setup() {
@@ -41,7 +43,7 @@ export default {
     const chatMessageHandler = messageManager.chatMessageHandler;
     const inputMessage = ref('');
     const room: ComputedRef<Room> = computed(() => store.getters['room/getRoom']);
-    const chatMessages = computed(() => store.getters['chat/chatMessages']);
+    const chatMessages: ComputedRef<ChatMessageType[]> = computed(() => store.getters['chat/chatMessages']);
 
     const sendBtnHandler = () => {
       if (!room?.value?.roomId) return;
@@ -52,7 +54,7 @@ export default {
 
     return { parseStr, sendBtnHandler, inputMessage, chatMessages };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>
