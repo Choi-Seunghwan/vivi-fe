@@ -24,7 +24,7 @@ export default class MediaManager {
     }
   }
 
-  clearlocalStream() {
+  clearLocalStream() {
     const tracks = this.localStream?.getTracks();
     tracks?.forEach(track => {
       track.stop();

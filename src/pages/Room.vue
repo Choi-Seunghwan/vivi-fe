@@ -45,7 +45,6 @@ export default defineComponent({
 
     // const sws = messageManage.getServiceWebSocket();
     // const pc = new PeerConnection({ localStream, member: null, socket: sws });
-
     const stream: Ref<MediaStream | {}> = ref({});
     const mediaManager: MediaManager = inject('$media')!;
 
@@ -65,24 +64,15 @@ export default defineComponent({
       if (!!prevVal && !newVal) leaveRoom();
     });
 
-    const initLocalStreamCb = async () => {
-      const localStream: MediaStream = <MediaStream>await mediaManager.getLocalStream();
-      stream.value = localStream;
-    };
-
     onMounted(async () => {
       roomMessageHandler.setAckHandler(roomMessageHandler.ackJoinRoom.name, ackJoinRoom.bind(this));
-
-      if (isHost.value) {
-        await mediaManager.initLocalStream(initLocalStreamCb.bind(this));
-      }
 
       if (!isHost.value && !room.value) await joinRoom();
     });
 
     onUnmounted(() => {
       roomMessageHandler.releaseAckHandler(roomMessageHandler.ackJoinRoom.name);
-      if (isHost) mediaManager.clearlocalStream();
+      if (isHost.value) mediaManager.clearLocalStream();
       store.dispatch('room/clearRoom');
       store.dispatch('chat/clearChatMessages');
     });

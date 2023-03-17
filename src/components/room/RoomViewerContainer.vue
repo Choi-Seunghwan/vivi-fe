@@ -9,15 +9,12 @@
 </template>
 
 <script lang="ts">
-import { inject, onMounted, onUnmounted, ref } from 'vue';
-import type { Ref } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { parseStr } from '@/utils';
+
 import Screen from '@/components/screen/Screen.vue';
 import BasicButton from '@/components/common/BasicButton.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
-import type MediaManager from '@/modules/MediaManager';
-import { PeerConnection } from '@/modules/PeerConnection';
-import type MessageManager from '@/service/MessageManager';
 
 export default {
   name: 'RoomViewerContainer',
