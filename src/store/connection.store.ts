@@ -1,11 +1,11 @@
 import type { PeerConnection } from '@/modules/PeerConnection';
 
 interface ConnectionState {
-  peerConnections: PeerConnection[] | null;
+  peerConnections: Object;
 }
 
 const state = (): ConnectionState => ({
-  peerConnections: null
+  peerConnections: {}
 });
 
 const mutations = {

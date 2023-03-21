@@ -4,8 +4,8 @@ import { EVENT_ICE_CANDIDATE, EVENT_ON_TRACK } from '@/constant';
 export class PeerConnection {
   pc: RTCPeerConnection;
   member: RoomMember;
-  localStream: MediaStream;
-  remoteStream;
+  localStream?: MediaStream;
+  remoteStream?;
   iceServers = [
     {
       urls: [
@@ -18,9 +18,8 @@ export class PeerConnection {
     }
   ];
 
-  constructor({ localStream, member, socket }) {
+  constructor({ member, socket }) {
     this.pc = new RTCPeerConnection({ iceServers: this.iceServers });
-    this.localStream = localStream;
     this.member = member;
     this.pc.addEventListener('icecandidate', this.iceCandidateHandler.bind(this));
     this.pc.onicegatheringstatechange = e => {
@@ -34,11 +33,11 @@ export class PeerConnection {
       eventManager.callEvent(EVENT_ON_TRACK, { peerConnection: this, remoteStream });
     };
 
-    if (localStream) {
-      this.localStream.getTracks().forEach(track => {
-        this.pc.addTrack(track, this.localStream);
-      });
-    }
+    // if (localStream) {
+    //   this.localStream.getTracks().forEach(track => {
+    //     this.pc.addTrack(track, this.localStream);
+    //   });
+    // }
   }
 
   async createOffer() {

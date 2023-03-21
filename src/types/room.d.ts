@@ -1,7 +1,7 @@
 declare type Room = {
   roomId: string;
   title: string;
-  host: User;
+  host: RoomMember;
   members: any[];
 };
 
