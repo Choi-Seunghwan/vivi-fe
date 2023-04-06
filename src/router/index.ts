@@ -5,29 +5,30 @@ import Room from '@/pages/Room.vue';
 import Broadcast from '@/pages/Broadcast.vue';
 // import NotFound from "@/pages/NotFound.vue";
 import { BroadcastPageGuard, authGuard, globalGuard, signInPageGuard } from './routerGuard';
+import { PATH_NAME_BROADCAST, PATH_NAME_HOME, PATH_NAME_ROOM, PATH_NAME_SIGN_IN } from '@/constant';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: PATH_NAME_HOME,
       component: Home
     },
     {
       path: '/signIn',
-      name: 'SignIn',
+      name: PATH_NAME_SIGN_IN,
       component: SignIn,
       beforeEnter: signInPageGuard
     },
     {
       path: '/room/:roomId',
-      name: 'Room',
+      name: PATH_NAME_ROOM,
       component: Room
     },
     {
       path: '/broadcast',
-      name: 'Broadcast',
+      name: PATH_NAME_BROADCAST,
       component: Broadcast,
       beforeEnter: BroadcastPageGuard
     }

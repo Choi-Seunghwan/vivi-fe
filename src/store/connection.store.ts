@@ -1,20 +1,31 @@
 import type { PeerConnection } from '@/modules/PeerConnection';
 
 interface ConnectionState {
-  peerConnections: Object;
+  peerConnections: Map<string, PeerConnection>; // key: member Id
 }
 
 const state = (): ConnectionState => ({
-  peerConnections: {}
+  peerConnections: new Map()
 });
 
 const mutations = {
-  setPeerConnections: (state, v) => (state.peerConnections = v)
+  setPeerConnections: (state: ConnectionState, v) => (state.peerConnections = v)
 };
 
-const getters = {};
+const getters = {
+  getPeerConnection: (state: ConnectionState, memberId) => {
+    const peerConnection = state.peerConnections.get(memberId);
+    return peerConnection;
+  }
+};
 
-const actions = {};
+const actions = {
+  setPc({ state }: { state: ConnectionState }, { pc }: { pc: PeerConnection }) {
+    const peerConnections = state.peerConnections;
+    const key = pc.member.id;
+    peerConnections.set(key, pc);
+  }
+};
 
 export default {
   namespaced: true,

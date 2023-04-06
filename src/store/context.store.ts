@@ -1,66 +1,50 @@
-const state = () => ({
+import { TOP_NAV_DEFAULT } from '@/constant';
+
+interface ContextState {
+  isMobileSize: boolean | undefined;
+  isDimmed: boolean;
+  topNavContext: string;
+  showGlobalProgress: boolean;
+}
+
+const state = (): ContextState => ({
   isMobileSize: undefined,
   isDimmed: false,
-  showSideNav: false,
-  showTopNav: true,
+  topNavContext: TOP_NAV_DEFAULT,
   showGlobalProgress: false
 });
 
 const mutations = {
-  setDimmed(state, dimmed) {
+  setDimmed(state: ContextState, dimmed: boolean) {
     state.isDimmed = dimmed;
   },
 
-  setSideNav(state, showSideNav) {
-    state.showSideNav = showSideNav;
+  setTopNavContext(state: ContextState, topNavContext: string) {
+    state.topNavContext = topNavContext;
   },
 
-  setTopNav(state, showTopNav) {
-    state.showTopNav = showTopNav;
-  },
-
-  setGlobalProgress(state, showGlobalProgress) {
+  setGlobalProgress(state: ContextState, showGlobalProgress: boolean) {
     state.showGlobalProgress = showGlobalProgress;
   }
 };
 
 const getters = {
-  showTopNav: state => state.showTopNav,
-  showGlobalProgress: state => state.showGlobalProgress
+  getTopNavContext: (state: ContextState) => state.topNavContext,
+  showGlobalProgress: (state: ContextState) => state.showGlobalProgress
 };
 
 const actions = {
   initContext() {},
 
-  setDimmed({ commit }, dimmed) {
+  setDimmed({ commit }, dimmed: boolean) {
     commit('setDimmed', dimmed);
   },
 
-  toggleSideNav({ state, commit }) {
-    if (state.showSideNav) {
-      commit('setSideNav', false);
-      commit('setDimmed', false);
-    } else {
-      commit('setSideNav', true);
-      commit('setDimmed', true);
-    }
+  setTopNavContext({ commit }, topNavContext: string) {
+    commit('setTopNavContext', topNavContext);
   },
 
-  setSideNav({ commit }, showSideNav) {
-    if (showSideNav) {
-      commit('setSideNav', true);
-      commit('setDimmed', true);
-    } else {
-      commit('setSideNav', false);
-      commit('setDimmed', false);
-    }
-  },
-
-  setTopNav({ commit }, showTopNav) {
-    commit('setTopNav', showTopNav);
-  },
-
-  setGlobalProgress({ commit }, showGlobalProgress) {
+  setGlobalProgress({ commit }, showGlobalProgress: boolean) {
     commit('setGlobalProgress', showGlobalProgress);
   }
 };

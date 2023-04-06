@@ -18,7 +18,7 @@ export class PeerConnection {
     }
   ];
 
-  constructor({ member, socket }) {
+  constructor({ member }) {
     this.pc = new RTCPeerConnection({ iceServers: this.iceServers });
     this.member = member;
     this.pc.addEventListener('icecandidate', this.iceCandidateHandler.bind(this));
@@ -45,25 +45,22 @@ export class PeerConnection {
       offerToReceiveAudio: true,
       offerToReceiveVideo: true
     });
-    await this.pc.setLocalDescription(offer);
+    await this.pc.setLocalDescription(new RTCSessionDescription(offer));
     return offer;
   }
 
   async setOffer(offer) {
-    await this.pc.setRemoteDescription(offer);
+    await this.pc.setRemoteDescription(new RTCSessionDescription(offer));
   }
 
   async createAnswer() {
-    const answer = await this.pc.createAnswer({
-      offerToReceiveAudio: true,
-      offerToReceiveVideo: true
-    });
-    this.pc.setLocalDescription(answer);
+    const answer = await this.pc.createAnswer();
+    await this.pc.setLocalDescription(answer);
     return answer;
   }
 
-  async setAnswer(remoteDesc) {
-    await this.pc.setRemoteDescription(remoteDesc);
+  async setAnswer(answer) {
+    await this.pc.setRemoteDescription(answer);
   }
 
   async iceCandidateHandler(data) {
@@ -76,6 +73,6 @@ export class PeerConnection {
   }
 
   async addIceCandidate(candidate) {
-    await this.pc.addIceCandidate(candidate);
+    await this.pc.addIceCandidate(new RTCIceCandidate(candidate));
   }
 }

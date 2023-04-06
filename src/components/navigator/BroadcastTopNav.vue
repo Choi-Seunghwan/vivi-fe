@@ -16,7 +16,6 @@ import { parseStr } from '@/utils';
 import { useStore } from 'vuex';
 
 import Arrow from '../svg/Arrow.vue';
-import { computed } from '@vue/runtime-core';
 import BasicButton from '../common/BasicButton.vue';
 
 export default {
@@ -31,11 +30,6 @@ export default {
 
     const backBtnHandler = () => {
       router.push({ name: 'Home' });
-    };
-
-    const settingBtnHandler = () => {
-      if (store.getters['room/isShowSettingPanel']) store.dispatch('room/setShowSettingPanel', { value: false });
-      else store.dispatch('room/setShowSettingPanel', { value: true });
     };
 
     return { parseStr, backBtnHandler };

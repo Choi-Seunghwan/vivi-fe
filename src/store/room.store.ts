@@ -14,8 +14,8 @@ const mutations = {
 
 const getters = {
   // roomId: (state: RoomState) => state?.room?.roomId,
-  isHost: (state: RoomState, getters, rootState, rootGatters) => {
-    const user: User | null = getters.userInfo;
+  isHost: (state: RoomState, getters, rootState, rootGetters) => {
+    const user: User | null = rootGetters['auth/userInfo'];
 
     if (!user) return false;
     if (user.id === state.room?.host?.id) return true;

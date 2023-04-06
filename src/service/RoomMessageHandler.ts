@@ -1,9 +1,10 @@
 import type { App as VueApp } from 'vue';
 import type ServiceWebSocket from './ServiceWebSocket';
-import { MESSAGE_ROOM } from '@/constant';
+import { MESSAGE_PC, MESSAGE_ROOM } from '@/constant';
 import { MessageHandler } from './MessageHandler';
-import logger from '@/utils/Logger';
 import type { Store } from 'vuex';
+import type { ChatMessage } from '@/types/chat';
+import { PeerConnection } from '@/modules/PeerConnection';
 
 export class RoomMessageHandler extends MessageHandler {
   private app: VueApp;
@@ -30,11 +31,11 @@ export class RoomMessageHandler extends MessageHandler {
     }
   }
 
-  async ackCreateRoom(room: Room) {
+  async ackCreateRoom(result: CreateRoomResult) {
     try {
-      if (!room) throw new Error('ackCreateRoom room Error');
+      if (!result || result?.error) throw new Error('ackCreateRoom room Error');
 
-      await this.store.dispatch('room/setRoom', { room });
+      await this.store.dispatch('room/setRoom', { room: result });
       this.runAckHandler(this.ackCreateRoom.name);
     } catch (e) {
       throw e;
@@ -50,15 +51,22 @@ export class RoomMessageHandler extends MessageHandler {
     }
   }
 
-  async ackJoinRoom(result) {
+  async ackJoinRoom(result: JoinRoomResult) {
     try {
       if (result?.error) {
         this.runAckHandler(this.ackJoinRoom.name, { result: false });
         throw new Error(`ackJoinRoom Error`);
       }
 
-      await this.store.dispatch('room/setRoom', result);
+      const member = result.host;
+      const pc = new PeerConnection({ member });
+
+      await this.store.dispatch('connection/setPc', { pc });
+      await this.store.dispatch('room/setRoom', { room: result });
       this.runAckHandler(this.ackJoinRoom.name, { result });
+
+      const offer = await pc.createOffer();
+      this.serviceWebSocket.sendMessage(MESSAGE_PC.SEND_OFFER, { socketId: member.socketId, offer });
     } catch (e) {
       throw e;
     }
