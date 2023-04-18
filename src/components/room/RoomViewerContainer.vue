@@ -27,10 +27,6 @@ export default {
     const isHost = props.isHost;
     const stream = props.stream;
 
-    const settingBtnHandler = () => {
-      context.emit('toggleSetting');
-    };
-
     onMounted(async () => {});
 
     onUnmounted(() => {});
@@ -38,8 +34,7 @@ export default {
     return {
       parseStr,
       isHost,
-      stream,
-      settingBtnHandler
+      stream
     };
   }
 };

@@ -7,10 +7,10 @@
       @navBroadcast="navBroadcast"
       @test="test"
       class="nav top-nav"
-      :class="{ hide: !showTopNav }"
+      :class="{ hide: topNavContext !== TOP_NAV_DEFAULT }"
     />
 
-    <BroadcastTopNav :class="{ hide: !showBroadcastNav }" class="nav broadcast-nav" />
+    <BroadcastTopNav :class="{ hide: topNavContext !== TOP_NAV_BROADCAST_ROOM }" class="nav broadcast-nav" />
   </div>
 </template>
 
@@ -23,6 +23,7 @@ import TopNav from '@/components/navigator/TopNav.vue';
 import BroadcastTopNav from './BroadcastTopNav.vue';
 import type MessageManager from '@/service/MessageManager';
 import type ServiceManager from '@/service/ServiceManager';
+import { TOP_NAV_BROADCAST_ROOM, TOP_NAV_DEFAULT } from '@/constant';
 
 export default defineComponent({
   name: 'NavContainer',
@@ -56,11 +57,7 @@ export default defineComponent({
       // roomMessageHandler.test();
     };
 
-    const showTopNav = computed(() => store.getters['context/showTopNav']);
-    const showBroadcastNav = computed(() => {
-      if (!showTopNav.value) return true;
-      else return false;
-    });
+    const topNavContext = computed(() => store.getters['context/getTopNavContext']);
 
     return {
       navHome,
@@ -68,8 +65,9 @@ export default defineComponent({
       navBroadcast,
       navSignOff,
       test,
-      showTopNav,
-      showBroadcastNav
+      topNavContext,
+      TOP_NAV_BROADCAST_ROOM,
+      TOP_NAV_DEFAULT
     };
   }
 });

@@ -34,7 +34,7 @@ export default {
 
     const getRooms = async () => {
       const result = await roomService.getRoomList();
-      rooms.value = result;
+      rooms.value = result || [];
     };
 
     const roomCardClick = (room: Room) => {

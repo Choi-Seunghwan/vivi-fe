@@ -54,6 +54,8 @@ export default defineComponent({
 
     const ackJoinRoom = async args => {
       if (!args?.result) router.push({ name: 'Home' });
+
+      stream.value = {};
     };
 
     const leaveRoom = async () => {
@@ -73,6 +75,7 @@ export default defineComponent({
     onUnmounted(() => {
       roomMessageHandler.releaseAckHandler(roomMessageHandler.ackJoinRoom.name);
       if (isHost.value) mediaManager.clearLocalStream();
+      leaveRoom();
       store.dispatch('room/clearRoom');
       store.dispatch('chat/clearChatMessages');
     });
