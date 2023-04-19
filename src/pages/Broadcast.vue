@@ -24,7 +24,7 @@ import { useStore } from 'vuex';
 import { parseStr } from '@/utils';
 import type MessageManager from '@/service/MessageManager';
 import { useRouter } from 'vue-router';
-import type MediaManager from '@/modules/MediaManager';
+import { mediaManager, MediaManager } from '@/modules/MediaManager';
 
 import PageLayout from '@/components/layout/PageLayout.vue';
 import BasicInput from '@/components/common/BasicInput.vue';
@@ -46,8 +46,7 @@ export default {
     const messageManager: MessageManager = inject('$message')!;
     const roomMessageHandler = messageManager.roomMessageHandler;
 
-    const stream: Ref<MediaStream | {}> = ref({});
-    const mediaManager: MediaManager = inject('$media')!;
+    const stream: Ref<MediaStream | null> = ref(null);
 
     const title = ref('');
     const tag = ref('');
@@ -75,7 +74,7 @@ export default {
     };
 
     const initLocalStreamCb = async () => {
-      const localStream: MediaStream = <MediaStream>await mediaManager.getLocalStream();
+      const localStream: MediaStream = <MediaStream>mediaManager.getLocalStream();
       stream.value = localStream;
     };
 
@@ -83,7 +82,9 @@ export default {
     const startBtnDisabled = computed(() => !tag || !title);
 
     onMounted(async () => {
-      await mediaManager.initLocalStream(initLocalStreamCb.bind(this));
+      setTimeout(async () => {
+        await mediaManager.initLocalStream(initLocalStreamCb.bind(this));
+      });
       roomMessageHandler.setAckHandler(roomMessageHandler.ackCreateRoom.name, ackCreateRoom.bind(this));
     });
 

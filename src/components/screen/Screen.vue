@@ -5,23 +5,23 @@
 </template>
 
 <script lang="ts">
-import { onMounted, ref, watch } from '@vue/runtime-core';
+import { computed, ref, watch } from '@vue/runtime-core';
 export default {
   name: 'Screen',
   props: {
-    stream: {}
+    stream: { type: Object as any, default: null, required: false }
   },
   setup(props, context) {
     const videoRef = ref();
+    const stream = computed(() => props.stream);
 
     watch(
-      () => props.stream,
+      stream,
       (newVal, prevVal) => {
         if (newVal && videoRef?.value) videoRef.value.srcObject = newVal;
-      }
+      },
+      { immediate: true }
     );
-
-    onMounted(() => {});
     return { videoRef };
   }
 };

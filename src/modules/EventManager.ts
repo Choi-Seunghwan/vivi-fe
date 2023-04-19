@@ -1,19 +1,25 @@
 class EventManager {
-  eventMap = {};
+  eventMap: Map<string, Function>;
 
   constructor() {
-    this.eventMap = {};
+    this.eventMap = new Map<string, Function>();
   }
 
-  setEvent(event, handler) {
-    this.eventMap[event] = handler;
+  setEvent(event: string, handler: Function) {
+    this.eventMap.set(event, handler);
   }
 
   async callEvent(event, ...args) {
-    const e = this.eventMap[event];
+    const e = this.eventMap.get(event);
     if (!e && typeof e !== 'function') return;
     await e(...args);
   }
+
+  releaseEvent(event) {
+    this.eventMap.delete(event);
+  }
 }
 
-export default new EventManager();
+const eventManager = new EventManager();
+
+export default eventManager;

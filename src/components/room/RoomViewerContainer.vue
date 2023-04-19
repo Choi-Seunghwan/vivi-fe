@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { onMounted, onUnmounted } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
 import { parseStr } from '@/utils';
 
 import Screen from '@/components/screen/Screen.vue';
@@ -21,15 +21,13 @@ export default {
   components: { Screen, BasicButton, ChatContainer },
   props: {
     isHost: { type: Boolean, default: false },
-    stream: { type: Object, default: null }
+    stream: { type: Object as any, default: null, required: false }
   },
   setup(props, context) {
     const isHost = props.isHost;
-    const stream = props.stream;
+    // const stream = props.stream;
 
-    onMounted(async () => {});
-
-    onUnmounted(() => {});
+    const stream = computed(() => props.stream);
 
     return {
       parseStr,
