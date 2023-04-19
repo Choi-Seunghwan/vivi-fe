@@ -24,7 +24,10 @@ import RoomViewerContainer from '@/components/room/RoomViewerContainer.vue';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import type MessageManager from '@/service/MessageManager';
 import PageLayout from '@/components/layout/PageLayout.vue';
-import type MediaManager from '@/modules/MediaManager';
+import { mediaManager, MediaManager } from '@/modules/MediaManager';
+import eventManager from '@/modules/EventManager';
+import { EVENT_ON_TRACK } from '@/constant';
+import type { OnTrackEvent } from '@/modules/PeerConnection';
 
 export default defineComponent({
   components: {
@@ -42,11 +45,7 @@ export default defineComponent({
     const roomId = route.params?.roomId || '';
     const isHost: ComputedRef<boolean> = computed(() => store.getters['room/isHost']);
     const room: ComputedRef<Room> = computed(() => store.getters['room/getRoom']);
-
-    // const sws = messageManage.getServiceWebSocket();
-    // const pc = new PeerConnection({ localStream, member: null, socket: sws });
-    const stream: Ref<MediaStream | {}> = ref({});
-    const mediaManager: MediaManager = inject('$media')!;
+    const stream: Ref<MediaStream | null> = ref(null);
 
     const joinRoom = async () => {
       await roomMessageHandler.joinRoom(roomId);
@@ -55,7 +54,7 @@ export default defineComponent({
     const ackJoinRoom = async args => {
       if (!args?.result) router.push({ name: 'Home' });
 
-      stream.value = {};
+      stream.value = null;
     };
 
     const leaveRoom = async () => {
@@ -66,14 +65,26 @@ export default defineComponent({
       if (!!prevVal && !newVal) leaveRoom();
     });
 
+    const setRemoteStream = ({ peerconnection, remoteStream }: OnTrackEvent) => {
+      if (remoteStream) stream.value = remoteStream;
+    };
+
     onMounted(async () => {
       roomMessageHandler.setAckHandler(roomMessageHandler.ackJoinRoom.name, ackJoinRoom.bind(this));
 
-      if (!isHost.value && !room.value) await joinRoom();
+      if (isHost.value)
+        setTimeout(() => {
+          stream.value = mediaManager.getLocalStream() as MediaStream;
+        }, 100);
+      if (!isHost.value && !room.value) {
+        eventManager.setEvent(EVENT_ON_TRACK, setRemoteStream.bind(this));
+        await joinRoom();
+      }
     });
 
     onUnmounted(() => {
       roomMessageHandler.releaseAckHandler(roomMessageHandler.ackJoinRoom.name);
+      eventManager.releaseEvent(EVENT_ON_TRACK);
       if (isHost.value) mediaManager.clearLocalStream();
       leaveRoom();
       store.dispatch('room/clearRoom');

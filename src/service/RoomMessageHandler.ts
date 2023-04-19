@@ -5,6 +5,7 @@ import { MessageHandler } from './MessageHandler';
 import type { Store } from 'vuex';
 import type { ChatMessage } from '@/types/chat';
 import { PeerConnection } from '@/modules/PeerConnection';
+import { mediaManager } from '@/modules/MediaManager';
 
 export class RoomMessageHandler extends MessageHandler {
   private app: VueApp;
@@ -58,15 +59,16 @@ export class RoomMessageHandler extends MessageHandler {
         throw new Error(`ackJoinRoom Error`);
       }
 
-      const member = result.host;
-      const pc = new PeerConnection({ member });
+      const host = result.host;
+      const hostRoomMember = result.members.find(m => m.id === host.id);
+      const pc = new PeerConnection({ member: hostRoomMember });
 
       await this.store.dispatch('connection/setPc', { pc });
       await this.store.dispatch('room/setRoom', { room: result });
       this.runAckHandler(this.ackJoinRoom.name, { result });
 
       const offer = await pc.createOffer();
-      this.serviceWebSocket.sendMessage(MESSAGE_PC.SEND_OFFER, { socketId: member.socketId, offer });
+      this.serviceWebSocket.sendMessage(MESSAGE_PC.SEND_OFFER, { socketId: hostRoomMember.socketId, offer });
     } catch (e) {
       throw e;
     }
@@ -74,7 +76,6 @@ export class RoomMessageHandler extends MessageHandler {
 
   async onNewRoomMemberJoined({
     roomMember,
-    roomId,
     chatMessage
   }: {
     roomMember: RoomMember;

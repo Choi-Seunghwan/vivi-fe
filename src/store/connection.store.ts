@@ -1,5 +1,7 @@
 import type { PeerConnection } from '@/modules/PeerConnection';
 
+export type PcMap = Map<string, PeerConnection>;
+
 interface ConnectionState {
   peerConnections: Map<string, PeerConnection>; // key: member Id
 }
@@ -13,9 +15,8 @@ const mutations = {
 };
 
 const getters = {
-  getPeerConnection: (state: ConnectionState, memberId) => {
-    const peerConnection = state.peerConnections.get(memberId);
-    return peerConnection;
+  getPeerConnection: (state: ConnectionState) => {
+    return state.peerConnections;
   }
 };
 

@@ -1,12 +1,9 @@
-import type { App as VueApp } from 'vue';
 import logger from '@/utils/Logger';
 
-export default class MediaManager {
+export class MediaManager {
   localStream: MediaStream | null;
-  app: VueApp;
 
-  constructor(app: VueApp) {
-    this.app = app;
+  constructor() {
     this.localStream = null;
   }
 
@@ -35,3 +32,5 @@ export default class MediaManager {
     return this.localStream;
   }
 }
+
+export const mediaManager = new MediaManager();

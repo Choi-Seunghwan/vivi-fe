@@ -1,11 +1,15 @@
 import eventManager from '@/modules/EventManager';
 import { EVENT_ICE_CANDIDATE, EVENT_ON_TRACK } from '@/constant';
 
+export interface OnTrackEvent {
+  peerconnection: PeerConnection;
+  remoteStream: MediaStream;
+}
+
 export class PeerConnection {
   pc: RTCPeerConnection;
   member: RoomMember;
-  localStream?: MediaStream;
-  remoteStream?;
+  localStream?: MediaStream | null;
   iceServers = [
     {
       urls: [
@@ -18,26 +22,27 @@ export class PeerConnection {
     }
   ];
 
-  constructor({ member }) {
+  constructor({ member, localStream = null }: { member: RoomMember; localStream?: MediaStream | null }) {
     this.pc = new RTCPeerConnection({ iceServers: this.iceServers });
     this.member = member;
     this.pc.addEventListener('icecandidate', this.iceCandidateHandler.bind(this));
-    this.pc.onicegatheringstatechange = e => {
-      console.log('@@ oniceconnectionstatechange', this.pc.iceGatheringState);
+    this.pc.onicegatheringstatechange = event => {
+      console.log('oniceconnectionstatechange', event);
     };
 
     this.pc.ontrack = trackEvent => {
       const { streams } = trackEvent;
       const remoteStream = streams[0];
-      this.remoteStream = remoteStream;
       eventManager.callEvent(EVENT_ON_TRACK, { peerConnection: this, remoteStream });
     };
 
-    // if (localStream) {
-    //   this.localStream.getTracks().forEach(track => {
-    //     this.pc.addTrack(track, this.localStream);
-    //   });
-    // }
+    if (localStream) {
+      this.localStream = localStream as MediaStream;
+
+      this.localStream?.getTracks().forEach(track => {
+        this.pc.addTrack(track, this.localStream as MediaStream);
+      });
+    }
   }
 
   async createOffer() {
@@ -63,9 +68,8 @@ export class PeerConnection {
     await this.pc.setRemoteDescription(answer);
   }
 
-  async iceCandidateHandler(data) {
-    const { candidate } = data;
-    // eventManager를 통해 PeerConection 외부의 모듈로 이벤트 송신
+  async iceCandidateHandler(event: RTCPeerConnectionIceEvent) {
+    const { candidate } = event;
     eventManager.callEvent(EVENT_ICE_CANDIDATE, {
       candidate,
       member: this.member
