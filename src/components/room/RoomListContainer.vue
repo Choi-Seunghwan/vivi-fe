@@ -23,17 +23,19 @@ export default {
     RoomCard
   },
   props: {
+    isArchive: { type: Boolean, default: false },
     tag: { type: String, default: '' }
   },
-  setup() {
+  setup(props) {
     const router = useRouter();
     const services: ServiceManager = inject('$service')!;
     const roomService: RoomService = services.roomService;
+    const isArchive = props.isArchive;
 
     const rooms = ref<Room[]>([]);
 
     const getRooms = async () => {
-      const result = await roomService.getRoomList();
+      const result = await roomService.getRoomList({ isArchive });
       rooms.value = result || [];
     };
 

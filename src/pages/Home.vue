@@ -1,8 +1,13 @@
 <template>
   <PageLayout class="home">
     <div class="live-chat">
-      <h1 class="title">목록</h1>
+      <h1 class="title">{{ parseStr('LIST') }}</h1>
       <RoomListContainer />
+    </div>
+
+    <div class="archive-chat">
+      <h1 class="title">{{ parseStr('ARCHIVE_LIST') }}</h1>
+      <RoomListContainer isArchive />
     </div>
   </PageLayout>
 </template>
@@ -11,6 +16,7 @@ import { defineComponent } from 'vue';
 
 import RoomListContainer from '@/components/room/RoomListContainer.vue';
 import PageLayout from '@/components/layout/PageLayout.vue';
+import { parseStr } from '@/utils';
 
 export default defineComponent({
   name: 'Home',
@@ -18,9 +24,9 @@ export default defineComponent({
     PageLayout,
     RoomListContainer
   },
-  data: () => ({}),
-  methods: {},
-  mounted() {}
+  setup() {
+    return { parseStr };
+  }
 });
 </script>
 <style lang="scss" scoped>

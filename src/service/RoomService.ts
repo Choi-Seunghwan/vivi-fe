@@ -11,8 +11,8 @@ export default class RoomService {
     this.api = api;
   }
 
-  async getRoomList(): Promise<Room[]> {
-    const rooms: Room[] = await this.api.get(`${this.ROOM_PATH}`);
+  async getRoomList({ isArchive }: { isArchive: boolean }): Promise<Room[]> {
+    const rooms: Room[] = await this.api.get(`${this.ROOM_PATH}`, { isArchive });
     return rooms;
   }
 
